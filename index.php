@@ -114,21 +114,22 @@ if (isset($_POST['email'])) {
 
                 <div class="container-form">
                     <div class="form-group-input">
-                    <h1>Admin Login</h1>
+                    <h1>Login Here</h1>
                     <p class="para">Welcome back. Enter your Credentials to access your account.</p>
                     </div>
                   
                     <div class="form-group-input">
                         <label for="email">Email Address</label>
                         <input type="text" placeholder="Enter your email address" id="email" name="email">
+                        <small class="text-sm text-danger"><?= $emailErr ?></small>
                     </div>
                     <div class="form-group-input">
                         <!-- <i class="fa-solid fa-eye"></i> -->
                         <i class="fa-solid fa-eye-slash" style="font-size:20px;" id="showpsw"></i>
                             <label for="email">Password</label>
                             <input type="password" placeholder="Enter your password" id="password" name="password">
+                            <small class="text-sm text-danger"><?= $passwordErr ?></small>
                     </div>
-
                     <div class="checkbox">
                         <input type="checkbox" id="remember">
                         <label for="hey">Remember Me</label>
@@ -149,8 +150,6 @@ if (isset($_POST['email'])) {
         let form = document.getElementById("form")
         let email = document.getElementById("email");
         let status = true;
-
-        
 
         showpsw.addEventListener("click", () => {
             if (showpsw.classList[1] == "fa-eye-slash") {
