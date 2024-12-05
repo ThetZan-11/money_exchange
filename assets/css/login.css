@@ -1,0 +1,86 @@
+:root{
+    --fontcolor: rgb(15, 104, 15);
+    --labelsize: 17px;
+}
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: monospace;
+}
+body{
+    background-color: rgb(167, 241, 217);
+}
+.container-form{
+    width: 37%;
+    padding: 20px;
+    margin: auto;
+    border-radius: 20px;
+    margin-top: 10px;
+    box-shadow: -3px 5px 5px 7px #adadad;
+    background-color: #fff;
+}
+.para{
+    letter-spacing: 2px;
+    margin: 10px 0px 20px 0px;
+}
+.form-group-input{
+    margin-bottom: 20px;
+    position: relative;
+}
+.form-group-input label{
+    display: block;
+    font-size: var(--labelsize);
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.form-group-input input{
+    width: 100%;
+    border-radius: 5px;
+    padding: 15px 5px;
+    border-color: #adadad;
+}
+.form-group-input i{
+    position:absolute;
+    top: 50px;
+    right: 20px;
+    cursor: pointer;
+}
+.checkbox input{
+    width: 10px;
+    height: 10px;
+}
+.checkbox>label{
+    font-size: 15px;
+}
+.continue{
+    width: 100%;
+    background-color: var(--fontcolor);
+    color: #fff;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    margin: 20px 0px 30px 0px;
+    padding: 13px;
+}
+.btn-group{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+.btn-group button{
+    padding: 10px 10px;
+    border: 1px solid #adadad;
+    border-radius: 5px;
+    margin: 20px 0px;
+    font-size: 20px;
+}
+.btn-group>button:nth-child(2){
+    background-color: var(--fontcolor);
+    color: #fff;
+}
+p>a{
+    text-decoration: none;
+    color: var(--fontcolor);
+    font-weight: bold;
+}
