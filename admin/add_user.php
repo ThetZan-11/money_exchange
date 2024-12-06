@@ -17,7 +17,7 @@ $invalid = false;
 
 if (isset($_POST['name'])) {
 
-  $name = ($_POST['name']);
+  $name = trim($_POST['name']);
   $email = trim($_POST['email']);
   $pwd = trim($_POST['pwd']);
   $address = trim($_POST['address']);

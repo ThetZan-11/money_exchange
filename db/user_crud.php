@@ -30,3 +30,4 @@ function get_user_with_email($mysqli,$email){
     $result = $mysqli->query($sql);
     return $result->fetch_assoc();
 }
+

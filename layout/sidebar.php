@@ -20,6 +20,13 @@
             </a>
           </li>
         </ul>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="./add_counter.php">
+              <i class="bi bi-circle"></i><span>Add Counter</span>
+            </a>
+          </li>
+        </ul>
       </li><!-- End Components Nav -->
 
 
