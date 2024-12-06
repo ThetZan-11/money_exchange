@@ -15,6 +15,17 @@ $profileName = "";
 $invalid = false;
 
 
+if(isset($_GET['id'])){
+    $users = get_all_user($mysqli);
+    $user = $users->fetch_assoc();
+    $name = $user['name'];
+    $email = $user['email'];
+    $address = $user['address'];
+    $phone = $user['ph_no'];
+    $select = $user['role'];
+    $profile = $user['user_img'];
+}
+
 if(isset($_POST['name'])){
     $name =trim($_POST['name']);
     $email =trim($_POST['email']);
@@ -22,6 +33,9 @@ if(isset($_POST['name'])){
     $address =trim($_POST['address']);
     $phone =trim($_POST['phone']);
     $select = ($_POST['select']);
+    $profile = $_FILES['profile'];
+    $profileName = $profile['name'];
+    $tmp = $profile['tmp_name'];
 
     if($name == ""){
        $nameErr ="name cann't be blank!";
@@ -61,9 +75,16 @@ if(isset($_POST['name'])){
     $invalid = true;
   }
 
-  if (isset($_POST['select']) && $_POST['select'] == '0') {
+  if ($select == "0" ) {
     $selectErr = 'Please select one.';
+    $invalid = true;
 }
+    if(isset($_GET['id'])){
+
+    } else {
+        
+    }
+
 
 }
 
@@ -75,9 +96,16 @@ if(isset($_POST['name'])){
 
   <div class="conatiner">
     <div class="card p-3 mx-auto" style="width:60%;">
-      <div class="card-title  mx-auto">
-        <h3>Add User</h3>
-      </div>
+    <?php if(!isset($_GET['id'])){ ?>
+         <div class="card-title  mx-auto">
+            <h3>Add User</h3>
+       </div>
+    <?php } else { ?>
+        <div class="card-title  mx-auto">
+            <h3>Edit User</h3>
+        </div>
+    <?php } ?>
+     
       <div class="card-body mx-auto">
         <form method="post" enctype="multipart/form-data">
           <div class="input mx-auto">
@@ -91,13 +119,17 @@ if(isset($_POST['name'])){
               <input type="text" class="form-control" name="email" placeholder="Enter your email" style="height:50px;" value="<?= $email ?>">
               <div class="invalid"><?= $emailErr ?></div>
             </div>
-            <div class="forpwd mb-4">
+
+            <?php if(!isset($_GET['id'])){ ?>
+                <div class="forpwd mb-4">
               <label for="name">Password</label>
               <input type="password" class="form-control pwd" name="pwd" placeholder="Enter your password" style="height:50px;" value="<?= $pwd ?>">
               <div class="invalid"><?= $pwdErr ?></div>
-              <input type="checkbox" class="check">
-              <label for="vehicle1">show password</label><br>
+              <input type="checkbox" class="check" id="show">
+              <label for="show">show password</label><br>
             </div>
+            <?php } ?>
+            
 
             <div class="foraddress mb-4">
               <label for="name">Address</label>
@@ -110,8 +142,9 @@ if(isset($_POST['name'])){
               <div class="invalid"><?= $phoneErr ?></div>
             </div>
             <div class="forselect mb-4">
-              <select class="form-select" name="select" style="height:50px;" value="<?= $select ?>">
-                <option selected value="0">Open this select menu</option>
+            <label for="name">Role</label>
+              <select class="form-select" name="select" style="height:50px;" value="<?php echo $select ?>">
+                <option value="0">Open this select menu</option>
                 <option value="1">Admin</option>
                 <option value="2">staff</option>
               </select>
@@ -119,10 +152,10 @@ if(isset($_POST['name'])){
             </div>
             <div class="forprofile mb-4">
               <label for="name">Profile</label>
-              <input type="file" name="profile" class="form-control" placeholder="please choose profile" style="height:50px;" vlaue="<?= $profile ?>">
+              <input type="file" name="profile" class="form-control" placeholder="please choose profile" style="height:50px;" value="<?= $profile ?>">
               <div class="invalid"><?= $profileErr ?></div>
             </div>
-            <button type="submit" value="submit" class="btn btn-primary">submit</button>
+            <button type="submit" value="submit" class="btn btn-primary">Submit</button>
           </div>
         </form>
       </div>
