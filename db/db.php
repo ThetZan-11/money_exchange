@@ -19,5 +19,36 @@ function create_table($mysqli)
     if (!$mysqli->query($sql)) {
         return false;
     }
+
+    $sql = "CREATE TABLE IF NOT EXISTS `customer`(`id` INT AUTO_INCREMENT,`name` VARCHAR(100) NOT NULL,`email` VARCHAR(95) UNIQUE, `address` VARCHAR(255) NOT NULL,`ph_no` VARCHAR(255) NOT NULL, PRIMARY KEY(`id`))";
+    if (!$mysqli->query($sql)) {
+        return false;
+    }
+
+    $sql = "CREATE TABLE IF NOT EXISTS `counter` (`id` INT AUTO_INCREMENT,`counter_name` VARCHAR(50) UNIQUE NOT NULL,`location` VARCHAR(100) NOT NULL, PRIMARY KEY(`id`))";
+    if(!$mysqli->query($sql)){
+        return false;
+    }
+
+    $sql = "CREATE TABLE IF NOT EXISTS `currency` (`id` INT AUTO_INCREMENT,`currency_name` VARCHAR(100) UNIQUE NOT NULL,`buy_currency_name` VARCHAR(100) NOT NULL, `buy_currency_code` VARCHAR(100) NOT NULL,`sell_currency_name` VARCHAR(100) NOT NULL, `sell_currency_code` VARCHAR(100) NOT NULL, PRIMARY KEY(`id`))";
+    if(!$mysqli->query($sql)){
+        return false;
+    }
+
+    $sql = "CREATE TABLE IF NOT EXISTS `duty`(`id` INT AUTO_INCREMENT,`from_date` DATE NOT NULL,`to_date` DATE NOT NULL,`user_id` INT NOT NULL,`counter_id` INT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY (`user_id`) REFERENCES `user`(`id`), FOREIGN KEY (`counter_id`) REFERENCES `counter`(`id`))";
+    if(!$mysqli->query($sql)){
+        return false;
+    }
+
+    $sql = "CREATE TABLE IF NOT EXISTS `currency_counter`(`id` INT AUTO_INCREMENT,`currency_id` INT NOT NULL,`counter_id` INT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY (`currency_id`) REFERENCES `currency`(`id`), FOREIGN KEY (`counter_id`) REFERENCES `counter`(`id`))";
+    if(!$mysqli->query($sql)){
+        return false;
+    }
+
+    $sql = "CREATE TABLE IF NOT EXISTS `daily_exchange`(`id` INT AUTO_INCREMENT,`sell_rate` FLOAT NOT NULL,`buy_rate` FLOAT NOT NULL,`date` DATE NOT NULL,`currency_id` INT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY (`currency_id`) REFERENCES `currency`(`id`))";
+    if(!$mysqli->query($sql)){
+        return false;
+    }
+
     return true;
 }

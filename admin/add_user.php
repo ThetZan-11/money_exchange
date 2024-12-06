@@ -1,6 +1,8 @@
+<?php require_once '../db/db.php' ?>
 <?php require_once '../layout/header.php' ?>
 <?php require_once '../layout/nav.php' ?>
 <?php require_once '../layout/sidebar.php' ?>
+<?php require_once '../db/user_crud.php' ?>
 <?php 
 $name = $nameErr = "";
 $email = $emailErr = "";
@@ -17,7 +19,10 @@ if(isset($_POST['name'])){
     $pwd =trim($_POST['pwd']);
     $address =trim($_POST['address']);
     $phone =trim($_POST['phone']);
-    $select = ($_POST['select']);
+    $select = $_POST['select'];
+    $profile = $_FILES['profile'];
+    $tmp = $profile['tmp_name'];
+    $profileName = date("YMDHS").$profile['name'];
 
     if($name == ""){
        $nameErr ="name cann't be blank!";
@@ -35,35 +40,45 @@ if(isset($_POST['name'])){
    if($pwd == ""){
     $pwdErr ="password cann't be blank!";
     $inavlid = true;
-    }else if( !preg_match( '/[^A-Za-z0-9]+/', $pwd) || strlen( $pwd) < 8)
+    }
+    if(strlen( $pwd) < 8)
     {
         $pwdErr ="Enter at least 8 digit!";
+        $invalid = true;
     }
 
-  if($address == ""){
-    $addErr ="address cann't be blank!";
-    $inavlid = true;
-  }
+    if($address == ""){
+        $addErr ="address cann't be blank!";
+        $inavlid = true;
+    }
 
-  if($phone == ""){
-    $phoneErr ="address cann't be blank!";
-    $inavlid = true;
-  }else if(!preg_match('/^\S+@\S+\.\S+$/', $phone)){
-   $phoneErr ="Enter only number";
-  }
+    if($phone == ""){
+        $phoneErr ="address cann't be blank!";
+        $inavlid = true;
+    }else if(!is_numeric($phone)){
+    $phoneErr ="Enter only number";
+    $invalid = true;
+    }
 
   if($profile == ""){
     $profileErr ="Please choos profile!";
     $inavlid = true;
   }
 
-  if (isset($_POST['select']) && $_POST['select'] == '0') {
-    $selectErr = 'Please select one.';
+if ($select == '0') {
+        $selectErr = 'Please select one.';
+    }
+    if(!$invalid){
+        $hash_password = password_hash($pwd, PASSWORD_BCRYPT);
+        $status = save_user($mysqli, $name, $email, $hash_password, $address, $phone, $select, $profileName);
+        header("Location:./user_list.php");
+        if ($status) {
+            move_uploaded_file($tmp,'../assets/img/'.$profileName);
+        } else {
+            $invalid = $status;
+        }
+    }
 }
-
-}
-
-
 
 ?>
 

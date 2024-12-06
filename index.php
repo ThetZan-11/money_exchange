@@ -63,61 +63,29 @@ if (isset($_POST['email'])) {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
-      
+
     }
-    
 </style>
 
 <body>
     <div class="container-fluid p-5">
         <div class="p-5">
-            <?php
-            if (isset($_GET['login']) && $_GET['login'] == "Login Please") {
-                $formErr = "Login Again!"; ?>
-                <div class="alert alert-danger">
-                    <?= $formErr ?>
-                </div>
-            <?php } ?>
-
-
-            <!-- <h1>Login</h1> -->
             <form method="post" id="form">
-                <!-- <div class="form-group-input py-3">
-                    <label for="" class="form-label">Email</label>
-                    <input type="text" name="email" class="form-control border-2" id="email">
-                    <span class="text-sm text-danger"><?= $emailErr ?></span>
-                </div>
-                <div class="form-group-input py-3">
-                    <label for="" class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control border-2" id="password">
-                    <span class="text-sm text-danger"><?= $passwordErr ?></span>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="form-check py-3">
-                        <input class="form-check-input" type="checkbox" id="showpsw">
-                        <label class="form-check-label" for="showpsw">
-                            Show Password
-                        </label>
-                    </div>
-                    <div class="form-check py-3">
-                        <input class="form-check-input" type="checkbox" id="remember">
-                        <label class="form-check-label" for="remember">
-                            Remember Me
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group-input py-3">
-                    <button class="btn btn-success" id="login-btn">
-                        Login
-                    </button>
-                </div> -->
+
 
                 <div class="container-form">
+                    <?php
+                    if (isset($_GET['login']) && $_GET['login'] == "Login Please") {
+                        $formErr = "Login Again!"; ?>
+                        <div class="alert alert-danger">
+                            <?= $formErr ?>
+                        </div>
+                    <?php } ?>
                     <div class="form-group-input">
-                    <h1>Login Here</h1>
-                    <p class="para">Welcome back. Enter your Credentials to access your account.</p>
+                        <h1>Login Here</h1>
+                        <p class="para">Welcome back. Enter your Credentials to access your account.</p>
                     </div>
-                  
+
                     <div class="form-group-input">
                         <label for="email">Email Address</label>
                         <input type="text" placeholder="Enter your email address" id="email" name="email">
@@ -126,9 +94,9 @@ if (isset($_POST['email'])) {
                     <div class="form-group-input">
                         <!-- <i class="fa-solid fa-eye"></i> -->
                         <i class="fa-solid fa-eye-slash" style="font-size:20px;" id="showpsw"></i>
-                            <label for="email">Password</label>
-                            <input type="password" placeholder="Enter your password" id="password" name="password">
-                            <small class="text-sm text-danger"><?= $passwordErr ?></small>
+                        <label for="email">Password</label>
+                        <input type="password" placeholder="Enter your password" id="password" name="password">
+                        <small class="text-sm text-danger"><?= $passwordErr ?></small>
                     </div>
                     <div class="checkbox">
                         <input type="checkbox" id="remember">
