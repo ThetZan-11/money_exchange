@@ -657,5 +657,6 @@
   </main><!-- End #main -->
 
 <!-- ======= Footer ======= -->
-<?php require_once '../layout/footer.php' ?>
+<?php require_once '../layout/footer.php'; ?>
 <!-- End footer-->
+

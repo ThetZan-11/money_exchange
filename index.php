@@ -100,7 +100,7 @@ if (isset($_POST['email'])) {
                     </div>
                     <div class="checkbox">
                         <input type="checkbox" id="remember">
-                        <label for="hey">Remember Me</label>
+                        <label for="remember">Remember Me</label>
                     </div>
 
                     <button class="continue" id="login-btn">Continue</button>
@@ -135,7 +135,6 @@ if (isset($_POST['email'])) {
             if (status) {
                 if (email.value == localStorage.getItem('email')) {
                     password.value = localStorage.getItem('password');
-
                 } else {
                     password.value = "";
                 }

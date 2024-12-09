@@ -1,8 +1,12 @@
-<?php require_once '../db/db.php' ?>
-<?php require_once '../layout/header.php' ?>
-<?php require_once '../db/user_crud.php' ?>
-<?php require_once '../layout/nav.php' ?>
-<?php require_once '../layout/sidebar.php' ?>
+<?php 
+require_once '../layout/header.php' 
+?>
+<?php
+ require_once '../layout/nav.php'
+ ?>
+<?php 
+require_once '../layout/sidebar.php'
+ ?>
 <?php 
 $name = $nameErr = "";
 $email = $emailErr = "";
@@ -14,28 +18,31 @@ $select = $selectErr = "";
 $profileName = "";
 $invalid = false;
 
-
 if(isset($_GET['id'])){
-    $users = get_all_user($mysqli);
+    $users = get_user_with_id($mysqli, $_GET['id']);
     $user = $users->fetch_assoc();
+    $id = $_GET['id'];
     $name = $user['name'];
     $email = $user['email'];
     $address = $user['address'];
     $phone = $user['ph_no'];
     $select = $user['role'];
-    $profile = $user['user_img'];
 }
 
 if(isset($_POST['name'])){
     $name =trim($_POST['name']);
     $email =trim($_POST['email']);
-    $pwd =trim($_POST['pwd']);
+    
     $address =trim($_POST['address']);
     $phone =trim($_POST['phone']);
-    $select = ($_POST['select']);
+    $select = $_POST['select'];
     $profile = $_FILES['profile'];
-    $profileName = $profile['name'];
+    $profileName = date('DMYHS').$profile['name'];
     $tmp = $profile['tmp_name'];
+
+    if(!isset($_GET['id'])){
+      $pwd = $pwd =trim($_POST['pwd']);
+    }
 
     if($name == ""){
        $nameErr ="name cann't be blank!";
@@ -53,7 +60,7 @@ if(isset($_POST['name'])){
    if($pwd == ""){
     $pwdErr ="password cann't be blank!";
     $inavlid = true;
-    }else if( !preg_match( '/[^A-Za-z0-9]+/', $pwd) || strlen( $pwd) < 8)
+    }else if(strlen( $pwd) < 8)
     {
         $pwdErr ="Enter at least 8 digit!";
     }
@@ -64,28 +71,40 @@ if(isset($_POST['name'])){
   }
 
   if($phone == ""){
-    $phoneErr ="address cann't be blank!";
+    $phoneErr ="Phone cann't be blank!";
     $inavlid = true;
-  }else if(!preg_match('/^\S+@\S+\.\S+$/', $phone)){
+  }else if(!is_numeric($phone)){
    $phoneErr ="Enter only number";
   }
 
-  if ($profile['name'] == "") {
-    $profileErr = "Please choos profile!";
-    $invalid = true;
+  if ($profile == "") {
+    $profileErr = "Please choose profile!";
+    $invalid    = true;
   }
 
-  if ($select == "0" ) {
+  if ($select == "" ) {
     $selectErr = 'Please select one.';
+    $invalid   = true;
+  } else if($select != 1 && $select != 2){
+    $selectErr = "Please select available role";
     $invalid = true;
+  }
+  
+if(!$invalid){
+  if(isset($_GET['id'])){
+      $profile = $_FILES['profile'];
+      $profileName = $profile['name'];
+      update_user($mysqli, $id, $name, $email, $address, $phone, $select, $profileName);
+      move_uploaded_file($profile['tmp_name'], '../assets/img/'.$profileName);
+      echo "<script>location.replace('./user_list.php?edit_success=Edit Successfully')</script>";
+  } else{
+      $hash_password = password_hash($pwd,PASSWORD_BCRYPT);
+      save_user($mysqli, $name, $email, $hash_password, $address, $phone, $select, $profileName);
+      move_uploaded_file($tmp, '../assets/img/'.$profileName);
+      echo "<script>location.replace('./user_list.php?add_success=Edit Successfully')</script>";
+  }
 }
-    if(isset($_GET['id'])){
-
-    } else {
-        
-    }
-
-
+    
 }
 
 
@@ -105,7 +124,6 @@ if(isset($_POST['name'])){
             <h3>Edit User</h3>
         </div>
     <?php } ?>
-     
       <div class="card-body mx-auto">
         <form method="post" enctype="multipart/form-data">
           <div class="input mx-auto">
@@ -128,6 +146,8 @@ if(isset($_POST['name'])){
               <input type="checkbox" class="check" id="show">
               <label for="show">show password</label><br>
             </div>
+            <?php } else { ?>
+              <div></div>
             <?php } ?>
             
 
@@ -143,10 +163,17 @@ if(isset($_POST['name'])){
             </div>
             <div class="forselect mb-4">
             <label for="name">Role</label>
-              <select class="form-select" name="select" style="height:50px;" value="<?php echo $select ?>">
-                <option value="0">Open this select menu</option>
-                <option value="1">Admin</option>
-                <option value="2">staff</option>
+              <select class="form-select" name="select" style="height:50px;" value="<?= $select ?>">
+                <option value="">Open this select menu</option>
+                <option <?php if($select==1) {
+                  echo "selected"; 
+                  } ?> value="1">Admin</option>
+                <option <?php 
+                if($select==2)
+                {
+                  echo "selected";
+                }
+                  ?> value="2">Staff</option>
               </select>
               <div class="invalid"><?= $selectErr ?></div>
             </div>

@@ -1,7 +1,7 @@
 <?php
 function have_admin($mysqli)
 {
-    $sql = "SELECT COUNT(`id`) as total FROM `user` WHERE `role`=1";
+    $sql = $mysqli->prepare("SELECT COUNT(`id`) as total FROM `user` WHERE `role`=1");
     $total = $mysqli->query($sql);
     $total = $total->fetch_assoc();
     if ($total['total'] > 0) {
@@ -35,3 +35,21 @@ function get_all_user($mysqli){
     $sql = "SELECT * FROM `user`";
     return $mysqli->query($sql);
 }
+
+function update_user($mysqli, $id,$name, $email, $address, $ph_no, $role, $user_img){
+    $sql = "UPDATE `user` SET `name`='$name', `email`='$email', `address`='$address', `ph_no`='$ph_no', `role`='$role', `user_img`= '$user_img' WHERE `id`=$id";
+    return $mysqli->query($sql);
+}
+
+function get_user_with_id($mysqli, $id){
+    $sql = "SELECT * FROM `user` WHERE `id`=$id";
+    return $mysqli->query($sql);
+}
+
+function get_email_of_user($mysqli){
+    $sql = "SELECT `email` FROM `user`";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+
+
