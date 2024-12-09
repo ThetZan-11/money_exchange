@@ -6,6 +6,7 @@
 
 
   <main id="main" class="main">
+<<<<<<< HEAD
     <div class="container">  
      <div style="width:100%; height:60px" id="success-message">
         <?php if (isset($_GET['edit_success'])) { ?>
@@ -18,6 +19,10 @@
         
      </div>
     <table class="table table-dark mt-3">
+=======
+    <div class="container">
+    <table class="table table-bordered">
+>>>>>>> cb82bbac9a86a693ee05eadc5d96c60d8a562fc5
   <thead>
     <tr>
         <th>No</th>
