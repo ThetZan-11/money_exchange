@@ -7,7 +7,7 @@
 
   <main id="main" class="main">
     <div class="container">
-    <table class="table table-dark">
+    <table class="table table-bordered">
   <thead>
     <tr>
         <th>No</th>

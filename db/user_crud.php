@@ -35,3 +35,4 @@ function get_all_user($mysqli){
     $sql = "SELECT * FROM `user`";
     return $mysqli->query($sql);
 }
+

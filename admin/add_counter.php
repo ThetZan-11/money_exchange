@@ -3,10 +3,18 @@
 <?php require_once '../db/user_crud.php' ?>
 <?php require_once '../layout/nav.php' ?>
 <?php require_once '../layout/sidebar.php' ?>
+<?php require_once '../db/counter_crud.php' ?>
 <?php
   $name = $nameErr = "";
   $location = $locationErr = "";
   $invalid = false;
+
+if(isset ($_GET['id'])){
+    $counters = get_counter_id($mysqli , $_GET['id']);
+    $name = $counters['counter_name'];
+    $location = $counters['location'];
+
+}
 
 if(isset($_POST['name'])){
     $name = trim($_POST['name']);
@@ -22,6 +30,20 @@ if(isset($_POST['name'])){
     if($location == ""){    
         $locationErr = "Please enter location";
     }
+
+    if(!$invalid){
+        if(isset($_GET['id'])){
+          update_counter ($mysqli , $_GET['id'] , $name , $location);
+          echo "<script>location.replace('../admin/counter_list.php?edit_success=Edit Successfully')</script>";
+        }else{
+            add_counter($mysqli , $name , $location);
+            echo "<script>location.replace('../admin/counter_list.php?edit_success=Edit Successfully')</script>";
+        }
+        
+    }
+
+
+
 }
 
 
