@@ -165,7 +165,7 @@ if(!$invalid){
             <label for="name">Role</label>
               <select class="form-select" name="select" style="height:50px;" value="<?= $select ?>">
                 <option value="">Open this select menu</option>
-                <option <?php if($select==1) {
+                <option <?php if($select == 1) {
                   echo "selected"; 
                   } ?> value="1">Admin</option>
                 <option <?php 

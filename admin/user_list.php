@@ -6,7 +6,6 @@
 
 
   <main id="main" class="main">
-<<<<<<< HEAD
     <div class="container">  
      <div style="width:100%; height:60px" id="success-message">
         <?php if (isset($_GET['edit_success'])) { ?>
@@ -18,11 +17,7 @@
         <?php } ?>
         
      </div>
-    <table class="table table-dark mt-3">
-=======
-    <div class="container">
-    <table class="table table-bordered">
->>>>>>> cb82bbac9a86a693ee05eadc5d96c60d8a562fc5
+    <table class="table table-bordered mt-3">
   <thead>
     <tr>
         <th>No</th>
@@ -63,8 +58,7 @@
             </a>
           <?php } ?>
           
-            <a class="btn btn-danger btn-sm" onclick="deleteFun" data-value='<?= $user['id']?>' >
-              <i class="fa-solid fa-trash"></i>
+          <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
                <!-- Delete -->
             </a>
         </td>
@@ -83,4 +77,9 @@ let successMsg =document.getElementById("success-message");
 setTimeout(() => {
     successMsg.innerHTML= "";
 },2000);
+
+function deleteFun(){
+
+  
+}
 </script>
