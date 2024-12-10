@@ -9,10 +9,22 @@
   <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="../assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="../assets/vendor/php-email-form/validate.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <!-- Template Main JS File -->
   <script src="../assets/js/main.js"></script>
+  
 
+  
 </body>
-
+<script>
+   
+  
+  // console.log(uploadToggle);
+  // uploadToggle.on("click",()=>{
+  //   let uploadContainer = $("#uploadContainer");
+  //   let uploadToggle = $("#uploadToggle");
+  //   console.log("ello");
+  //   uploadContainer.append();
+  // })
+</script>
 </html>
