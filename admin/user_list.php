@@ -1,14 +1,12 @@
-<?php require_once '../db/db.php' ?>
 <?php require_once '../layout/header.php' ?>
 <?php require_once '../layout/nav.php' ?>
 <?php require_once '../layout/sidebar.php' ?>
-<?php require_once '../db/user_crud.php' ?>
 
 
   <main id="main" class="main">
 
     <div class="container">  
-     <div style="width:100%; height:60px" id="success-message">
+     <div style="width:100%; height:30px" id="success-message">
         <?php if (isset($_GET['edit_success'])) { ?>
             <p class="alert alert-success"><?= $_GET['edit_success'] ?></p>    
         <?php } else if(isset($_GET['add_success'])){ ?>
@@ -20,7 +18,7 @@
     <table class="table table-dark mt-3">
 
     <div class="container">
-    <table class="table table-bordered">
+    <table class="table table-bordered datatable">
 
   <thead>
     <tr>
@@ -74,16 +72,3 @@
     
   </main>
 <?php require_once '../layout/footer.php' ?>
-<script>
-let successMsg =document.getElementById("success-message");
-// let role =document.getElementById("role");
-
-setTimeout(() => {
-    successMsg.innerHTML= "";
-},2000);
-
-function deleteFun(){
-
-  
-}
-</script>

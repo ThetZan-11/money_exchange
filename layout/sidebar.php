@@ -45,6 +45,24 @@
         </ul>
       </li>
 
+      
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-currency" data-bs-toggle="collapse">
+          <i class="bi bi-menu-button-wide"></i><span>Currency</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-currency" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="./add_currency.php">
+              <i class="bi bi-circle"></i><span>Add Currency</span>
+            </a>
+          </li>
+          <li>
+            <a href="./currency_list.php">
+              <i class="bi bi-circle"></i><span>Currency List</span>
+            </a>
+          </li>
+        </ul>
+      </li>
 
     </ul>
 

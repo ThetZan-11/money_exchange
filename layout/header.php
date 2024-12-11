@@ -1,6 +1,8 @@
 <?php require_once '../islogin.php' ?>
 <?php require_once '../db/db.php' ?>
 <?php require_once '../db/user_crud.php' ?>
+<?php require_once '../db/counter_crud.php' ?>
+<?php require_once '../db/currency_crud.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 

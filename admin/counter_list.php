@@ -1,24 +1,18 @@
-<?php require_once '../db/db.php' ?>
 <?php require_once '../layout/header.php' ?>
 <?php require_once '../layout/nav.php' ?>
 <?php require_once '../layout/sidebar.php' ?>
-<?php require_once '../db/counter_crud.php' ?>
+
 
 <?php   
  if(isset($_GET['deleteId'])){
     if(delete_counter ($mysqli , $_GET['deleteId'])){
       echo "<script>location.replace('./counter_list.php')</script>";
     }
-
  }
-
-
-
 ?>
-
   <main id="main" class="main">
     <div class="container">
-    <table class="table table-bordered">
+    <table class="table table-bordered datatable">
   <thead>
     <tr>
         <th>No</th>

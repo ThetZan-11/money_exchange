@@ -34,7 +34,6 @@ $invalid = false;
 if(isset($_POST['name'])){
     $name =trim($_POST['name']);
     $email =trim($_POST['email']);
-    
     $address =trim($_POST['address']);
     $phone =trim($_POST['phone']);
     $select = $_POST['select'];

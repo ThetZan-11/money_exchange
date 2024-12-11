@@ -15,14 +15,16 @@ if(false !== $response_json) {
 		// Check for success
 		if('success' === $response->result) {
 
-			// YOUR APPLICATION CODE HERE, e.g.
-			$base_price = 12; // Your price in USD
+			
 			$EUR_price = round(($base_price * $response->conversion_rates->EUR), 2);
+            
 		}
 
     }
     catch(Exception $e) {
         echo "Api error";
     }
-    print_r($response);
+   
+   
 }
+
