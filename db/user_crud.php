@@ -1,7 +1,7 @@
 <?php
 function have_admin($mysqli)
 {
-    $sql = $mysqli->prepare("SELECT COUNT(`id`) as total FROM `user` WHERE `role`=1");
+    $sql = "SELECT COUNT(`id`) as total FROM `user` WHERE `role`=1";
     $total = $mysqli->query($sql);
     $total = $total->fetch_assoc();
     if ($total['total'] > 0) {

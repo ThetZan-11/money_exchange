@@ -40,6 +40,16 @@ if(isset($_POST['name'])){
     $profileName = date('DMYHS').$profile['name'];
     $tmp = $profile['tmp_name'];
 
+    $allEmails = get_email_of_user($mysqli);
+    // var_dump($allEmails);
+    // while($allEmails){
+    //   if($allEmails[`email`] == $email){
+    //         $emailErr = "This user email is already exists!";
+    //         $inavlid = true;
+    //   }
+    
+
+
     if(!isset($_GET['id'])){
       $pwd = $pwd =trim($_POST['pwd']);
     }
