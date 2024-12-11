@@ -15,8 +15,7 @@
             <p class="alert alert-success"><?= $_GET['add_success'] ?></p>
         <?php } else if(!isset($_GET['edit_success']) && !isset($_GET['add_success'])){ ?>
             <p></p>
-        <?php } ?>
-        
+        <?php } ?> 
      </div>
     <table class="table table-dark mt-3">
 
@@ -63,8 +62,7 @@
             </a>
           <?php } ?>
           
-            <a class="btn btn-danger btn-sm" onclick="deleteFun" data-value='<?= $user['id']?>' >
-              <i class="fa-solid fa-trash"></i>
+          <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
                <!-- Delete -->
             </a>
         </td>
@@ -83,4 +81,9 @@ let successMsg =document.getElementById("success-message");
 setTimeout(() => {
     successMsg.innerHTML= "";
 },2000);
+
+function deleteFun(){
+
+  
+}
 </script>

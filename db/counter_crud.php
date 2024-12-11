@@ -8,7 +8,8 @@ function add_counter($mysqli , $counter_name , $location)  {
 
 function get_counter ($mysqli){
     $sql = "SELECT * FROM `counter`";
-    return $mysqli->query($sql);
+    return  $mysqli->query($sql);
+  
 }
 
 function get_counter_id ($mysqli , $id){
@@ -21,4 +22,10 @@ function update_counter ($mysqli , $id , $counter_name , $location){
     $sql = "UPDATE `counter` SET `counter_name`= '$counter_name' , `location` = '$location' WHERE `id` = $id";
     return $mysqli->query($sql);
      
+}
+
+function delete_counter ($mysqli , $id){
+    $sql = "DELETE FROM `counter` WHERE `id`=$id";
+    return $mysqli->query($sql);
+
 }
