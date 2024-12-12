@@ -64,6 +64,42 @@
         </ul>
       </li>
 
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-duty" data-bs-toggle="collapse">
+          <i class="bi bi-menu-button-wide"></i><span>Duty</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-duty" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="./add_duty.php">
+              <i class="bi bi-circle"></i><span>Add Duty</span>
+            </a>
+          </li>
+          <li>
+            <a href="./duty_list.php">
+              <i class="bi bi-circle"></i><span>Duty Schedule</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-counterManagement" data-bs-toggle="collapse">
+          <i class="bi bi-menu-button-wide"></i><span>Counter Manage</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-counterManagement" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="./manage_counter.php">
+              <i class="bi bi-circle"></i><span>Manage Counter</span>
+            </a>
+          </li>
+          <li>
+            <a href="./counter_detail_list.php">
+              <i class="bi bi-circle"></i><span>Counter Detail List</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
     </ul>
 
   </aside>

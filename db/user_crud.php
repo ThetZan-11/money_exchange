@@ -52,4 +52,9 @@ function get_email_of_user($mysqli){
     return $result->fetch_assoc();
 }
 
+function get_staff($mysqli){
+    $sql = "SELECT * FROM `user` WHERE `role`=2";
+    return $mysqli->query($sql);
+}
+
 

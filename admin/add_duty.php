@@ -8,13 +8,16 @@
     $from_date         = $from_dateErr ="";
     $to_date           = $to_dateErr ="";
     $invalid = false;
-
+    
     if(isset($_POST['submit'])){
         $counterName      = $mysqli->real_escape_string(trim($_POST['counterName']));
         $userName         = $mysqli->real_escape_string(trim($_POST['userName']));
-        $from_date        = $mysqli->real_escape_string(trim(strtoupper($_POST['from_date'])));
+        $from_date        = $mysqli->real_escape_string(trim($_POST['from_date']));
         $to_date          = $mysqli->real_escape_string(trim($_POST['to_date']));
-
+        $dateFormat       = 'Y-m-d';
+        $from_date_format = DateTime::createFromFormat($dateFormat,$from_date);
+        $to_date_format   = DateTime::createFromFormat($dateFormat,$to_date);
+        $date_now         = date("Y-m-d");
         if($counterName == ""){
             $counterNameErr = "Can't be blank";
             $invalid = true;
@@ -27,19 +30,36 @@
             $from_dateErr = "Can't be blank";
             $invalid = true;
         }
+
         if($to_date == ""){
             $to_dateErr = "Can't be blank";
             $invalid = true;
         }
-        if($to_date < $from_date){
+        if(!$from_date_format){
+            $from_dateErr = "date format is year-month-date";
+            $invalid      = true;
+        }
+        if(!$to_date_format){
+            $to_dateErr = "date format is year-month-date";
+            $invalid      = true;
+        }
+        if($to_date <= $from_date){
             $from_dateErr = "From date must be smaller than To date";
             $to_dateErr   = "From date must be smaller than To date";
             $invalid = true;
         }
-
+        if($from_date < $date_now){
+            $from_dateErr = "Invalid Date";
+            $invalid      =  true;
+        }
+        if($to_date < $date_now){
+            $to_dateErr = "Invalid Date";
+            $invalid      =  true;
+        }
 
         if(!$invalid){
-            
+            add_duty($mysqli, $userName, $counterName, $from_date, $to_date);
+            echo "<script>location.replace('../admin/duty_list.php?add_success=Added Successfully')</script>";
         }
     }
 ?>
@@ -62,18 +82,25 @@
                         <div class="input mx-auto">
                             <div class="form-group mb-4"> 
                                  <label for="exampleDataList" class="form-label">Choose Counter</label>
-                                <input class="form-control" list="datalistOptions" placeholder="Search Counter...." name="counterName">
-                                <datalist id="datalistOptions">
-                                    <option value="San Francisco">
-                                </datalist>
+                                <!-- <input class="form-control" list="datalistOptions" placeholder="Search Counter...." name="counterName"> -->
+                                <select id="datalistOptions" class="form-control" name="counterName" value="<?= $counterName ?>">
+                                <?php  
+                                    $counters = get_counter($mysqli);
+                                    while ($counter = $counters->fetch_assoc()) { ?>
+                                    <option value="<?=$counter['id']?>"><?=$counter['counter_name']?></option>
+                                <?php } ?>
+                                </select> 
                             </div>
 
                             <div class="form-group mb-4"> 
                                  <label for="exampleDataList" class="form-label">Choose Staff</label>
-                                 <input class="form-control" list="datalistOptions" placeholder="Search Counter...." name="userName">
-                                <datalist id="datalistOptions">
-                                    <option value="San Francisco">
-                                </datalist>
+                                <select name="userName" class="form-control">
+                                <?php  
+                                    $staffs = get_staff($mysqli);
+                                    while ($staff = $staffs->fetch_assoc()) { ?>
+                                    <option value="<?=$staff['id']?>"><?=$staff['name']?></option>
+                                <?php } ?>
+                                </select>
                             </div>
 
                             <div class="form-group mb-4">

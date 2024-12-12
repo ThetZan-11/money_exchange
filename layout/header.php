@@ -3,6 +3,7 @@
 <?php require_once '../db/user_crud.php' ?>
 <?php require_once '../db/counter_crud.php' ?>
 <?php require_once '../db/currency_crud.php' ?>
+<?php require_once '../db/duty_crud.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 
