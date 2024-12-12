@@ -1,13 +1,10 @@
-<?php require_once '../db/db.php' ?>
 <?php require_once '../layout/header.php' ?>
-<?php require_once '../db/user_crud.php' ?>
 <?php require_once '../layout/nav.php' ?>
 <?php require_once '../layout/sidebar.php' ?>
-<?php require_once '../db/counter_crud.php' ?>
+
 <?php
 $name = $nameErr = "";
 $location = $locationErr = "";
-
 $invalid = true;
 
 if (isset($_GET['id'])) {
@@ -29,9 +26,6 @@ if (isset($_POST['name'])) {
            $invalid = false;
       }
     }
-
-    
-     
 
     if ($name == "") {
         $nameErr = "Please enter counter";
@@ -61,6 +55,7 @@ if (isset($_POST['name'])) {
 
 <main id="main" class="main">
     <div class="conatiner">
+        
         <div class="card p-3 mx-auto" style="width:60%;">
             <div class="card-title  mx-auto">
                 <?php
@@ -70,8 +65,6 @@ if (isset($_POST['name'])) {
                 <?php } else { ?>
                     <h3>Add counter</h3>
                 <?php } ?>
-
-
             </div>
             <div class="card-body mx-auto">
                  <form method="post">

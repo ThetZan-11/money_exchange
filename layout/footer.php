@@ -40,6 +40,13 @@
 </body>
 
 <script>
+  let successMsg =document.getElementById("success-message");
+// let role =document.getElementById("role");
+
+setTimeout(() => {
+    successMsg.innerHTML= "";
+},2000);
+
   let deleteBtn =$(".counterDelete");
   let close = $("#close");
   deleteBtn.on("click" , (c) =>{
