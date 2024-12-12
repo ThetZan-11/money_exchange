@@ -52,7 +52,7 @@
         <ul id="components-customer" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
             <a href="./add_customer.php">
-              <i class="bi bi-circle"></i><span>Add Customer</span>
+              <i class="bi bi-circle"></i><span>Edit Customer</span>
             </a>
           </li>
           <li>

@@ -40,7 +40,7 @@ if(isset($_GET['deleteId'])){
                         <td><?= $customers['ph_no'] ?></td>
 
                         <td>
-                            <a class="btn btn-primary btn-sm" href=""><i class="fa-solid fa-pen"></i></a>
+                            <a class="btn btn-primary btn-sm" href="./edit_customer.php?id=<?= $customers['id'] ?>"><i class="fa-solid fa-pen"></i></a>
                             <button class="btn btn-sm btn-danger counterDelete" data-value="<?= $customers['id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></button>
                         </td>
                     </tr>
