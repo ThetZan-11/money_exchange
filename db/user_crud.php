@@ -52,4 +52,8 @@ function get_email_of_user($mysqli){
     return $result->fetch_assoc();
 }
 
+function delete_user($mysqli , $id){
+    $sql = "DELETE FROM `user` WHERE `id`=$id";
+    return $mysqli->query($sql);
 
+}

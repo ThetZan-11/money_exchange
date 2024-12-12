@@ -3,9 +3,17 @@
 <?php require_once '../layout/nav.php' ?>
 <?php require_once '../layout/sidebar.php' ?>
 <?php require_once '../db/user_crud.php' ?>
+<?php 
+if(isset($_GET['deleteId'])){
+    if(delete_user ($mysqli , $_GET['deleteId'])){
+      echo "<script>location.replace('./user_list.php')</script>";
+    }
 
+ }
 
+ ?>
   <main id="main" class="main">
+
     <div class="container">  
      <div style="width:100%; height:60px" id="success-message">
         <?php if (isset($_GET['edit_success'])) { ?>
@@ -14,10 +22,13 @@
             <p class="alert alert-success"><?= $_GET['add_success'] ?></p>
         <?php } else if(!isset($_GET['edit_success']) && !isset($_GET['add_success'])){ ?>
             <p></p>
-        <?php } ?>
-        
+        <?php } ?> 
      </div>
-    <table class="table table-bordered mt-3">
+    <table class="table table-dark mt-3">
+
+    <div class="container">
+    <table class="table table-bordered">
+
   <thead>
     <tr>
         <th>No</th>
@@ -58,7 +69,7 @@
             </a>
           <?php } ?>
           
-          <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+          <button class="btn btn-sm btn-danger counterDelete" data-value="<?= $user['id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></button>
                <!-- Delete -->
             </a>
         </td>
@@ -79,7 +90,7 @@ setTimeout(() => {
 },2000);
 
 function deleteFun(){
-
-  
 }
+
+
 </script>

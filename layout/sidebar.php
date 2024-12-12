@@ -44,6 +44,24 @@
           </li>
         </ul>
       </li>
+    
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-customer" data-bs-toggle="collapse">
+          <i class="bi bi-menu-button-wide"></i><span>Customer</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-customer" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="./add_customer.php">
+              <i class="bi bi-circle"></i><span>Add Customer</span>
+            </a>
+          </li>
+          <li>
+            <a href="./customer_list.php">
+              <i class="bi bi-circle"></i><span>Customer List</span>
+            </a>
+          </li>
+        </ul>
+      </li>
 
 
     </ul>

@@ -18,7 +18,8 @@ $select = $selectErr = "";
 $profileName = "";
 $invalid = false;
 
-if(isset($_GET['id'])){
+
+  if(isset($_GET['id'])){
     $users = get_user_with_id($mysqli, $_GET['id']);
     $user = $users->fetch_assoc();
     $id = $_GET['id'];
@@ -27,7 +28,8 @@ if(isset($_GET['id'])){
     $address = $user['address'];
     $phone = $user['ph_no'];
     $select = $user['role'];
-}
+} 
+
 
 if(isset($_POST['name'])){
     $name =trim($_POST['name']);
