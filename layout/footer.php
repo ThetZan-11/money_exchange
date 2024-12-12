@@ -56,8 +56,10 @@ setTimeout(() => {
  
  $("#confirmDelete").on("click" , ()=> {
   location.replace("?deleteId="+ deleteKey);
-
  })
+
+
+ 
 </script>
 
 </html>

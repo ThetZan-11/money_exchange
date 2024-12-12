@@ -1,8 +1,16 @@
 <?php require_once '../layout/header.php' ?>
 <?php require_once '../layout/nav.php' ?>
 <?php require_once '../layout/sidebar.php' ?>
+<?php require_once '../db/user_crud.php' ?>
+<?php 
+if(isset($_GET['deleteId'])){
+    if(delete_user ($mysqli , $_GET['deleteId'])){
+      echo "<script>location.replace('./user_list.php')</script>";
+    }
 
+ }
 
+ ?>
   <main id="main" class="main">
 
     <div class="container">  
@@ -60,7 +68,7 @@
             </a>
           <?php } ?>
           
-          <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+          <button class="btn btn-sm btn-danger counterDelete" data-value="<?= $user['id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></button>
                <!-- Delete -->
             </a>
         </td>
@@ -72,3 +80,16 @@
     
   </main>
 <?php require_once '../layout/footer.php' ?>
+<script>
+let successMsg =document.getElementById("success-message");
+// let role =document.getElementById("role");
+
+setTimeout(() => {
+    successMsg.innerHTML= "";
+},2000);
+
+function deleteFun(){
+}
+
+
+</script>

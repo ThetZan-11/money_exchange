@@ -57,4 +57,9 @@ function get_staff($mysqli){
     return $mysqli->query($sql);
 }
 
+function delete_user($mysqli , $id){
+    $sql = "DELETE FROM `user` WHERE `id`=$id";
+    return $mysqli->query($sql);
+
+}
 
