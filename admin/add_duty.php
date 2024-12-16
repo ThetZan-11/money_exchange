@@ -1,6 +1,6 @@
 <?php require_once '../layout/header.php' ?>
-<?php require_once '../layout/nav.php' ?>
-<?php require_once '../layout/sidebar.php' ?>
+<?php //require_once '../layout/nav.php' ?>
+<?php //require_once '../layout/sidebar.php' ?>
 
 <?php
     $counterName       = $counterNameErr = "";
@@ -9,6 +9,11 @@
     $to_date           = $to_dateErr ="";
     $invalid = false;
     
+    if(isset($_GET['id'])){
+        $duties = get_duites_with_id($mysqli, $_GET['id'])->fetch_assoc();
+        // var_dump($duties);
+    }
+
     if(isset($_POST['submit'])){
         $counterName      = $mysqli->real_escape_string(trim($_POST['counterName']));
         $userName         = $mysqli->real_escape_string(trim($_POST['userName']));

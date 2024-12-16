@@ -13,13 +13,13 @@
     table th{
         font-size: 15px;
     }
-    table{
+table{
         font-size: 14px;
     }
 </style>
   <main id="main" class="main">
     <div class="container">
-    <div style="width:100%; height:60px" id="success-message">
+    <div style="width:100%; height:55px;" class="mt-3" id="success-message">
         <?php if (isset($_GET['edit_success'])) { ?>
             <p class="alert alert-success"><?= $_GET['edit_success'] ?></p>    
         <?php } else if(isset($_GET['add_success'])){ ?>

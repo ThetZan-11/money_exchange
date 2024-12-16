@@ -27,3 +27,7 @@ function update_currency($mysqli, $id ,$currencyName,$sellCurrencyName,$sellCurr
     $sql = "UPDATE `currency` SET `currency_name`='$currencyName', `sell_currency_name`='$sellCurrencyName',`sell_currency_code`='$sellCurrencyCode',`buy_currency_name`='$buyCurrencyName',`buy_currency_code`='$buyCurrencyCode'";
     return $mysqli->query($sql);
 }
+
+
+
+

@@ -11,7 +11,7 @@
 ?>
   <main id="main" class="main">
     <div class="container">
-    <div style="width:100%; height:60px;" id="success-message">
+    <div style="width:100%; height:55px;" class="mt-3" id="success-message">
         <?php if (isset($_GET['edit_success'])) { ?>
             <p class="alert alert-success"><?= $_GET['edit_success'] ?></p>    
         <?php } else if(isset($_GET['add_success'])){ ?>
@@ -19,7 +19,7 @@
         <?php } else if(!isset($_GET['edit_success']) && !isset($_GET['add_success'])){ ?>
             <p></p>
         <?php } ?> 
-    </div>
+     </div>
     <table class="table table-bordered datatable">
   <thead>
     <tr>
@@ -45,7 +45,7 @@
         <td><?= $duty['from_date'] ?></td>
         <td><?= $duty['to_date'] ?></td>
         <td>
-        <a class="btn btn-primary btn-sm" href="./add_counter.php?id=<?= $duty['id'] ?> "><i class="fa-solid fa-pen"></i></a>
+        <a class="btn btn-primary btn-sm" href="./add_duty.php?id=<?= $duty['id'] ?> "><i class="fa-solid fa-pen"></i></a>
         <button class="btn btn-sm btn-danger counterDelete" data-value="<?= $duty['id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></button>
         </td>
     </tr>

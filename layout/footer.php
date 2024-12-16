@@ -58,7 +58,6 @@ setTimeout(() => {
   location.replace("?deleteId="+ deleteKey);
  })
 
-
  
 </script>
 

@@ -7,14 +7,12 @@ if(isset($_GET['deleteId'])){
     if(delete_user ($mysqli , $_GET['deleteId'])){
       echo "<script>location.replace('./user_list.php')</script>";
     }
-
  }
 
  ?>
   <main id="main" class="main">
-
     <div class="container">  
-     <div style="width:100%; height:30px" id="success-message">
+    <div style="width:100%; height:55px;" class="mt-3" id="success-message">
         <?php if (isset($_GET['edit_success'])) { ?>
             <p class="alert alert-success"><?= $_GET['edit_success'] ?></p>    
         <?php } else if(isset($_GET['add_success'])){ ?>
@@ -23,9 +21,8 @@ if(isset($_GET['deleteId'])){
             <p></p>
         <?php } ?> 
      </div>
-    <table class="table table-dark mt-3">
 
-    <div class="container">
+    
     <table class="table table-bordered datatable">
 
   <thead>
