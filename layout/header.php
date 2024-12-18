@@ -6,6 +6,8 @@
 <?php require_once ('../db/customer_crud.php') ?>
 <?php require_once ('../db/currency_counter_crud.php') ?>
 <?php require_once ('../db/duty_crud.php') ?>
+<?php require_once ('../db/daily_exchange.php') ?>
+<?php require_once ('../db/rate.php') ?>
 
 
 <!DOCTYPE html>
