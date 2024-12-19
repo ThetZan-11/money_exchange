@@ -6,9 +6,6 @@
 <?php require_once ('../db/customer_crud.php') ?>
 <?php require_once ('../db/currency_counter_crud.php') ?>
 <?php require_once ('../db/duty_crud.php') ?>
-<?php require_once ('../db/daily_exchange.php') ?>
-<?php require_once ('../db/rate.php') ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,8 +13,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Dashboard - NiceAdmin Bootstrap Template</title>
+  <title>NiceAdmin Bootstrap Template</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
