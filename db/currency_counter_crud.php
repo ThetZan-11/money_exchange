@@ -35,3 +35,4 @@ function get_currency_id_with_counter_id($mysqli,$id){
     $result =  $mysqli->query($sql);
     return $result->fetch_assoc();
 }
+

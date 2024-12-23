@@ -36,6 +36,8 @@ h4,
 h5,
 h6 {
   font-family: "Nunito", sans-serif;
+  color: #012970;
+  font-weight: 800;
 }
 
 /*--------------------------------------------------------------
@@ -1242,4 +1244,53 @@ h6 {
   
   margin-top:40px ;
   color:black;
+}
+
+
+/* Show Result  */
+
+.para-small, .para-mid, .para-large{
+  text-align: left;  
+  color: #012970;
+}
+.para-small{
+  font-size: 15px; 
+  text-decoration: wavy;
+  font-weight: 700;
+}
+.para-large{
+  font-size: 30px;
+  font-weight: 500;
+}
+.para-mid{
+  font-size: 20px;
+  font-weight: 500px;
+}
+.btn_converter{
+  padding: 15px 100px;
+  border-radius: 5px;
+  background-color:#012970;
+  color:#caf0f8; 
+  box-shadow: 2px 2px 2px 2px #aeb1b8;
+  font-size: 20px;
+
+}
+#form-input{
+  height: 70px;
+  position: relative;
+}
+
+#form-input label{
+  font-size: 15px;
+  font-weight: 400;
+  color: #012970;
+  position: absolute;
+  top: 0px;
+  left: 20px;
+  margin-bottom: 30px;
+}
+#form-input input{
+  font-size: 18px;
+  color: #012970;
+  border: none;
 }
