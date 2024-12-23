@@ -11,7 +11,6 @@ if (have_admin($mysqli)) {
     save_user($mysqli, "admin", "admin@gmail.com", $admin_password, "YGN", "09942801162", 1, "admin.png");
 }
 
-
 $email = $emailErr = "";
 $password = $passwordErr = "";
 $formErr = "";
@@ -71,8 +70,6 @@ if (isset($_POST['email'])) {
     <div class="container-fluid p-5">
         <div class="p-5">
             <form method="post" id="form">
-
-
                 <div class="container-form">
                     <?php
                     if (isset($_GET['login']) && $_GET['login'] == "Login Please") {
@@ -159,7 +156,6 @@ if (isset($_POST['email'])) {
             }
             form.submit();
         })
-        // console.log(email,password);
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

@@ -128,6 +128,11 @@
               <i class="bi bi-circle"></i><span>Daily Money Exchange</span>
             </a>
           </li>
+          <li>
+            <a href="./calculate_exchange.php">
+              <i class="bi bi-circle"></i><span>Calculate Exchange</span>
+            </a>
+          </li>
         </ul>
       </li>
 
