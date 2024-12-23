@@ -10,8 +10,14 @@
     $invalid = false;
     
     if(isset($_GET['id'])){
-        $duties = get_duites_with_id($mysqli, $_GET['id'])->fetch_assoc();
-        // var_dump($duties);
+        $duties = get_duites_with_id($mysqli, $_GET['id']);
+        $duty = $duties->fetch_assoc();
+        $counterName = $duty['counter_id'];
+        $userName = $duty['user_id'];
+        $from_date = $duty['from_date'];
+        $to_date = $duty['to_date'];
+
+        var_dump($counterName);
     }
 
     if(isset($_POST['submit'])){
@@ -63,6 +69,10 @@
         }
 
         if(!$invalid){
+            if(isset($_GET['id'])){
+                update_duty($mysqli , $id , $counterName , $userName , $from_date , $to_date);
+                echo "<script>location.replace('../admin/duty_list.php?add_success=Added Successfully')</script>";
+            }else
             add_duty($mysqli, $userName, $counterName, $from_date, $to_date);
             echo "<script>location.replace('../admin/duty_list.php?add_success=Added Successfully')</script>";
         }
@@ -99,7 +109,7 @@
 
                             <div class="form-group mb-4"> 
                                  <label for="exampleDataList" class="form-label">Choose Staff</label>
-                                <select name="userName" class="form-control">
+                                <select name="userName" class="form-control" value="<?= $userName ?>">
                                 <?php  
                                     $staffs = get_staff($mysqli);
                                     while ($staff = $staffs->fetch_assoc()) { ?>
