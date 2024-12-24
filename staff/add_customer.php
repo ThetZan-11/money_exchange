@@ -56,7 +56,13 @@ if(isset($_POST['name'])){
         if(isset($_GET['id'])){
             update_customer($mysqli , $id , $name ,  $email , $address , $phone);
             echo "<script>location.replace('./customer_list.php?edit_success=Edit Successfully')</script>";
-        } 
+        } else {
+            add_customer($mysqli , $name , $email , $address , $phone);
+            echo "<script>location.replace('./customer_list.php?edit_success=Edit Successfully')</script>";
+
+        }
+
+        
     }
 
 
@@ -66,10 +72,18 @@ if(isset($_POST['name'])){
 <main id="main" class="main">
 
     <div class="conatiner">
-        <div class="card p-3 mx-auto" style="width:60%;">
-            <div class="text-center mb-3">
+        <div class="card p-3 mx-auto" style="width:60%;">\
+            <?php if(isset($_GET['id'])) { ?>
+                <div class="text-center mb-3">
                 <h3>Edit Customer</h3>
             </div>
+           <?php }else { ?>
+            <div class="text-center mb-3">
+                <h3>add Customer</h3>
+            </div>
+
+          <?php } ?>
+           
             <div class="card-body mx-auto">
                 <form method="post" enctype="multipart/form-data">
                     <div class="input mx-auto">

@@ -21,3 +21,9 @@ function update_customer($mysqli , $id , $name , $email , $address , $ph_no ){
     WHERE `id` = $id";
     return $mysqli->query($sql);
 }
+
+function add_customer($mysqli , $name , $email , $address , $ph_no){
+    $sql ="INSERT INTO `customer` (`name`  , `email`  , `address`  , `ph_no`)
+    VALUES ('$name' , '$email' , '$address' , $ph_no)";
+    return $mysqli->query($sql);
+}
