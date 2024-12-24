@@ -3,7 +3,7 @@
 <div class="d-flex align-items-center justify-content-between">
   <a href="index.html" class="logo d-flex align-items-center">
     <img src="assets/img/logo.png" alt="">
-    <span class="d-none d-lg-block">NiceAdmin</span>
+    <span class="d-none d-lg-block">Currency Exchange</span>
   </a>
   <i class="bi bi-list toggle-sidebar-btn"></i>
 </div><!-- End Logo -->
@@ -42,29 +42,9 @@
         </li>
 
         <li>
-          <a class="dropdown-item d-flex align-items-center" href="./admin_profile.php?id=<?= $user['id'] ?>">
+          <a class="dropdown-item d-flex align-items-center" href="./user_profile.php?id=<?= $user['id'] ?>">
             <i class="bi bi-person"></i>
             <span>My Profile</span>
-          </a>
-        </li>
-        <li>
-          <hr class="dropdown-divider">
-        </li>
-
-        <li>
-          <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-            <i class="bi bi-gear"></i>
-            <span>Account Settings</span>
-          </a>
-        </li>
-        <li>
-          <hr class="dropdown-divider">
-        </li>
-
-        <li>
-          <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
-            <i class="bi bi-question-circle"></i>
-            <span>Need Help?</span>
           </a>
         </li>
         <li>

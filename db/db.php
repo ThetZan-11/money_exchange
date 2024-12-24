@@ -50,5 +50,10 @@ function create_table($mysqli)
         return false;
     }
 
+    // $sql = "CREATE TABLE IF NOT EXISTS `trade`(`id` INT AUTO_INCREMENT,`sell_rate` FLOAT NOT NULL,`buy_rate` FLOAT NOT NULL,`date` DATE NOT NULL,`currency_id` INT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY (`currency_id`) REFERENCES `currency`(`id`))";
+    // if(!$mysqli->query($sql)){
+    //     return false;
+    // }
+
     return true;
 }

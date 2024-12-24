@@ -75,9 +75,9 @@
                     <datalist id="datalistOptions2">
                     <?php 
                     $get_all_currency = get_sell_name_code($mysqli);
-
+                        
                     while ($sell_name_code = $get_all_currency->fetch_assoc()) { ?>
-                            <option value="<?= $sell_name_code['sell_currency_code'] ?>"><?= $sell_name_code['sell_currency_name'] ?></option>
+                          <option class="flag-icon flag-icon-us" value="<?= $sell_name_code['sell_currency_code'] ?>"><?= $sell_name_code['sell_currency_name'] ?> </option>
                         <?php   } ?>
                     </datalist>
                 </div>
@@ -85,13 +85,13 @@
             <div class="row d-flex align-items-center ">
                 <?php if(isset($rate)) { ?>
                      <div class="para col-md-6 mt-4">
-                        <p class="para-mid"><?= $amount ?> <?= $rate['buy_currency_name'] ?> = </p>
-                        <p class="para-large"><?php $result = $rate['buy_rate'] * $amount; echo $result; ?>  <?= $rate['sell_currency_name'] ?></p>
+                        <p class="para-mid"><?= number_format($amount) ?> <?= $rate['buy_currency_name'] ?> = </p>
+                        <p class="para-large"><?php $result = $rate['buy_rate'] * $amount; echo number_format($result); ?>  <?= $rate['sell_currency_name'] ?></p>
                         <p class="para-small">1 <?= $rate['buy_currency_code'] ?> = <?= $rate['buy_rate'] ?> <?= $rate['sell_currency_code'] ?></p>
                         <p class="para-small">1 <?= $rate['sell_currency_code'] ?> = <?= $change['buy_rate'] ?> <?= $rate['buy_currency_code'] ?></p>
                     </div>
                  <?php } else { ?>
-                    <div class="para col-md-6 mt-4" style="height: 150px;"></div>
+                    <div class="para col-md-6 mt-4" style="height: 165px;"></div>
                 <?php } ?>
                
                 <div class="form-group mb-3 col-md-6">
@@ -102,6 +102,7 @@
             </div>
         </form>
     </div>
+    
 </main>
 
 <?php require_once '../layout/footer.php';

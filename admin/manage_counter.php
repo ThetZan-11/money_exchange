@@ -22,14 +22,6 @@
     $sellName = $_POST['sell_name'];
     $counterValidates = get_counter_id($mysqli, $counterName);
     $sellNamevalidates = get_currency_with_id($mysqli,$sellName);
-
-    // $currency_id_with_query = get_currency_id_with_counter_id($mysqli, $counterName);
-    // var_dump($counterName);
-    // var_dump($currency_id_with_query['currency_id'],  $sellName);
-    // if($currency_id_with_query['currency_id'] == $sellName){
-    //     $sellNameErr = "This currency exchange is  already exists!";
-    //     $invalid = true;
-    // }
     
     if($counterName == ""){
         $counterNameErr = "Choose one";
@@ -54,10 +46,10 @@
     if(!$invalid){
         if (isset($_GET['id'])) {
             edit_currency_counter($mysqli, $id, $counterName, $sellName);
-            echo "<script>location.replace('./counter_detail_list.php?add_success=Edit Successfully')</script>";
+            echo "<script>location.replace('./counter_detail_list.php?edit_success=Edit Successfully')</script>";
         } else {
             add_currency_counter($mysqli, $counterName, $sellName);
-            //echo "<script>location.replace('./counter_detail_list.php?add_success=Edit Successfully')</script>";
+            echo "<script>location.replace('./counter_detail_list.php?add_success=Add Successfully')</script>";
         }
         
     }

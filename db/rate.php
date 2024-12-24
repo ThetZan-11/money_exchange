@@ -22,12 +22,9 @@ function get_exchange_rate($mysqli){
                     echo "<pre>";
                     $date = date("Y-m-d", time());
                     foreach ($sell_currency_arr as $sell_currency) {
-                        // $sell_currency = $sell_currencies['sell_currency_code'];
                         $currency_code = $response->conversion_rates->$sell_currency;
                         $buy_rate  =  $currency_code-($currency_code*0.02);
                         $sell_rate =  $currency_code+($currency_code*0.02);
-                        // var_dump("$buy_currency buy rate for $sell_currency is $buy_rate");
-                        // var_dump("$buy_currency sell rate for $sell_currency is $sell_rate");
                         if($date_validate['date'] == $date){
                             update_daily($mysqli, $sell_rate, $buy_rate, $date, $buy_currency, $sell_currency);
                         } else {

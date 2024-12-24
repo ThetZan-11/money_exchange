@@ -1246,16 +1246,16 @@ h6 {
   color: #012970;
 }
 .para-small{
-  font-size: 15px; 
+  font-size: 13px; 
   text-decoration: wavy;
   font-weight: 700;
 }
 .para-large{
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 500;
 }
 .para-mid{
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 500px;
 }
 .btn_converter{
