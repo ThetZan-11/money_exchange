@@ -36,14 +36,10 @@ if(isset($_GET['deleteId'])){
             <tbody>
                 <?php
                  $i = 1;
-                
+                $customer= get_customer($mysqli);
+                // $customers = $customer->fetch_assoc();
+                //  var_dump($customer);
 
-                if(isset($_POST['key']) && $_POST['key'] != ''){
-                    $key = $_POST['key'];
-                    $customer =  search_query_for_customer($mysqli, $key);
-                  } else {
-                    $customer= get_customer($mysqli);
-                  }
 
                 while($customers = $customer->fetch_assoc()) { ?>
                     <tr>
@@ -54,11 +50,11 @@ if(isset($_GET['deleteId'])){
                         <td><?= $customers['ph_no'] ?></td>
 
                         <td>
-                            <a class="btn btn-primary btn-sm" href="./edit_customer.php?id=<?= $customers['id'] ?>"><i class="fa-solid fa-pen"></i></a>
+                            <a class="btn btn-primary btn-sm" href="./add_customer.php?id=<?= $customers['id'] ?>"><i class="fa-solid fa-pen"></i></a>
                             <button class="btn btn-sm btn-danger counterDelete" data-value="<?= $customers['id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></button>
                         </td>
                     </tr>
-                    <?php $i++;}  ?>
+                    <?php $i++;} ?>
 
             </tbody>
         </table>

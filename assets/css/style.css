@@ -1239,6 +1239,14 @@ h6 {
   color: red;
 }
 
+
+.title {
+  
+  margin-top:40px ;
+  color:black;
+}
+
+
 /* Show Result  */
 
 .para-small, .para-mid, .para-large{

@@ -139,18 +139,18 @@
 
         <?php } else if($user['role'] == 2) { ?>
              <li class="nav-item">
-             <a class="nav-link collapsed" data-bs-target="#components-dailyExchange" data-bs-toggle="collapse">
-             <i class="bi bi-currency-exchange"></i><span>Daily Money Exchange</span><i class="bi bi-chevron-down ms-auto"></i>
+             <a class="nav-link collapsed" data-bs-target="#components-customer" data-bs-toggle="collapse">
+             <i class="bi bi-currency-exchange"></i><span>Customer</span><i class="bi bi-chevron-down ms-auto"></i>
              </a>
-             <ul id="components-dailyExchange" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+             <ul id="components-customer" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                <li>
-                 <a href="./daily_exchange.php">
-                   <i class="bi bi-circle"></i><span>Daily Money Exchange</span>
+                 <a href="./add_customer.php">
+                   <i class="bi bi-circle"></i><span>Add Customer</span>
                  </a>
                </li>
                <li>
-                 <a href="./calculate_exchange.php">
-                   <i class="bi bi-circle"></i><span>Calculate Exchange</span>
+                 <a href="./customer_list.php">
+                   <i class="bi bi-circle"></i><span>Customer List</span>
                  </a>
                </li>
              </ul>

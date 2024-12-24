@@ -204,7 +204,7 @@ if (isset($_POST['name'])) {
                         <option
                           <?php if ($role == 1) {
                             echo "selected";
-                          }  ?>
+                          }  ?> 
                           value="1">Admin</option>
                         <option
                           <?php if ($role == 2) {
@@ -218,7 +218,7 @@ if (isset($_POST['name'])) {
 
                   <div class="row mb-3">
                     <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
-                    <div class="col-md-8 col-lg-9">
+                    <div class="col-md-8 col-lg-9"> 
                       <input name="address" type="text" class="form-control" id="Address" value="<?= $address ?>">
                       <span class="text-danger"><?= $addErr ?></span>
                     </div>
@@ -231,7 +231,6 @@ if (isset($_POST['name'])) {
                       <span class="text-danger"><?= $phoneErr ?></span>
                     </div>
                   </div>
-
                   <div class="row mb-3">
                     <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                     <div class="col-md-8 col-lg-9">

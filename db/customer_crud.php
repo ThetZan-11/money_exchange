@@ -24,5 +24,10 @@ function update_customer($mysqli , $id , $name , $email , $address , $ph_no ){
 
 function search_query_for_customer($mysqli, $key){
     $sql = "SELECT * FROM `customer` WHERE name LIKE '%$key%' OR `email` LIKE '%$key%' OR `address` LIKE '%$key%' OR `ph_no` LIKE '%$key%'";
-    return $mysqli->query($sql);    
+    return $mysqli->query($sql);
+}        
+function add_customer($mysqli , $name , $email , $address , $ph_no){
+    $sql ="INSERT INTO `customer` (`name`  , `email`  , `address`  , `ph_no`)
+    VALUES ('$name' , '$email' , '$address' , $ph_no)";
+    return $mysqli->query($sql);
 }
