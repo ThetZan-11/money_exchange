@@ -21,3 +21,8 @@ function update_customer($mysqli , $id , $name , $email , $address , $ph_no ){
     WHERE `id` = $id";
     return $mysqli->query($sql);
 }
+
+function search_query_for_customer($mysqli, $key){
+    $sql = "SELECT * FROM `customer` WHERE name LIKE '%$key%' OR `email` LIKE '%$key%' OR `address` LIKE '%$key%' OR `ph_no` LIKE '%$key%'";
+    return $mysqli->query($sql);    
+}

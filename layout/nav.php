@@ -10,8 +10,8 @@
 
 <div class="search-bar">
   <form class="search-form d-flex align-items-center" method="POST">
-    <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-    <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+    <input type="text" name="key" placeholder="Search" title="Enter search keyword">
+    <button type="submit" name="search" title="Search"><i class="bi bi-search"></i></button>
   </form>
 </div><!-- End Search Bar -->
 

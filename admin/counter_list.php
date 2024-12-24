@@ -4,6 +4,7 @@
 
 
 <?php
+$search_result = "";
 if (isset($_GET['deleteId'])) {
   if (delete_counter($mysqli, $_GET['deleteId'])) {
     echo "<script>location.replace('./counter_list.php')</script>";
@@ -11,6 +12,7 @@ if (isset($_GET['deleteId'])) {
 }
 ?>
 <main id="main" class="main">
+
   <div class="container">
   <div style="width:100%; height:55px;" class="mt-3" id="success-message">
         <?php if (isset($_GET['edit_success'])) { ?>
@@ -34,6 +36,7 @@ if (isset($_GET['deleteId'])) {
         <?php
         $i = 1;
         $counters = get_counter($mysqli);
+      
         while ($counter = $counters->fetch_assoc()) { ?>
           <tr>
             <td><?= $i ?></td>
@@ -49,6 +52,5 @@ if (isset($_GET['deleteId'])) {
       </tbody>
     </table>
   </div>
-
 </main>
 <?php require_once '../layout/footer.php' ?>
