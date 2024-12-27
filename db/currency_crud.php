@@ -38,6 +38,20 @@ function update_currency($mysqli, $id ,$currencyName,$sellCurrencyName,$sellCurr
     return $mysqli->query($sql);
 }
 
+function soft_delete_currency ($mysqli , $id)
+{
+ 
+    $sql ="UPDATE  `currency` SET `soft_delete` = 1 WHERE `id` = $id";
+    return $mysqli->query($sql);
+}
+
+function currency_sd ($mysqli)
+{
+
+    $sql = "SELECT * FROM `currency`  WHERE `soft_delete` = 0";
+    return $mysqli->query($sql);
+}
+
 
 
 

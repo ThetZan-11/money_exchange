@@ -6,10 +6,14 @@
 <?php
 $search_result = "";
 if (isset($_GET['deleteId'])) {
-  if (delete_counter($mysqli, $_GET['deleteId'])) {
+  if (soft_delete($mysqli, $_GET['deleteId'])) {
     echo "<script>location.replace('./counter_list.php')</script>";
   }
 }
+
+
+
+
 ?>
 <main id="main" class="main">
 
@@ -36,7 +40,7 @@ if (isset($_GET['deleteId'])) {
       <tbody>
         <?php
         $i = 1;
-        $counters = get_counter($mysqli);
+        $counters = get_counter_with_sd($mysqli);
       
         while ($counter = $counters->fetch_assoc()) { ?>
           <tr>

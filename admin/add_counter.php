@@ -1,6 +1,6 @@
 <?php require_once '../layout/header.php' ?>
-<?php require_once '../layout/nav.php' ?>
-<?php require_once '../layout/sidebar.php' ?>
+<?php //require_once '../layout/nav.php' ?>
+<?php //require_once '../layout/sidebar.php' ?>
 
 <?php
 $name = $nameErr = "";
@@ -27,7 +27,7 @@ if (isset($_POST['name'])) {
       }
     }
 
-    if ($name == "") {
+    if ($name == "") {  
         $nameErr = "Please enter counter";
         $invalid = false;
     } elseif (!preg_match('/^Counter-\d{2}$/', $name)) {

@@ -1,13 +1,19 @@
 <?php 
 function add_counter($mysqli , $counter_name , $location)  {
 
-    $sql = "INSERT INTO `counter`(`counter_name` , `location`) VALUES('$counter_name' , '$location')"; 
+    $sql = "INSERT INTO `counter`(`counter_name`, `location`) VALUES('$counter_name' , '$location')"; 
     return $mysqli->query($sql);
     
 }
 
 function get_counter ($mysqli){
     $sql = "SELECT * FROM `counter`";
+    return  $mysqli->query($sql);
+  
+}
+
+function get_counter_with_sd($mysqli){
+    $sql = "SELECT * FROM `counter` WHERE `soft_delete` = 0";
     return  $mysqli->query($sql);
   
 }
@@ -29,3 +35,21 @@ function delete_counter ($mysqli , $id){
     return $mysqli->query($sql);
 
 }
+
+
+function soft_delete ($mysqli , $id)
+{
+
+ $sql = "UPDATE `counter` SET `soft_delete` = 1 WHERE `id` = $id";
+ return $mysqli->query($sql);
+
+}
+
+
+// function soft_delete_id ($mysqli)
+// {
+
+//     $sql = "SELECT * FROM `counter` WHERE `soft_delete` = 1";
+//     return $mysqli->query($sql);
+// }
+

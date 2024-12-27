@@ -4,7 +4,7 @@
 
 <?php   
  if(isset($_GET['deleteId'])){
-    if(delete_currency ($mysqli , $_GET['deleteId'])){
+    if(soft_delete_currency ($mysqli , $_GET['deleteId'])){
       echo "<script>location.replace('./currency_list.php')</script>";
     }
  }
@@ -44,7 +44,8 @@ table{
   <tbody>
     <?php
     $i = 1;
-    $currencies = get_all_currency($mysqli);
+    $currencies  =  currency_sd($mysqli);
+    //die(var_dump($currencies));
      while ($currency = $currencies->fetch_assoc()) { ?>
      <tr>
         <td><?= $i ?></td>
