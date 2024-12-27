@@ -1,7 +1,7 @@
 <?php session_start()  ?>
 <?php require_once('../layout/header.php') ?>
-<?php require_once('../layout/nav.php') ?>
-<?php require_once('../layout/sidebar.php') ?>
+<?php //require_once('../layout/nav.php') ?>
+<?php //require_once('../layout/sidebar.php') ?>
 <?php require_once('../db/daily_exchange_crud.php') ?>
 <?php require_once('../db/rate.php') ?>
 
@@ -40,10 +40,15 @@
             $rate =  select_rates($mysqli, $from, $to);
             $change =  select_rates($mysqli, $to, $from);
             $result = $rate['buy_rate'] * $amount;
-            array_push($order_detail, ['amount'=>$amount, 'result'=>$result]);
+            array_push($order_detail, ['amount'=> $amount,'result'=>$result,'buy_currency_name'=> $rate['buy_currency_name'],'sell_currency_name'=> $rate['sell_currency_name']]);
             $_SESSION["order_detail"] = $order_detail;
+            var_dump($_SESSION["order_detail"]);
         }
     }  
+    $user = json_decode($_COOKIE['user'], true);
+    $user_id = $user['id'];
+    $counter_id = get_counter_id_with_user_id($mysqli, $user_id);
+   
 ?>
 
 <main id="main" class="main">
@@ -65,9 +70,9 @@
                     <input class="form-control py-3" list="datalistOptions" name="from" id="exampleDataList" placeholder="Type to search..."> 
                      <datalist id="datalistOptions">
                     <?php 
-                    $get_all_currency = get_buy_name_code($mysqli);
+                     $counter_filter  = filter_currency_with_counter($mysqli, $counter_id['id']);   
 
-                    while ($buy_name_code = $get_all_currency->fetch_assoc()) { ?>
+                    while ($buy_name_code = $counter_filter->fetch_assoc()) { ?>
                             <option value="<?= $buy_name_code['buy_currency_code'] ?>" >
                             <span class="flag-icon flag-icon-us"></span>
                              <?= $buy_name_code['buy_currency_name'] ?>
@@ -80,9 +85,10 @@
                     <input class="form-control py-3" list="datalistOptions2" name="to" id="exampleDataList" placeholder="Type to search...">
                     <datalist id="datalistOptions2">
                     <?php 
-                    $get_all_currency = get_sell_name_code($mysqli);
+                    $counter_filter  = filter_currency_with_counter($mysqli, $counter_id['id']);   
+                    // $get_all_currency = get_sell_name_code($mysqli);
                         
-                    while ($sell_name_code = $get_all_currency->fetch_assoc()) { ?>
+                    while ($sell_name_code = $counter_filter->fetch_assoc()) { ?>
                           <option class="flag-icon flag-icon-us" value="<?= $sell_name_code['sell_currency_code'] ?>"><?= $sell_name_code['sell_currency_name'] ?> </option>
                         <?php   } ?>
                     </datalist>
@@ -112,12 +118,9 @@
                     </div>
                     <?php }
                         if(isset($_POST['trade'])){
-                            
                             echo "<script>location.replace('./trade.php')</script>";
                         }
-                    
                     ?>
-                    
                 </div>
             </div>
         </form>
