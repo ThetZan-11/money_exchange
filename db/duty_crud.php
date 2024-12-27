@@ -20,3 +20,8 @@
    return $mysqli->query($sql);
  }
 
+ function get_counter_id_with_user_id($mysqli, $user_id){
+    $sql = "SELECT `counter`.`id` FROM `duty` INNER JOIN counter ON `counter`.`id` = `duty`.`counter_id` INNER JOIN `user` ON `user`.`id` = `duty`.`user_id` where `duty`.`user_id` = '$user_id'";
+    $result =  $mysqli->query($sql);
+    return $result->fetch_assoc();
+ }

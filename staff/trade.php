@@ -28,13 +28,28 @@
             
             <div class="form-group mb-3">
                 <label class="label">Exchange Amount</label>
-                <input type="text" class="form-control" name="exchange_amount" value="<?= $trades[0]['amount'] ?>" readonly> 
+                <input type="text" class="form-control" name="exchange_amount" value="<?= number_format($trades[0]['amount']) ?>" readonly> 
             </div>
-                            
             
             <div class="form-group mb-3">
                 <label class="label">Converted Amount</label>
                 <input type="text" class="form-control" name="exchange_amount" value="<?= number_format($trades[0]['result']) ?>" readonly> 
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="label">From</label>
+                <input type="text" class="form-control" name="exchange_amount" value="<?= $trades[0]['buy_currency_name'] ?>" readonly> 
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="label">TO</label>
+                <input type="text" class="form-control" name="exchange_amount" value="<?= $trades[0]['sell_currency_name'] ?>" readonly> 
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary">
+                    Save
+                </button>
             </div>
         </form>
     </div>
