@@ -20,7 +20,7 @@
     }
 
     function get_currency_counter_with_id($mysqli, $id){
-        $sql = "SELECT `currency`.`id` AS `id_for_currency`,`counter`.`id` AS `id_for_counter`,`currency_counter`.`id`,`counter`.`counter_name`,`currency`.`currency_name` FROM `currency_counter`INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` INNER JOIN `currency` ON `currency`.`id` = `currency_counter`.`currency_id` WHERE `currency_counter`.`id`=$id";
+        $sql = "SELECT `currency`.`id` AS `id_for_currency`,`counter`.`id` AS `id_for_counter`,`currency_counter`.`id`,`counter`.`counter_name`,`currency`.`currency_name` FROM `currency_counter`INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` INNER JOIN `currency` ON `currency`.`id` = `currency_counter`.`currency_id` WHERE `currency_counter`.`counter_id`=$id";
         return $mysqli->query($sql);
     }
 
@@ -34,5 +34,10 @@ function get_currency_id_with_counter_id($mysqli,$id){
     $sql = "SELECT `currency_id` from `currency_counter` WHERE `counter_id`='$id'";
     $result =  $mysqli->query($sql);
     return $result->fetch_assoc();
+}
+
+function filter_currency_with_counter($mysqli, $counter_id){
+    $sql = "SELECT `currency`.`currency_name`, `counter`.`counter_name`, `currency`.`buy_currency_name`, `currency`.`sell_currency_name` FROM `currency_counter` INNER JOIN `currency` ON `currency`.`id` = `currency_counter`.`currency_id` INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` WHERE `currency_counter`.`counter_id` = '$counter_id'";
+    return $mysqli->query($sql);
 }
 

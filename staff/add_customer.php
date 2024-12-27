@@ -5,7 +5,7 @@
 require_once '../layout/nav.php'
 ?>
 <?php
-require_once '../layout/sidebar.php'
+ require_once '../layout/sidebar.php'
 ?>
 <?php 
 $name = $email = $address = $phone = "";
@@ -22,14 +22,11 @@ if (isset($_GET['id'])) {
     $phone = $customer['ph_no'];
     
 }
-  
-
 if(isset($_POST['name'])){
-    $name = $_POST['name'];
-    $email = $_POST['email'];
+    $name       = $_POST['name'];
+    $email      = $_POST['email'];
     $address = $_POST['address'];
     $phone = $_POST['ph_no'];
-
 
     if($name == ""){
         $name_err = "Name cann't be blank";
@@ -53,19 +50,20 @@ if(isset($_POST['name'])){
 
 
     if(!$invalid){
-        if(isset($_GET['id'])){
-            update_customer($mysqli , $id , $name ,  $email , $address , $phone);
-            echo "<script>location.replace('./customer_list.php?edit_success=Edit Successfully')</script>";
-        } else {
-            add_customer($mysqli , $name , $email , $address , $phone);
-            echo "<script>location.replace('./customer_list.php?edit_success=Edit Successfully')</script>";
-
+         
+        if(get_customer_with_email($mysqli, $email)){
+            $email_err = "Email already exists";
+            $invalid = true;
+        }else {   
+            if(isset($_GET['id'])){
+                update_customer($mysqli , $id , $name ,  $email , $address , $phone);
+                echo "<script>location.replace('./customer_list.php?edit_success=Edit Successfully')</script>";
+            } else {
+                add_customer($mysqli , $name , $email , $address , $phone);
+                echo "<script>location.replace('./customer_list.php?edit_success=Edit Successfully')</script>";
+            }
         }
-
-        
     }
-
-
 }
 ?>
 

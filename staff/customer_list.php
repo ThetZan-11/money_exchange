@@ -35,11 +35,13 @@ if(isset($_GET['deleteId'])){
             </thead>
             <tbody>
                 <?php
-                 $i = 1;
-                $customer= get_customer($mysqli);
-                // $customers = $customer->fetch_assoc();
-                //  var_dump($customer);
-
+                $i = 1;
+                if(isset($_POST['key']) && $_POST['key'] != ''){
+                    $key = $_POST['key'];
+                    $customer =  search_query_for_customer($mysqli, $key);
+                } else {
+                    $customer= get_customer($mysqli);
+                }
 
                 while($customers = $customer->fetch_assoc()) { ?>
                     <tr>
