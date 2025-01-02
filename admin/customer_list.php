@@ -5,7 +5,7 @@
 <?php 
 
 if(isset($_GET['deleteId'])){
-    delete_customer($mysqli,($_GET['deleteId']));
+    soft_delete_customer($mysqli,($_GET['deleteId']));
     echo "<script>location.replace('./customer_list.php')</script>";
 }
 
@@ -42,7 +42,7 @@ if(isset($_GET['deleteId'])){
                     $key = $_POST['key'];
                     $customer =  search_query_for_customer($mysqli, $key);
                   } else {
-                    $customer= get_customer($mysqli);
+                    $customer= get_sd_customer($mysqli);
                   }
 
                 while($customers = $customer->fetch_assoc()) { ?>

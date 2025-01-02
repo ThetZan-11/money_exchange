@@ -3,11 +3,11 @@
 <?php require_once '../layout/sidebar.php' ?>
 
 <?php   
-//  if(isset($_GET['deleteId'])){
-//     if(delete_counter ($mysqli , $_GET['deleteId'])){
-//       echo "<script>location.replace('./counter_list.php')</script>";
-//     }
-//  }
+  if(isset($_GET['deleteId'])){
+    if(duty_soft_delete ($mysqli , $_GET['deleteId'])){
+      echo "<script>location.replace('./counter_list.php')</script>";
+    }
+ }
 ?>
   <main id="main" class="main">
     <div class="container">

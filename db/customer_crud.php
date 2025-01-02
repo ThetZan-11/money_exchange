@@ -38,3 +38,16 @@ function add_customer($mysqli, $name, $email, $address, $ph_no){
 }
 
 
+function soft_delete_customer ($mysqli , $id) 
+{
+ $sql ="UPDATE `customer` SET `soft_delete` = 1 WHERE `id` = $id";
+ return $mysqli->query($sql);
+}
+
+function get_sd_customer ($mysqli)
+{
+$sql ="SELECT * FROM `customer` WHERE `soft_delete` = 0";
+return $mysqli->query($sql);
+
+}
+
