@@ -69,4 +69,16 @@ $sql = "SELECT * FROM `user` WHERE `name` LIKE '%$key%' OR `email` LIKE '%$key%'
 return $mysqli->query($sql);
 }
 
+function user_softdelete ($mysqli , $id)
+{
+    $sql = "UPDATE  `user` SET `soft_delete` = 1 WHERE `id` = $id";
+    return $mysqli->query($sql);
+}
+
+function user_sd ($mysqli)
+{
+ $sql = "SELECT * FROM `user` WHERE `soft_delete` = 0";
+ return $mysqli->query($sql);
+
+}
 

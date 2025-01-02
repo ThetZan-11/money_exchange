@@ -4,7 +4,7 @@
 <?php require_once '../db/user_crud.php' ?>
 <?php 
 if(isset($_GET['deleteId'])){
-    if(delete_user ($mysqli , $_GET['deleteId'])){
+    if(user_softdelete ($mysqli , $_GET['deleteId'])){
       echo "<script>location.replace('./user_list.php')</script>";
     }
  }
@@ -45,7 +45,7 @@ if(isset($_GET['deleteId'])){
         $key = $_POST['key'];
         $users = user_search ($mysqli , $_POST['key']);
     }else{
-      $users = get_all_user($mysqli);
+      $users = user_sd($mysqli);
     }
     
 
