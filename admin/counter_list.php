@@ -40,8 +40,13 @@ if (isset($_GET['deleteId'])) {
       <tbody>
         <?php
         $i = 1;
-        $counters = get_counter_with_sd($mysqli);
-      
+
+        if(isset($_POST['key'])){
+         $counters = counter_search ($mysqli , $_POST['key']);
+        }else {
+          $counters = get_counter_with_sd($mysqli);
+        }
+       
         while ($counter = $counters->fetch_assoc()) { ?>
           <tr>
             <td><?= $i ?></td>

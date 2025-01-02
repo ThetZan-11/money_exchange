@@ -25,3 +25,17 @@
     $result =  $mysqli->query($sql);
     return $result->fetch_assoc();
  }
+
+
+ function duty_soft_delete ($mysqli , $id)
+ {
+    $sql = "UPDATE `duty` SET `soft_delete` = 1 WHERE `id` = $id";
+    return $mysqli->query($sql);
+ }
+
+ function search_duty ()
+ {
+
+  
+
+ }

@@ -44,7 +44,12 @@ table{
   <tbody>
     <?php
     $i = 1;
-    $currencies  =  currency_sd($mysqli);
+    if(isset($_POST['key'])){
+      $currencies = currency_search ($mysqli , $_POST['key']);
+    }else {
+      $currencies  =  currency_sd($mysqli);
+    }
+  
     //die(var_dump($currencies));
      while ($currency = $currencies->fetch_assoc()) { ?>
      <tr>

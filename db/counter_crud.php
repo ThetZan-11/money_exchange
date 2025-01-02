@@ -45,11 +45,8 @@ function soft_delete ($mysqli , $id)
 
 }
 
-
-// function soft_delete_id ($mysqli)
-// {
-
-//     $sql = "SELECT * FROM `counter` WHERE `soft_delete` = 1";
-//     return $mysqli->query($sql);
-// }
-
+function counter_search ($mysqli , $key)
+{
+    $sql = "SELECT * FROM `counter` WHERE `counter_name` LIKE '%$key%' OR `location` LIKE '%$key%'";
+    return $mysqli->query($sql);
+}

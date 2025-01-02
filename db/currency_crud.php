@@ -47,11 +47,16 @@ function soft_delete_currency ($mysqli , $id)
 
 function currency_sd ($mysqli)
 {
-
-    $sql = "SELECT * FROM `currency`  WHERE `soft_delete` = 0";
+    $sql = "SELECT * FROM `currency`  WHERE `buy_currency_code`!=`sell_currency_code` AND  `soft_delete` = 0";
     return $mysqli->query($sql);
 }
 
+function currency_search ($mysqli ,$key)
+{
+    $sql = "SELECT * FROM `currency` WHERE `currency_name` LIKE '%$key%' OR `buy_currency_name` LIKE '%$key%' OR 
+    `buy_currency_code` LIKE '%$key%' OR `sell_currency_name` LIKE '%$key%' OR `sell_currency_code` LIKE '%$key%'";
+     return $mysqli->query($sql);
+}
 
 
 

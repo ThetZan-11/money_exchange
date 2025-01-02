@@ -40,8 +40,15 @@ if(isset($_GET['deleteId'])){
   <tbody>
     <?php
     $i = 1;
-    $users = get_all_user($mysqli);
-    // $admin_email = get_email_of_user($mysqli);
+
+    if(isset($_POST['key'])){
+        $key = $_POST['key'];
+        $users = user_search ($mysqli , $_POST['key']);
+    }else{
+      $users = get_all_user($mysqli);
+    }
+    
+
      while ($user = $users->fetch_assoc()) { ?>
      <tr>
         <td><?= $i ?></td>

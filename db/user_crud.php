@@ -57,9 +57,16 @@ function get_staff($mysqli){
     return $mysqli->query($sql);
 }
 
-function delete_user($mysqli , $id){
+function delete_user($mysqli , $id)
+{
     $sql = "DELETE FROM `user` WHERE `id`=$id";
     return $mysqli->query($sql);
-
 }
+
+function user_search ($mysqli , $key) 
+{
+$sql = "SELECT * FROM `user` WHERE `name` LIKE '%$key%' OR `email` LIKE '%$key%' OR `address` LIKE '%$key%' OR  `ph_no` LIKE '%$key%'";
+return $mysqli->query($sql);
+}
+
 
