@@ -8,6 +8,7 @@ require_once '../layout/nav.php'
  require_once '../layout/sidebar.php'
 ?>
 <?php 
+ 
 $name = $email = $address = $phone = "";
 $name_err = $email_err = $adderss_err = $phone_err ="";
 $invalid = false;
@@ -70,7 +71,7 @@ if(isset($_POST['name'])){
 <main id="main" class="main">
 
     <div class="conatiner">
-        <div class="card p-3 mx-auto" style="width:60%;">\
+        <div class="card p-3 mx-auto" style="width:60%;">
             <?php if(isset($_GET['id'])) { ?>
                 <div class="text-center mb-3">
                 <h3>Edit Customer</h3>

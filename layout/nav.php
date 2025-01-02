@@ -7,13 +7,22 @@
   </a>
   <i class="bi bi-list toggle-sidebar-btn"></i>
 </div><!-- End Logo -->
+<?php
+$url = explode('/',$_SERVER['REQUEST_URI']);
+$path = explode('_', $url[3]);
 
-<div class="search-bar">
-  <form class="search-form d-flex align-items-center" method="POST">
-    <input type="text" name="key" placeholder="Search" title="Enter search keyword">
-    <button type="submit" name="search" title="Search"><i class="bi bi-search"></i></button>
-  </form>
-</div><!-- End Search Bar -->
+if($path[0] != 'add'){ ?>
+ <div class="search-bar">
+   <form class="search-form d-flex align-items-center" method="POST">
+     <input type="text" name="key" placeholder="Search" title="Enter search keyword">
+     <button type="submit" name="search" title="Search"><i class="bi bi-search"></i></button>
+   </form>
+ </div><!-- End Search Bar -->
+
+<?php } else { ?>
+  <div></div>
+ <?php } ?>
+
 
 <nav class="header-nav ms-auto">
   <ul class="d-flex align-items-center">

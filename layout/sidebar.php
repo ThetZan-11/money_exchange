@@ -153,6 +153,11 @@
                 <i class="bi bi-circle"></i><span>Calculate Exchange</span>
               </a>
             </li>
+            <li>
+              <a href="./sale_record.php">
+                <i class="bi bi-circle"></i><span>Sale Record</span>
+              </a>
+            </li>
           </ul>
         </li>
 

@@ -30,7 +30,7 @@ function create_table($mysqli)
         return false;
     }
 
-    $sql = "CREATE TABLE IF NOT EXISTS `currency` (`id` INT AUTO_INCREMENT,`currency_name` VARCHAR(100) UNIQUE NOT NULL,`buy_currency_name` VARCHAR(100) NOT NULL, `buy_currency_code` VARCHAR(100) NOT NULL,`sell_currency_name` VARCHAR(100) NOT NULL, `sell_currency_code` VARCHAR(100) NOT NULL,   `soft_delete` boolean DEFAULT 0 ,PRIMARY KEY(`id`))";
+    $sql = "CREATE TABLE IF NOT EXISTS `currency` (`id` INT AUTO_INCREMENT,`currency_name` VARCHAR(100) UNIQUE NOT NULL,`buy_currency_name` VARCHAR(100) NOT NULL, `buy_currency_code` VARCHAR(100) NOT NULL,`sell_currency_name` VARCHAR(100) NOT NULL, `sell_currency_code` VARCHAR(100) NOT NULL, `soft_delete` boolean DEFAULT 0 ,PRIMARY KEY(`id`))";
     if(!$mysqli->query($sql)){
         return false;
     }
@@ -50,10 +50,10 @@ function create_table($mysqli)
         return false;
     }
 
-    // $sql = "CREATE TABLE IF NOT EXISTS `trade`(`id` INT AUTO_INCREMENT,`sell_rate` FLOAT NOT NULL,`buy_rate` FLOAT NOT NULL,`date` DATE NOT NULL,`currency_id` INT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY (`currency_id`) REFERENCES `currency`(`id`))";
-    // if(!$mysqli->query($sql)){
-    //     return false;
-    // }
+    $sql = "CREATE TABLE IF NOT EXISTS `trade`(`id` INT AUTO_INCREMENT,`exchange_amount` FLOAT NOT NULL,`converted_amount` FLOAT NOT NULL,`date` DATE NOT NULL,`currency_counter_id` INT NOT NULL,`customer_id` INT NOT NULL,`soft_delete` boolean DEFAULT 0 ,PRIMARY KEY(`id`), PRIMARY KEY(`id`), FOREIGN KEY (`currency_counter_id`) REFERENCES `currency_counter`(`id`), FOREIGN KEY (`customer_id`) REFERENCES `customer`(`id`))";    
+    if(!$mysqli->query($sql)){
+        return false;
+    }
 
     return true;
 }
