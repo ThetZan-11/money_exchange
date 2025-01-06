@@ -50,8 +50,8 @@
         if(!$invalid){
             $customer_id = get_customer_with_email($mysqli, $customer_email);
             add_trade($mysqli, $trades[0]['amount'], $trades[0]['result'], $date_now, $counter_name,$customer_id['id']);
-            session_destroy();
             echo "<script>location.replace('./sale_record.php')</script>";
+            session_destroy();
         }
 
     }

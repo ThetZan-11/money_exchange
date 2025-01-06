@@ -6,6 +6,7 @@
 
     <main id="main" class="main">
         <div class="container">
+            <h3 class="my-3">Daily Exchange Rate</h3>    
             <table class="table table-bordered data-table">
                 <thead>
                     <tr>

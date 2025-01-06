@@ -12,7 +12,7 @@ if(isset($_GET['deleteId'])){
 ?>
 <main id="main" class="main">
     <div class="container">
-        <h3 class ="title">Sales Record</h3>
+        <h3>Sales Record</h3>
     <div style="width:100%; height:55px;" class="mt-3" id="success-message">
         <?php if (isset($_GET['edit_success'])) { ?>
             <p class="alert alert-success"><?= $_GET['edit_success'] ?></p>    

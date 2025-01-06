@@ -38,6 +38,7 @@ h6 {
   font-family: "Nunito", sans-serif;
   color: #012970;
   font-weight: 800;
+  color: #caf0f8;
 }
 
 /*--------------------------------------------------------------
@@ -45,12 +46,13 @@ h6 {
 --------------------------------------------------------------*/
 #main {
   margin-top: 60px;
+  padding: 20px 20px;
   transition: all 0.3s;
 }
 
 @media (max-width: 1199px) {
   #main {
-    padding: 5px;
+    padding: 20px;
   }
 }
 
@@ -606,7 +608,7 @@ h6 {
   width: 250px;
   z-index: 996;
   transition: all 0.3s;
-  padding: 20px 10px;
+  /* padding: 20px; */
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #aab7cf transparent;
@@ -634,7 +636,7 @@ h6 {
 
   #main,
   #footer {
-    margin-left: 250px;
+    margin-left: 300px;
   }
 }
 

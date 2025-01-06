@@ -154,7 +154,7 @@
               </a>
             </li>
             <li>
-              <a href="./sale_record.php">
+              <a href="./saleRecord_list.php">
                 <i class="bi bi-circle"></i><span>Sale Record</span>
               </a>
             </li>
