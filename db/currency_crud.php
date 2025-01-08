@@ -12,6 +12,7 @@ function get_all_currency($mysqli){
     return $mysqli->query($sql);    
 }
 
+
 function get_buy_name_code($mysqli){
     $sql = "SELECT DISTINCT `buy_currency_name`,`buy_currency_code` FROM `currency`";
     return $mysqli->query($sql);    

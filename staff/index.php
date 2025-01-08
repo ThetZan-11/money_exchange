@@ -10,7 +10,6 @@
   $user_email = $user['email'];
   $customer = "Today";
   $sale   = "Today";
-
   ?>
 
   <main id="main" class="main">

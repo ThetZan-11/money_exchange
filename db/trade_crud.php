@@ -49,8 +49,92 @@
         return $result->fetch_assoc();
     }
 
-    function toal_amount_of_sell_currency($mysqli, $counter_id, $sell_currency_code){
-        $sql = "SELECT SUM(`trade`.`converted_amount`) FROM `trade`
+// Sell rate Crud function
+    function total_amount_of_sell_currency_MMK($mysqli){
+        $sql = "SELECT SUM(`trade`.`converted_amount`) AS `sell_rate` FROM `trade`
+        INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+        INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
+        INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
+        WHERE `currency`.`sell_currency_code` = 'MMK'";
+        $result = $mysqli->query($sql);
+        return $result->fetch_assoc();
+    }
+    function total_amount_of_sell_currency($mysqli, $sell_currency_code){
+        $sql = "SELECT SUM(`trade`.`converted_amount`) AS `sell_rate` FROM `trade`
+        INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+        INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
+        INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
+        WHERE `currency`.`sell_currency_code` = '$sell_currency_code'";
+        $result = $mysqli->query($sql);
+        return $result->fetch_assoc();
+    }
+
+    function total_amount_of_sell_currencyToday($mysqli, $sell_currency_code){
+        $sql = "SELECT SUM(`trade`.`converted_amount`) AS `sell_rate` FROM `trade`
+        INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+        INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
+        INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
+        WHERE `currency`.`sell_currency_code` = '$sell_currency_code' AND `trade`.`date` = CURRENT_DATE";
+        $result = $mysqli->query($sql);
+        return $result->fetch_assoc();
+    }
+
+    function total_amount_of_sell_currencyMonth($mysqli, $sell_currency_code){
+        $sql = "SELECT SUM(`trade`.`converted_amount`) AS `sell_rate` FROM `trade`
+        INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+        INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
+        INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
+        WHERE `currency`.`sell_currency_code` = '$sell_currency_code' AND MONTH(`trade`.`date`) = MONTH(CURRENT_DATE)";
+        $result = $mysqli->query($sql);
+        return $result->fetch_assoc();
+    }
+
+    function total_amount_of_sell_currencyYear($mysqli, $sell_currency_code){
+        $sql = "SELECT SUM(`trade`.`converted_amount`) AS `sell_rate` FROM `trade`
+        INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+        INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
+        INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
+        WHERE `currency`.`sell_currency_code` = '$sell_currency_code' AND YEAR(`trade`.`date`) = YEAR(CURRENT_DATE)";
+        $result = $mysqli->query($sql);
+        return $result->fetch_assoc();
+    }
+
+    function total_amount_of_sell_currency_today($mysqli,$counter_id, $sell_currency_code, ){
+        $sql = "SELECT SUM(`trade`.`converted_amount`) AS `sell_rate` FROM `trade`
+        INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+        INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
+        INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
+        WHERE `currency`.`sell_currency_code` = '$sell_currency_code'
+        AND `currency_counter`.`counter_id`= '$counter_id' AND `trade`.`date` = CURRENT_DATE";
+        $result = $mysqli->query($sql);
+        return $result->fetch_assoc();
+    }
+
+    function total_amount_of_sell_currency_month($mysqli,$counter_id, $sell_currency_code, ){
+        $sql = "SELECT SUM(`trade`.`converted_amount`) AS `sell_rate` FROM `trade`
+        INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+        INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
+        INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
+        WHERE `currency`.`sell_currency_code` = '$sell_currency_code'
+        AND `currency_counter`.`counter_id`= '$counter_id' AND MONTH(`trade`.`date`) = MONTH(CURRENT_DATE)";
+        $result = $mysqli->query($sql);
+        return $result->fetch_assoc();
+    }
+
+    function total_amount_of_sell_currency_year($mysqli,$counter_id, $sell_currency_code, ){
+        $sql = "SELECT SUM(`trade`.`converted_amount`) AS `sell_rate` FROM `trade`
+        INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+        INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
+        INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
+        WHERE `currency`.`sell_currency_code` = '$sell_currency_code'
+        AND `currency_counter`.`counter_id`= '$counter_id' AND YEAR(`trade`.`date`) = YEAR(CURRENT_DATE)";
+        $result = $mysqli->query($sql);
+        return $result->fetch_assoc();
+    }
+
+    
+    function toal_amount_of_sell_currency_counter($mysqli, $counter_id, $sell_currency_code){
+        $sql = "SELECT SUM(`trade`.`converted_amount`) AS `sell_rate` FROM `trade`
         INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
         INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
         INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
@@ -59,15 +143,126 @@
         return $result->fetch_assoc();
     }
 
-    function toal_amount_of_buy_currency($mysqli, $counter_id, $buy_currency_code){
-        $sql = "SELECT SUM(`trade`.`exchange_amount`) FROM `trade`
+    function toal_amount_of_sell_currency_alltime($mysqli, $sell_currency_code){
+        $sql = "SELECT SUM(`trade`.`converted_amount`) AS `sell_rate` FROM `trade`
         INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
         INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
         INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
-        WHERE `counter`.`id` = '$counter_id' AND `currency`.`buy_currency_code` = '$buy_currency_code'";
+        WHERE  `currency`.`sell_currency_code` = '$sell_currency_code'";
         $result = $mysqli->query($sql);
         return $result->fetch_assoc();
     }
+
+    
+//Buy Currency Crud function
+
+function total_amount_of_buy_currency_MMK($mysqli){
+    $sql = "SELECT SUM(`trade`.`exchange_amount`) AS `buy_rate` FROM `trade`
+    INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+    INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
+    INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
+    WHERE `currency`.`sell_currency_code` = 'MMK'";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+function total_amount_of_buy_currency($mysqli, $buy_currency_code){
+    $sql = "SELECT SUM(`trade`.`exchange_amount`) AS `buy_rate` FROM `trade`
+    INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+    INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
+    INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
+    WHERE `currency`.`buy_currency_code` = '$buy_currency_code'";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+
+function total_amount_of_buy_currencyToday($mysqli, $buy_currency_code){
+    $sql = "SELECT SUM(`trade`.`exchange_amount`) AS `buy_rate` FROM `trade`
+    INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+    INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
+    INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
+    WHERE `currency`.`buy_currency_code` = '$buy_currency_code' AND `trade`.`date` = CURRENT_DATE";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+
+function total_amount_of_buy_currencyMonth($mysqli, $buy_currency_code){
+    $sql = "SELECT SUM(`trade`.`exchange_amount`) AS `buy_rate` FROM `trade`
+    INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+    INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
+    INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
+    WHERE `currency`.`buy_currency_code` = '$buy_currency_code' AND MONTH(`trade`.`date`) = MONTH(CURRENT_DATE)";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+
+function total_amount_of_buy_currencyYear($mysqli, $buy_currency_code){
+    $sql = "SELECT SUM(`trade`.`exchange_amount`) AS `buy_rate` FROM `trade`
+    INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+    INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
+    INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
+    WHERE `currency`.`buy_currency_code` = '$buy_currency_code' AND YEAR(`trade`.`date`) = YEAR(CURRENT_DATE)";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+
+function total_amount_of_buy_currency_today($mysqli,$counter_id, $buy_currency_code, ){
+    $sql = "SELECT SUM(`trade`.`exchange_amount`) AS `buy_rate` FROM `trade`
+    INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+    INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
+    INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
+    WHERE `currency`.`buy_currency_code` = '$buy_currency_code'
+    AND `currency_counter`.`counter_id`= '$counter_id' AND `trade`.`date` = CURRENT_DATE";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+
+function total_amount_of_buy_currency_month($mysqli,$counter_id, $buy_currency_code, ){
+    $sql = "SELECT SUM(`trade`.`exchange_amount`) AS `buy_rate` FROM `trade`
+    INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+    INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
+    INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
+    WHERE `currency`.`buy_currency_code` = '$buy_currency_code'
+    AND `currency_counter`.`counter_id`= '$counter_id' AND MONTH(`trade`.`date`) = MONTH(CURRENT_DATE)";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+
+function total_amount_of_buy_currency_year($mysqli,$counter_id, $buy_currency_code, ){
+    $sql = "SELECT SUM(`trade`.`exchange_amount`) AS `buy_rate` FROM `trade`
+    INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+    INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
+    INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
+    WHERE `currency`.`buy_currency_code` = '$buy_currency_code'
+    AND `currency_counter`.`counter_id`= '$counter_id' AND YEAR(`trade`.`date`) = YEAR(CURRENT_DATE)";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+
+
+function toal_amount_of_buy_currency_counter($mysqli, $counter_id, $buy_currency_code){
+    $sql = "SELECT SUM(`trade`.`exchange_amount`) AS `buy_rate` FROM `trade`
+    INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+    INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
+    INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
+    WHERE `counter`.`id` = '$counter_id' AND `currency`.`buy_currency_code` = '$buy_currency_code'";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+
+function toal_amount_of_buy_currency_alltime($mysqli, $buy_currency_code){
+    $sql = "SELECT SUM(`trade`.`exchange_amount`) AS `buy_rate` FROM `trade`
+    INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+    INNER JOIN `currency` ON `currency`.`id`= `currency_counter`.`currency_id` 
+    INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` 
+    WHERE  `currency`.`buy_currency_code` = '$buy_currency_code'";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+
+
+
+
+
 // buy    sell
 // USD to MMK 
 // 30    150000
@@ -124,6 +319,67 @@ function total_sale_from_counter($mysqli, $counter_id){
      WHERE `currency_counter`.`counter_id` = '$counter_id'";
      $result = $mysqli->query($sql);
      return $result->fetch_assoc();
+}
+
+function total_tradeCustomer_today($mysqli){
+    $sql = "SELECT COUNT(DISTINCT `trade`.`customer_id`) FROM `trade` INNER JOIN `customer` ON `customer`.`id` = `trade`.`customer_id`
+    where `trade`.`soft_delete` = 0 AND `trade`.`date` = CURRENT_DATE";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+
+function total_tradeCustomer_month($mysqli){
+    $sql = "SELECT COUNT(DISTINCT `trade`.`customer_id`) FROM `trade` INNER JOIN `customer` ON `customer`.`id` = `trade`.`customer_id`
+    where `trade`.`soft_delete` = 0 AND `trade`.`date` = MONTH(CURRENT_DATE)";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+
+function total_tradeCustomer_year($mysqli){
+    $sql = "SELECT COUNT(DISTINCT `trade`.`customer_id`) FROM `trade` INNER JOIN `customer` ON `customer`.`id` = `trade`.`customer_id`
+    where `trade`.`soft_delete` = 0 AND YEAR(`trade`.`date`) = YEAR(CURRENT_DATE)";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+
+function total_tradeCustomer($mysqli){
+    $sql = "SELECT COUNT(DISTINCT `trade`.`customer_id`) AS `customer_count`
+    FROM `trade` INNER JOIN `customer` ON `customer`.`id` = `trade`.`customer_id`
+    where `trade`.`soft_delete` = 0";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+
+function total_tradeCustomer_alltime($mysqli, $counter_id){
+    $sql = "SELECT COUNT(DISTINCT `trade`.`customer_id`) AS `customer_count`
+    FROM `trade` INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+    where `trade`.`soft_delete` = 0 AND `currency_counter`.`counter_id`='$counter_id'";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+
+function total_trade_customer_with_today($mysqli, $counter_id){
+    $sql = "SELECT COUNT(DISTINCT `trade`.`customer_id`) AS `customer_count`
+    FROM `trade` INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+    where `trade`.`soft_delete` = 0 AND `currency_counter`.`counter_id`='$counter_id' AND `trade`.`date` = CURRENT_DATE";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+
+function total_trade_customer_with_month($mysqli, $counter_id){
+    $sql = "SELECT COUNT(DISTINCT `trade`.`customer_id`) AS `customer_count`
+    FROM `trade` INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+    where `trade`.`soft_delete` = 0 AND `currency_counter`.`counter_id`='$counter_id' AND MONTH(`trade`.`date`) = MONTH(CURRENT_DATE)";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+
+function total_trade_customer_with_year($mysqli, $counter_id){
+    $sql = "SELECT COUNT(DISTINCT `trade`.`customer_id`) AS `customer_count`
+    FROM `trade` INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id`
+    where `trade`.`soft_delete` = 0 AND `currency_counter`.`counter_id`='$counter_id' AND YEAR(`trade`.`date`) = YEAR(CURRENT_DATE)";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
 }
 
 
