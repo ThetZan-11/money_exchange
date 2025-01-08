@@ -44,7 +44,7 @@
 // let role =document.getElementById("role");
 
 setTimeout(() => {
-    successMsg.innerHTML= "";
+    successMsg.innerHTML= ""; 
 },2000);
 
   let deleteBtn =$(".counterDelete");

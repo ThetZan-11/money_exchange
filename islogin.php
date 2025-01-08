@@ -1,5 +1,6 @@
 <?php
    $user = json_decode($_COOKIE["user"], true);
+
    if(!$user){
     header("Location:../index.php?login=Login Please");
    } else {
