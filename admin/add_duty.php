@@ -1,6 +1,6 @@
 <?php require_once '../layout/header.php' ?>
-<?php //require_once '../layout/nav.php' ?>
-<?php //require_once '../layout/sidebar.php' ?>
+<?php require_once '../layout/nav.php' ?>
+<?php require_once '../layout/sidebar.php' ?>
 
 <?php
 $counterName       = $counterNameErr = "";
@@ -65,6 +65,17 @@ if (isset($_POST['submit'])) {
         $to_dateErr = "Invalid Date";
         $invalid      =  true;
     }
+
+    if(duty_validate_with_date($mysqli, $counterName, $userName, $from_date)){
+        $from_dateErr = "Duty taken by other staff in this period";
+        $invalid      =  true;
+    }
+
+    if(duty_validate_with_date($mysqli, $counterName, $userName, $to_date)){
+        $to_dateErr = "Duty taken by other staff in this period";
+        $invalid      =  true;
+    }
+
 
     if (!$invalid) {
         if (isset($_GET['id'])) {

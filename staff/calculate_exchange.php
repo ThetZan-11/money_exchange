@@ -43,9 +43,7 @@ $counter_id = get_counter_id_with_user_id($mysqli, $user_id);
             $rate =  select_rates($mysqli, $from, $to);
             $change =  select_rates($mysqli, $to, $from);
             $result = $rate['buy_rate'] * $amount;
-            
             $idAndCounter = get_counter_name_and_id($mysqli, $counter_id['id'], $from, $to);
-            
             array_push($order_detail, ['amount'=> $amount,'result'=>$result,'buy_currency_name'=> $rate['buy_currency_name'],'sell_currency_name'=> $rate['sell_currency_name'], 'currency_counter_id'=> $idAndCounter['id'], 'counter_name'=> $idAndCounter['counter_name']]);  
             $_SESSION["order_detail"] = $order_detail;
         }
@@ -119,7 +117,7 @@ $counter_id = get_counter_id_with_user_id($mysqli, $user_id);
                     </div>
                     <?php }
                         if(isset($_POST['trade'])){
-                            echo "<script>location.replace('./trade.php')</script>";
+                            echo "<script>location.replace('./trade_cal.php')</script>";
                         }
                     ?>
                 </div>

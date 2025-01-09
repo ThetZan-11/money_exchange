@@ -1,4 +1,6 @@
-<?php require_once("./db/db.php") ?>
+<?php 
+session_start();
+require_once("./db/db.php"); ?>
 <?php require_once("./db/user_crud.php") ?>
 <?php
 
@@ -36,6 +38,8 @@ if (isset($_POST['email'])) {
         } else {
             if (password_verify($password, $users_with_email['password'])) {
                 setcookie("user", json_encode($users_with_email), time() + 1000 * 60 * 60 * 24 * 14, "/");
+                $duty_with_date = duty_with_date($mysqli, $users_with_email['id']);
+                $_SESSION['date'] = $duty_with_date;
                 header("Location:./role.php ");
             } else {
                 $passwordErr = "Password does not exits.";

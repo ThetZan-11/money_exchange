@@ -82,3 +82,11 @@ function user_sd ($mysqli)
 
 }
 
+function duty_with_date($mysqli, $user_id){
+    $sql = "SELECT `duty`.`from_date`, `duty`.`to_date` FROM `duty` 
+    INNER JOIN `user` ON `user`.`id` = `duty`.`user_id` 
+    INNER JOIN counter ON `counter`.`id` = `duty`.`counter_id` WHERE `user`.`id` = '$user_id'";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+

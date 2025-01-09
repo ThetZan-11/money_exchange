@@ -5,7 +5,10 @@
     }
 
     function select_duty($mysqli){
-        $sql = "SELECT `duty`.`id`,`user`.`name`,`counter`.`counter_name`,`counter`.`location`,`duty`.`from_date`,`duty`.`to_date` FROM `duty` INNER JOIN `user` on `user`.`id` = `duty`.`user_id` INNER JOIN `counter` ON `counter`.`id` = `duty`.`counter_id`";
+        $sql = "SELECT `duty`.`id`,`user`.`name`,`counter`.`counter_name`,
+        `counter`.`location`,`duty`.`from_date`,`duty`.`to_date` FROM `duty` 
+        INNER JOIN `user` on `user`.`id` = `duty`.`user_id` 
+        INNER JOIN `counter` ON `counter`.`id` = `duty`.`counter_id` WHERE `duty`.`soft_delete`=0";
         return $mysqli->query($sql);
     }   
 
@@ -25,3 +28,17 @@
         $result =  $mysqli->query($sql);
         return  $result->fetch_assoc();
     }
+
+    function duty_soft_delete($mysqli, $id){
+        $sql = "UPDATE `duty` SET `soft_delete` = 1 WHERE `id` = '$id'";
+        return $mysqli->query($sql);
+    }
+
+    function duty_validate_with_date($mysqli, $counter_id, $user_id, $date){
+        $sql = "SELECT `id` FROM `duty` where '$date' 
+        BETWEEN `duty`.`from_date` AND `duty`.`to_date` AND `counter_id` = '$counter_id' AND `user_id` = '$user_id'";
+        $result = $mysqli->query($sql);
+        return $result->fetch_assoc();
+    }
+
+   

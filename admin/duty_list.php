@@ -5,7 +5,7 @@
 <?php   
   if(isset($_GET['deleteId'])){
     if(duty_soft_delete ($mysqli , $_GET['deleteId'])){
-      echo "<script>location.replace('./counter_list.php')</script>";
+      echo "<script>location.replace('./duty_list.php')</script>";
     }
  }
 ?>

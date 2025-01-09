@@ -38,7 +38,18 @@
 <script src="../assets/js/main.js"></script>
 
 
+<script>
+  let counterSelect =document.getElementById("counter_select");
+  let form = document.getElementById("filter_counter_form");
 
+  if(counterSelect){
+    counterSelect.addEventListener("change",()=>{
+      console.log("ok");
+      form.submit();
+    })
+  }
+  
+</script>
 </body>
 
 <script>
@@ -61,10 +72,9 @@
   })
 
   function printReceipt() {
-    console.log("print");
     const originalContent = document.body.innerHTML;
     const printContent = document.getElementById('receipt').innerHTML;
-
+    console.log(printContent);
     document.body.innerHTML = printContent;
     window.print();
     document.body.innerHTML = originalContent;

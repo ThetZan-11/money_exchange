@@ -43,6 +43,8 @@
         $invalid = true;
     }
 
+   
+
     if(!$invalid){
         if (isset($_GET['id'])) {
             edit_currency_counter($mysqli, $id, $counterName, $sellName);

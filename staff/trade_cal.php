@@ -1,7 +1,6 @@
-<?php session_start()  ?>
 <?php require_once('../layout/header.php') ?>
-<?php //require_once('../layout/nav.php') ?>
-<?php //require_once('../layout/sidebar.php') ?>
+<?php require_once('../layout/nav.php') ?>
+<?php require_once('../layout/sidebar.php') ?>
 <?php require_once('../db/daily_exchange_crud.php') ?>
 <?php require_once('../db/rate.php') ?>
 <?php  
@@ -50,7 +49,7 @@
         if(!$invalid){
             $customer_id = get_customer_with_email($mysqli, $customer_email);
             add_trade($mysqli, $trades[0]['amount'], $trades[0]['result'], $date_now, $counter_name,$customer_id['id']);
-            echo "<script>location.replace('./sale_record.php')</script>";
+            echo "<script>location.replace('./saleRecord_list.php')</script>";
             session_destroy();
         }
 
