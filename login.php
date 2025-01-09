@@ -35,7 +35,7 @@ if (isset($_POST['email'])) {
             $emailErr = "Email Does Not match!";
         } else {
             if (password_verify($password, $users_with_email['password'])) {
-                setcookie("user", json_encode($users_with_email),  + 1000 * 60 * 60 * 24 * 14, "/");
+                setcookie("user", json_encode($users_with_email), time() + 1000 * 60 * 60 * 24 * 14, "/");
                 header("Location:./role.php ");
             } else {
                 $passwordErr = "Password does not exits.";

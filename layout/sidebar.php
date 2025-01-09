@@ -134,6 +134,11 @@
                 <i class="bi bi-circle"></i><span>Calculate Exchange</span>
               </a>
             </li>
+            <li>
+              <a href="./saleRecord_list.php">
+                <i class="bi bi-circle"></i><span>Sale Record</span>
+              </a>
+            </li>
           </ul>
         </li>
 
@@ -153,6 +158,12 @@
                 <i class="bi bi-circle"></i><span>Calculate Exchange</span>
               </a>
             </li>
+            <li>
+              <a href="./saleRecord_list.php">
+                <i class="bi bi-circle"></i><span>Sale Record</span>
+              </a>
+            </li>
+           
           </ul>
         </li>
 

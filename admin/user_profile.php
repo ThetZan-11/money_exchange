@@ -66,12 +66,10 @@ if (isset($_POST['name'])) {
   } else if (!is_numeric($phone)) {
     $phoneErr = "Enter only number";
   }
-
-  // if($user_img['name'] == "") {
-  //   $profileErr = "Please choose profile!";
-  //   $invalid    = true;
-  // }
-
+  if($user_img['name'] == "") {
+    $profileErr = "Please choose profile!";
+    $invalid    = true;
+  }
   if ($role == "") {
     $roleErr = 'Please select one.';
     $invalid   = true;
