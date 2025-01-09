@@ -10,7 +10,6 @@
   <?php
   $url = explode('/', $_SERVER['REQUEST_URI']);
   $path = explode('_', $url[3]);
-
   if ($path[0] == "index.php" ||  isset($_GET['id'])) { ?>
     <div></div>
     <?php  } else { 

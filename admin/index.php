@@ -395,7 +395,7 @@ if(isset($_POST['buy_filter'])){
               </div>
             </div>
 
-          </div><!-- End Customers Card -->
+          </div><!-- End Customerps Card -->
 
           
           <!-- buy Rate Card -->

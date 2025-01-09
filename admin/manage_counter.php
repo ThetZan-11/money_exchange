@@ -43,14 +43,19 @@
         $invalid = true;
     }
 
-   
-
+     if(choose_counter_currency($mysqli,$counterName, $sellName)){
+        $sellNameErr = "This currency is already in this counter";
+        $invalid = true;
+     };
+    
+     
     if(!$invalid){
         if (isset($_GET['id'])) {
             edit_currency_counter($mysqli, $id, $counterName, $sellName);
             echo "<script>location.replace('./counter_detail_list.php?edit_success=Edit Successfully')</script>";
         } else {
             add_currency_counter($mysqli, $counterName, $sellName);
+
             echo "<script>location.replace('./counter_detail_list.php?add_success=Add Successfully')</script>";
         }
         
@@ -73,7 +78,7 @@
             </div>
 
             <div class="card-body mx-auto">
-            <p class="text-danger card" style="font-size:16px; font-weight:800;"><?= $FormErr ?></p>
+            <p class="text-danger" style="font-size:16px; font-weight:800;"><?= $FormErr ?></p>
                     <form method="post" class="mt-3">
                         <div class="input mx-auto">
                             <div class="form-group mb-4"> 

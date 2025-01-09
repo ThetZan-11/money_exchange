@@ -52,3 +52,10 @@ function sell_currency_code_with_counter($mysqli, $counter_id){
     return $mysqli->query($sql);    
 }
 
+
+function choose_counter_currency($mysqli,$counter_id , $currency_id){
+    $sql = "SELECT id FROM `currency_counter` WHERE counter_id =  $counter_id AND currency_id = $currency_id";
+    $result =  $mysqli->query($sql);
+    return $result->fetch_assoc();
+}
+

@@ -12,6 +12,8 @@
         return $mysqli->query($sql);
     }   
 
+    
+
     function get_duites_with_id($mysqli , $id){
         $sql = "SELECT `user`.`name`, `counter`.`counter_name`, `counter`.`id`,`duty`.`from_date`,`duty`.`to_date`, `duty`.`counter_id`,`duty`.`user_id`  FROM `duty` INNER JOIN `user` ON `user`.`id`=`duty`.`user_id` INNER JOIN `counter` ON `counter`.`id`=`duty`.`counter_id` WHERE `user`.`role`=2 AND `duty`.`id` = '$id'";
         return $mysqli->query($sql);
