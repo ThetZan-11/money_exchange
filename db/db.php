@@ -1,6 +1,6 @@
 <?php
 
-try {
+// try {
     $mysqli = new mysqli("localhost", "root", "");
     $sql = "CREATE DATABASE IF NOT EXISTS `money_exchange`";
     if ($mysqli->query($sql)) {
@@ -8,10 +8,10 @@ try {
             create_table($mysqli);
         }
     }
-} catch (\Throwable $th) {
-    echo "Can not connect to Database!";
-    die();
-}
+// } catch (\Throwable $th) {
+//     echo "Can not connect to Database!";
+//     die();
+// }
 
 function create_table($mysqli)
 {
@@ -50,7 +50,7 @@ function create_table($mysqli)
         return false;
     }
 
-    $sql = "CREATE TABLE IF NOT EXISTS `trade`(`id` INT AUTO_INCREMENT,`exchange_amount` FLOAT NOT NULL,`converted_amount` FLOAT NOT NULL,`date` DATE NOT NULL,`currency_counter_id` INT NOT NULL,`customer_id` INT NOT NULL,`soft_delete` boolean DEFAULT 0 ,PRIMARY KEY(`id`), PRIMARY KEY(`id`), FOREIGN KEY (`currency_counter_id`) REFERENCES `currency_counter`(`id`), FOREIGN KEY (`customer_id`) REFERENCES `customer`(`id`))";    
+    $sql = "CREATE TABLE IF NOT EXISTS `trade`(`id` INT AUTO_INCREMENT,`exchange_amount` FLOAT NOT NULL,`converted_amount` FLOAT NOT NULL,`date` DATE NOT NULL,`currency_counter_id` INT NOT NULL,`customer_id` INT NOT NULL,`soft_delete` boolean DEFAULT 0 , PRIMARY KEY(`id`), FOREIGN KEY (`currency_counter_id`) REFERENCES `currency_counter`(`id`), FOREIGN KEY (`customer_id`) REFERENCES `customer`(`id`))";    
     if(!$mysqli->query($sql)){
         return false;
     }

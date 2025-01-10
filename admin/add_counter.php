@@ -32,10 +32,12 @@ if (isset($_POST['name'])) {
         $invalid = false;
     } elseif (!preg_match('/^Counter-\d{2}$/', $name)) {
         $nameErr = "counter name is  wrong";
+        $invalid = false;
     }
 
     if ($location == "") {
         $locationErr = "Please enter location";
+        $invalid = false; 
     }
 
     if ($invalid) {
