@@ -30,36 +30,36 @@
         WHERE `currency_counter`.`counter_id` = '$counter_id' AND `trade`.`soft_delete` = 0 ORDER BY `trade`.`id` DESC";
         return $mysqli->query($sql);
     }
-
-    function total_sale_counter_today_filter($mysqli ,$email){
+    function total_sale_counter_today_filter($mysqli ,$email, $from_date, $to_date){
         $sql = "SELECT COUNT(*) AS `sale_count` FROM `trade` 
         INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id` 
         WHERE `currency_counter`.`counter_id` = (SELECT DISTINCT `counter`.`id` from `duty`
         INNER JOIN counter ON `duty`.`counter_id` = `counter`.`id` 
         INNER JOIN `user` ON `user`.`id`=`duty`.`user_id` 
-        WHERE `user`.`role` = 2 AND `user`.`email` = '$email') AND `trade`.`date`=CURRENT_DATE";
+        WHERE `user`.`role` = 2 AND `user`.`email` = '$email' AND `duty`.`from_date` = '$from_date' AND `duty`.`to_date` = '$to_date')
+         AND `trade`.`date`=CURRENT_DATE";
         $result = $mysqli->query($sql);
         return $result->fetch_assoc();
     }
 
-    function total_sale_counter_month_filter($mysqli, $email){
+    function total_sale_counter_month_filter($mysqli, $email, $from_date, $to_date){
         $sql = "SELECT COUNT(*) AS `sale_count` FROM `trade` 
         INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id` 
         WHERE `currency_counter`.`counter_id` = (SELECT DISTINCT `counter`.`id` from `duty`
         INNER JOIN counter ON `duty`.`counter_id` = `counter`.`id` 
         INNER JOIN `user` ON `user`.`id`=`duty`.`user_id` 
-        WHERE `user`.`role` = 2 AND `user`.`email` = '$email') AND MONTH(`trade`.`date`)=MONTH(CURRENT_DATE)";
+        WHERE `user`.`role` = 2 AND `user`.`email` = '$email' AND `duty`.`from_date` = '$from_date' AND `duty`.`to_date` = '$to_date') AND MONTH(`trade`.`date`)=MONTH(CURRENT_DATE)";
         $result = $mysqli->query($sql);
         return $result->fetch_assoc();
     }
 
-    function total_sale_counter_year_filter($mysqli, $email){
+    function total_sale_counter_year_filter($mysqli, $email, $from_date, $to_date){
         $sql = "SELECT COUNT(*) AS `sale_count` FROM `trade` 
         INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id` 
         WHERE `currency_counter`.`counter_id` = (SELECT DISTINCT `counter`.`id` from `duty`
         INNER JOIN counter ON `duty`.`counter_id` = `counter`.`id` 
         INNER JOIN `user` ON `user`.`id`=`duty`.`user_id` 
-        WHERE `user`.`role` = 2 AND `user`.`email` = '$email') AND YEAR(`trade`.`date`) = YEAR(CURRENT_DATE)";
+        WHERE `user`.`role` = 2 AND `user`.`email` = '$email' AND `duty`.`from_date` = '$from_date' AND `duty`.`to_date` = '$to_date') AND YEAR(`trade`.`date`) = YEAR(CURRENT_DATE)";
         $result = $mysqli->query($sql);
         return $result->fetch_assoc();
     }
@@ -337,21 +337,21 @@ function total_sale_from_counter($mysqli, $counter_id){
 }
 
 function total_tradeCustomer_today($mysqli){
-    $sql = "SELECT COUNT(DISTINCT `trade`.`customer_id`) FROM `trade` INNER JOIN `customer` ON `customer`.`id` = `trade`.`customer_id`
+    $sql = "SELECT COUNT(DISTINCT `trade`.`customer_id`) AS `customer_count` FROM `trade` INNER JOIN `customer` ON `customer`.`id` = `trade`.`customer_id`
     where `trade`.`soft_delete` = 0 AND `trade`.`date` = CURRENT_DATE";
     $result = $mysqli->query($sql);
     return $result->fetch_assoc();
 }
 
 function total_tradeCustomer_month($mysqli){
-    $sql = "SELECT COUNT(DISTINCT `trade`.`customer_id`) FROM `trade` INNER JOIN `customer` ON `customer`.`id` = `trade`.`customer_id`
-    where `trade`.`soft_delete` = 0 AND `trade`.`date` = MONTH(CURRENT_DATE)";
+    $sql = "SELECT COUNT(DISTINCT `trade`.`customer_id`) AS `customer_count` FROM `trade` INNER JOIN `customer` ON `customer`.`id` = `trade`.`customer_id`
+    where `trade`.`soft_delete` = 0 AND MONTH(`trade`.`date`) = MONTH(CURRENT_DATE)";
     $result = $mysqli->query($sql);
     return $result->fetch_assoc();
 }
 
 function total_tradeCustomer_year($mysqli){
-    $sql = "SELECT COUNT(DISTINCT `trade`.`customer_id`) FROM `trade` INNER JOIN `customer` ON `customer`.`id` = `trade`.`customer_id`
+    $sql = "SELECT COUNT(DISTINCT `trade`.`customer_id`) AS `customer_count` FROM `trade` INNER JOIN `customer` ON `customer`.`id` = `trade`.`customer_id`
     where `trade`.`soft_delete` = 0 AND YEAR(`trade`.`date`) = YEAR(CURRENT_DATE)";
     $result = $mysqli->query($sql);
     return $result->fetch_assoc();

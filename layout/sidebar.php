@@ -52,11 +52,7 @@
           <i class="bi bi-person-vcard-fill"></i><span>Customer</span><i class="bi bi-chevron-down ms-auto"></i>
           </a>
           <ul id="components-customer" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-            <li>
-              <a href="./edit_customer.php">
-                <i class="bi bi-circle"></i><span>Edit Customer</span>
-              </a>
-            </li>
+
             <li>
               <a href="./customer_list.php">
                 <i class="bi bi-circle"></i><span>Customer List</span>

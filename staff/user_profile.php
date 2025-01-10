@@ -38,7 +38,6 @@ if (isset($_POST['name'])) {
   $email = $_POST['email'];
   $address = $_POST['address'];
   $phone = $_POST['phone'];
-  $role = $_POST['role'];
   $user_img = $_FILES['profile'];
   $invalid = false;
 
@@ -67,11 +66,6 @@ if (isset($_POST['name'])) {
     $phoneErr = "Enter only number";
   }
 
-  // if($user_img['name'] == "") {
-  //   $profileErr = "Please choose profile!";
-  //   $invalid    = true;
-  // }
-
   if ($role == "") {
     $roleErr = 'Please select one.';
     $invalid   = true;
@@ -84,14 +78,14 @@ if (isset($_POST['name'])) {
   if (!$invalid) {
 
       if($user_img['name']==""){
-        update_user($mysqli, $id, $name, $email, $address, $phone, $role, $oldImage);
+        update_user_profile($mysqli, $id, $name, $email, $address, $phone, $oldImage);
         echo "<script>location.replace('./user_profile.php?id=$id')</script>";
       } else {
         $filePath = "../assets/img/".$oldImage;
         unlink($filePath);
         $tmp = $user_img['tmp_name'];
         $user_profile_name = date("YMDHS") . $user_img['name'];
-        update_user($mysqli, $id, $name, $email, $address, $phone, $role, $user_profile_name);
+        update_user_profile($mysqli, $id, $name, $email, $address, $phone, $user_profile_name);
         move_uploaded_file($tmp, '../assets/img/' . $user_profile_name);
         echo "<script>location.replace('./user_profile.php?id=$id')</script>";
       }

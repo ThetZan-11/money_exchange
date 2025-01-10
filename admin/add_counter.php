@@ -31,11 +31,13 @@ if (isset($_POST['name'])) {
         $nameErr = "Please enter counter";
         $invalid = false;
     } elseif (!preg_match('/^Counter-\d{2}$/', $name)) {
-        $nameErr = "counter name is  wrong";
+        $nameErr = "Valid format eg - Counter-01";
+        $invalid = false;
     }
 
     if ($location == "") {
         $locationErr = "Please enter location";
+        $invalid = false;
     }
 
     if ($invalid) {
