@@ -43,7 +43,8 @@ function update_user($mysqli, $id,$name, $email, $address, $ph_no, $role, $user_
 
 function update_user_profile($mysqli, $id, $name, $email, $address, $phone, $user_img){
     $sql = "UPDATE `user` SET `name`='$name', `email`='$email', `address`='$address', `ph_no`='$phone', `user_img`= '$user_img' WHERE `id`=$id";
-}   return $mysqli->query($sql);
+    return $mysqli->query($sql);
+}   
 
 function get_user_with_id($mysqli, $id){
     $sql = "SELECT * FROM `user` WHERE `id`=$id";

@@ -6,11 +6,16 @@
     $receipt = show_trades_with_id($mysqli, $_GET['id']);
 ?>
     <main class="main" id="main">
-    <div>
+    <div class="d-flex justify-content-between">
+        <a class="btn btn-primary my-3 mx-3" href="./saleRecord_list.php"> 
+            Back
+        </a>
         <button class="btn btn-success my-3 mx-3" onclick="printReceipt()"> 
             Print
         </button>
     </div>
+
+    
 
         <div class="card mx-auto" style="width:500px; background-color:#ccd5ae;" id="receipt">
             <div class="card-body mx-auto" style="width:450px">

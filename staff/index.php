@@ -20,7 +20,6 @@
 
     <div class="pagetitle">
       <h1>Dashboard</h1>
-    
     </div><!-- End Page Title -->
 
     <section class="section dashboard">
@@ -143,4 +142,5 @@
 
 <!-- ======= Footer ======= -->
 <?php require_once '../layout/footer.php' ?>
+<?php //get_exchange_rate($mysqli); ?>
 <!-- End footer-->

@@ -1,7 +1,7 @@
 <?php
 session_start();
    $user = json_decode($_COOKIE["user"], true);
-   
+
    if(!$user){
     header("Location:../login.php?login=Login Please");
    } else {
@@ -24,6 +24,11 @@ session_start();
                     setcookie("user", "", -1, "/");
                     session_destroy();
                 } 
+            } else {
+                    echo "date empty";
+                    header("Location:../date_over_error.html");
+                    setcookie("user", "", -1, "/");
+                    session_destroy();
             }
             
         } 

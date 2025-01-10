@@ -115,22 +115,20 @@ if (isset($_POST['submit'])) {
 
                                     while ($buy_name_code = $get_all_currency->fetch_assoc()) { ?>
                                         <option value="<?= $buy_name_code['buy_currency_code'] ?>">
-                                            <!-- <img src="../assets/img/USD.png" alt="Hello">  -->
-                                            <span class="flag-icon flag-icon-us"></span>
                                             <?= $buy_name_code['buy_currency_name'] ?>
                                         </option>
                                     <?php  } ?>
                                 </datalist>
                             </div>
                             <div class="form-group col-md-4" id="form-input">
-                                <label for="exampleDataList" class="form-label ">To</label>
+                                <label for="exampleDataList" class="form-label">To</label>
                                 <input class="form-control" list="datalistOptions2" name="to" id="exampleDataList" placeholder="Type to search...">
                                 <datalist id="datalistOptions2">
                                     <?php
                                     $get_all_currency = get_sell_name_code($mysqli);
 
                                     while ($sell_name_code = $get_all_currency->fetch_assoc()) { ?>
-                                        <option class="flag-icon flag-icon-us" value="<?= $sell_name_code['sell_currency_code'] ?>"><?= $sell_name_code['sell_currency_name'] ?> </option>
+                                        <option value="<?= $sell_name_code['sell_currency_code'] ?>"><?= $sell_name_code['sell_currency_name'] ?> </option>
                                     <?php   } ?>
                                 </datalist>
                             </div>
@@ -237,3 +235,4 @@ if (isset($_POST['submit'])) {
 </body>
 
 </html>
+<?php get_exchange_rate($mysqli); ?>

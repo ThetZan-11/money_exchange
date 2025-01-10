@@ -6,7 +6,7 @@
 
     <main id="main" class="main">
         <div class="container">
-            <table class="table table-bordered data-table">
+            <table class="table table-bordered datatable">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -38,6 +38,5 @@
         </div>
     </main>
 
-    <?php require_once '../layout/footer.php';
-    get_exchange_rate($mysqli); ?>
+    <?php require_once '../layout/footer.php'; ?>
     

@@ -66,15 +66,6 @@ if (isset($_POST['name'])) {
     $phoneErr = "Enter only number";
   }
 
-  if ($role == "") {
-    $roleErr = 'Please select one.';
-    $invalid   = true;
-  } else if ($role != 1 && $role != 2) {
-    $roleErr = "Please select available role";
-    $invalid = true;
-  }
-
-
   if (!$invalid) {
 
       if($user_img['name']==""){
@@ -188,25 +179,6 @@ if (isset($_POST['name'])) {
                     <div class="col-md-8 col-lg-9">
                       <input name="name" type="text" class="form-control" id="fullName" value="<?= $name ?>">
                       <span class="text-danger"><?= $nameErr ?></span>
-                    </div>
-                  </div>
-
-                  <div class="row mb-3">
-                    <label for="Job" class="col-md-4 col-lg-3 col-form-label">Role</label>
-                    <div class="col-md-8 col-lg-9">
-                      <select name="role" value="<?= $role ?>" class="form-control">
-                        <option
-                          <?php if ($role == 1) {
-                            echo "selected";
-                          }  ?>
-                          value="1">Admin</option>
-                        <option
-                          <?php if ($role == 2) {
-                            echo "selected";
-                          }  ?>
-                          value="2">Staff</option>
-                      </select>
-                      <span class="text-danger"><?= $roleErr ?></span>
                     </div>
                   </div>
 

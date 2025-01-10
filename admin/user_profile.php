@@ -17,7 +17,7 @@ $user = $users->fetch_assoc();
 
 
 if ($_GET['id'] == '') {
-  echo "<script>location.replace('./index.php')</script>";
+  echo "<script>location.replace('./index.php'x`)</script>";
 } else {
   if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -27,8 +27,6 @@ if ($_GET['id'] == '') {
     $phone = $user['ph_no'];
     $role = $user['role'];
     $oldImage = $user['user_img'];
-
-    var_dump($oldImage);
   }
 }
 
@@ -38,7 +36,6 @@ if (isset($_POST['name'])) {
   $email = $_POST['email'];
   $address = $_POST['address'];
   $phone = $_POST['phone'];
-  $role = $_POST['role'];
   $user_img = $_FILES['profile'];
   $invalid = false;
 
@@ -66,30 +63,18 @@ if (isset($_POST['name'])) {
   } else if (!is_numeric($phone)) {
     $phoneErr = "Enter only number";
   }
-  if($user_img['name'] == "") {
-    $profileErr = "Please choose profile!";
-    $invalid    = true;
-  }
-  if ($role == "") {
-    $roleErr = 'Please select one.';
-    $invalid   = true;
-  } else if ($role != 1 && $role != 2) {
-    $roleErr = "Please select available role";
-    $invalid = true;
-  }
-
 
   if (!$invalid) {
 
       if($user_img['name']==""){
-        update_user($mysqli, $id, $name, $email, $address, $phone, $oldImage);
+        update_user_profile($mysqli, $id, $name, $email, $address, $phone, $oldImage);
         echo "<script>location.replace('./user_profile.php?id=$id')</script>";
       } else {
         $filePath = "../assets/img/".$oldImage;
         unlink($filePath);
         $tmp = $user_img['tmp_name'];
         $user_profile_name = date("YMDHS") . $user_img['name'];
-        update_user($mysqli, $id, $name, $email, $address, $phone, $role, $user_profile_name);
+        update_user_profile($mysqli, $id, $name, $email, $address, $phone, $user_profile_name);
         move_uploaded_file($tmp, '../assets/img/' . $user_profile_name);
         echo "<script>location.replace('./user_profile.php?id=$id')</script>";
       }

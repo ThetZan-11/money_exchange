@@ -1,12 +1,7 @@
-<?php
-require_once '../layout/header.php'
-?>
-<?php
-require_once '../layout/nav.php'
-?>
-<?php
-require_once '../layout/sidebar.php'
-?>
+<?php require_once '../layout/header.php' ?>
+<?php require_once '../layout/nav.php' ?>
+<?php require_once '../layout/sidebar.php' ?>
+
 <?php
 $name = $nameErr = "";
 $email = $emailErr = "";
@@ -17,7 +12,6 @@ $profile = $profileErr = "";
 $select = $selectErr = "";
 $profileName = "";
 $invalid = false;
-
 
 if (isset($_GET['id'])) {
   $users = get_user_with_id($mysqli, $_GET['id']);
@@ -30,7 +24,6 @@ if (isset($_GET['id'])) {
   $select = $user['role'];
 }
 
-
 if (isset($_POST['name'])) {
   $name = trim($_POST['name']);
   $email = trim($_POST['email']);
@@ -42,14 +35,6 @@ if (isset($_POST['name'])) {
   $tmp = $profile['tmp_name'];
 
   $allEmails = get_email_of_user($mysqli);
-  // var_dump($allEmails);
-  // while($allEmails){
-  //   if($allEmails[`email`] == $email){
-  //         $emailErr = "This user email is already exists!";
-  //         $inavlid = true;
-  //   }
-
-
 
   if (!isset($_GET['id'])) {
     $pwd = $pwd = trim($_POST['pwd']);
@@ -100,6 +85,11 @@ if (isset($_POST['name'])) {
     $invalid = true;
   }
 
+  if ($profile['name'] == "") {
+    $profileErr = "Please insert images";
+    $invalid = true;
+  }
+
   if (!$invalid) {
     if (isset($_GET['id'])) {
       $profile = $_FILES['profile'];
@@ -115,12 +105,9 @@ if (isset($_POST['name'])) {
     }
   }
 }
-
-
 ?>
 
 <main id="main" class="main">
-
   <div class="conatiner">
     <div class="card p-3 mx-auto" style="width:60%;">
       <?php if (!isset($_GET['id'])) { ?>

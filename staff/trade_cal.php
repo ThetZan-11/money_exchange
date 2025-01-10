@@ -50,9 +50,8 @@
             $customer_id = get_customer_with_email($mysqli, $customer_email);
             add_trade($mysqli, $trades[0]['amount'], $trades[0]['result'], $date_now, $counter_name,$customer_id['id']);
             echo "<script>location.replace('./saleRecord_list.php')</script>";
-            session_destroy();
+            unset($_SESSION['order_detail']);
         }
-
     }
 ?>
 

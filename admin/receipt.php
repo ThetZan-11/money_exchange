@@ -6,7 +6,10 @@
     $receipt = show_trades_with_id($mysqli, $_GET['id']);
 ?>
     <main class="main" id="main">
-    <div>
+    <div class="d-flex justify-content-between">
+        <a class="btn btn-primary my-3 mx-3" href="./saleRecord_list.php"> 
+            Back
+        </a>
         <button class="btn btn-success my-3 mx-3" onclick="printReceipt()"> 
             Print
         </button>
@@ -38,7 +41,7 @@
                         <div class="mt-3"><?= $receipt['date'] ?></div>
                     </div>
                 </div>
-
+                <hr>
                 <div class="d-flex justify-content-between">
                     <div>
                         <div class="mt-3">Total amount</div>
