@@ -8,18 +8,18 @@ function add_currency($mysqli, $currencyName, $sellCurrencyName, $sellCurrencyCo
 }
 
 function get_all_currency($mysqli){
-    $sql = "SELECT * FROM `currency`";
+    $sql = "SELECT * FROM `currency` WHERE `soft_delete` = 0 ";
     return $mysqli->query($sql);    
 }
 
 
 function get_buy_name_code($mysqli){
-    $sql = "SELECT DISTINCT `buy_currency_name`,`buy_currency_code` FROM `currency`";
+    $sql = "SELECT DISTINCT `buy_currency_name`,`buy_currency_code` FROM `currency` WHERE `soft_delete` = 0 ";
     return $mysqli->query($sql);    
 }
 
 function get_sell_name_code($mysqli){
-    $sql = "SELECT DISTINCT `sell_currency_name`,`sell_currency_code` FROM `currency`";
+    $sql = "SELECT DISTINCT `sell_currency_name`,`sell_currency_code` FROM `currency` WHERE `soft_delete` = 0 ";
     return $mysqli->query($sql);    
 }
 
@@ -29,7 +29,7 @@ function delete_currency($mysqli, $id){
 }
 
 function get_currency_with_id($mysqli, $id){
-    $sql = "SELECT * FROM `currency` WHERE `id`=$id";
+    $sql = "SELECT * FROM `currency` WHERE `soft_delete` = 0   AND `id`=$id ";
     $result = $mysqli->query($sql);
     return $result->fetch_assoc();
 }
@@ -53,7 +53,7 @@ function currency_sd ($mysqli)
 
 function currency_search ($mysqli ,$key)
 {
-    $sql = "SELECT * FROM `currency` WHERE `currency_name` LIKE '%$key%' OR `buy_currency_name` LIKE '%$key%' OR 
+    $sql = "SELECT * FROM `currency` WHERE `soft_delete` = 0 AND `currency_name` LIKE '%$key%' OR `buy_currency_name` LIKE '%$key%' OR 
     `buy_currency_code` LIKE '%$key%' OR `sell_currency_name` LIKE '%$key%' OR `sell_currency_code` LIKE '%$key%'";
      return $mysqli->query($sql);
 }

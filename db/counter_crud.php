@@ -19,13 +19,13 @@ function get_counter_with_sd($mysqli){
 }
 
 function get_counter_id ($mysqli , $id){
-    $sql = "SELECT * FROM `counter` WHERE `id` = $id";
+    $sql = "SELECT * FROM `counter` WHERE `soft_delete` = 0   AND `id` = $id";
     $result = $mysqli->query($sql);
     return $result->fetch_assoc();
 }
 
 function update_counter ($mysqli , $id , $counter_name , $location){
-    $sql = "UPDATE `counter` SET `counter_name`= '$counter_name' , `location` = '$location' WHERE `id` = $id";
+    $sql = "UPDATE `counter` SET `counter_name`= '$counter_name' , `location` = '$location' WHERE  `id` = $id";
     return $mysqli->query($sql);
      
 }
@@ -47,7 +47,7 @@ function soft_delete ($mysqli , $id)
 
 function counter_search ($mysqli , $key)
 {
-    $sql = "SELECT * FROM `counter` WHERE `counter_name` LIKE '%$key%' OR `location` LIKE '%$key%'";
-    return $mysqli->query($sql);
+    $sql = "SELECT * FROM `counter` WHERE `soft_delete` = 0 AND  `counter_name` LIKE '%$key%' OR `location` LIKE '%$key%'";
+    return $mysqli->query($sql); 
 }
 

@@ -26,7 +26,10 @@
     }
 
     function get_counter_id_with_user_id($mysqli, $user_id){
-        $sql = "SELECT `counter`.`id` FROM `duty` INNER JOIN counter ON `counter`.`id` = `duty`.`counter_id` INNER JOIN `user` ON `user`.`id` = `duty`.`user_id` where `duty`.`user_id` = '$user_id'";
+        $sql = "SELECT `counter`.`id` FROM `duty` 
+        INNER JOIN counter ON `counter`.`id` = `duty`.`counter_id` 
+        INNER JOIN `user` ON `user`.`id` = `duty`.`user_id` 
+        where `duty`.`user_id` = '$user_id'";
         $result =  $mysqli->query($sql);
         return  $result->fetch_assoc();
     }
@@ -38,9 +41,34 @@
 
     function duty_validate_with_date($mysqli, $counter_id, $user_id, $date){
         $sql = "SELECT `id` FROM `duty` where '$date' 
-        BETWEEN `duty`.`from_date` AND `duty`.`to_date` AND `counter_id` = '$counter_id' AND `user_id` = '$user_id'";
+        BETWEEN `duty`.`from_date` AND `duty`.`to_date` 
+        AND `counter_id` = '$counter_id' 
+        AND `user_id` = '$user_id'";
         $result = $mysqli->query($sql);
         return $result->fetch_assoc();
+    }
+
+    function duty_validate_date_counter($mysqli, $date, $user_id){
+        $sql = "SELECT COUNT(`counter`.`id`) AS 'count' FROM `duty` 
+        INNER JOIN `user` ON `user`.`id` = `duty`.`user_id` INNER JOIN counter ON `counter`.`id` = `duty`.`counter_id` 
+        WHERE '$date' BETWEEN `duty`.`from_date` AND `duty`.`to_date` AND `user`.`id` = '$user_id' ";
+        $result = $mysqli->query($sql);
+        return $result->fetch_assoc();
+    }
+
+    function duty_validate_counter_id($mysqli, $date, $user_id, $counter_id){
+        $sql= "SELECT `duty`.`counter_id` AS `counter_id` FROM `duty` 
+        INNER JOIN `user` ON `user`.`id` = `duty`.`user_id` INNER JOIN counter ON `counter`.`id` = `duty`.`counter_id` 
+        WHERE '$date' BETWEEN `duty`.`from_date` AND `duty`.`to_date` AND `user`.`id` = '$user_id' AND `counter`.`id` != '$counter_id';";
+        return $mysqli->query($sql);
+    }
+
+    function search_duty ($mysqli, $search){
+        $sql = "SELECT `duty`.`id`,`user`.`name`,`counter`.`counter_name`,
+        `counter`.`location`,`du ty`.`from_date`,`duty`.`to_date` FROM `duty` 
+        INNER JOIN `user` on `user`.`id` = `duty`.`user_id` 
+        INNER JOIN `counter` ON `counter`.`id` = `duty`.`counter_id` WHERE `duty`.`soft_delete`=0 AND `user`.`name` LIKE '%$search%' OR `counter`.`counter_name` LIKE '%$search%' OR `counter`.`location` LIKE '%$search%' OR `duty`.`from_date` LIKE '%$search%' OR `duty`.`to_date` LIKE '%$search%'";
+        return $mysqli->query($sql);
     }
 
    

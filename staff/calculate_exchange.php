@@ -1,4 +1,4 @@
-<?php session_start()  ?>
+<?php //session_start()  ?>
 <?php require_once('../layout/header.php') ?>
 <?php require_once('../layout/nav.php') ?>
 <?php require_once('../layout/sidebar.php') ?>

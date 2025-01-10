@@ -41,6 +41,10 @@ function update_user($mysqli, $id,$name, $email, $address, $ph_no, $role, $user_
     return $mysqli->query($sql);
 }
 
+function update_user_profile($mysqli, $id, $name, $email, $address, $phone, $user_img){
+    $sql = "UPDATE `user` SET `name`='$name', `email`='$email', `address`='$address', `ph_no`='$phone', `user_img`= '$user_img' WHERE `id`=$id";
+}   return $mysqli->query($sql);
+
 function get_user_with_id($mysqli, $id){
     $sql = "SELECT * FROM `user` WHERE `id`=$id";
     return $mysqli->query($sql);
@@ -65,7 +69,7 @@ function delete_user($mysqli , $id)
 
 function user_search ($mysqli , $key) 
 {
-$sql = "SELECT * FROM `user` WHERE `name` LIKE '%$key%' OR `email` LIKE '%$key%' OR `address` LIKE '%$key%' OR  `ph_no` LIKE '%$key%'";
+$sql = "SELECT * FROM `user` WHERE `soft_delete` = 0 AND `name` LIKE '%$key%' OR `email` LIKE '%$key%' OR `address` LIKE '%$key%' OR  `ph_no` LIKE '%$key%'";
 return $mysqli->query($sql);
 }
 

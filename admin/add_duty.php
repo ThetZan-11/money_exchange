@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
     $counterName      = $mysqli->real_escape_string(trim($_POST['counterName']));
     $userName         = $mysqli->real_escape_string(trim($_POST['userName']));
     $from_date        = $mysqli->real_escape_string(trim($_POST['from_date']));
-    $to_date          = $mysqli->real_escape_string(trim($_POST['to_date']));
+    $to_date          = $mysqli->real_escape_string(trim(string: $_POST['to_date']));
     $dateFormat       = 'Y-m-d';
     $from_date_format = DateTime::createFromFormat($dateFormat, $from_date);
     $to_date_format   = DateTime::createFromFormat($dateFormat, $to_date);
@@ -76,6 +76,33 @@ if (isset($_POST['submit'])) {
         $invalid      =  true;
     }
 
+    $duty_validate_from = duty_validate_date_counter($mysqli, $from_date, $userName);
+    if($duty_validate_from['count'] > '1' ){
+        $counterNameErr = "Assign conflit";
+        $invalid = true;
+    }
+
+    $duty_validate_to = duty_validate_date_counter($mysqli, $to_date, $userName);
+    if($duty_validate_to['count'] > '1' ){
+        $userNameErr = "Assign conflit";
+        $invalid = true;
+    }
+
+$duty_validates_counter_from = duty_validate_counter_id($mysqli, $from_date, $userName, $counterName);
+$duty_validates_counter_to = duty_validate_counter_id($mysqli, $to_date, $userName, $counterName);
+    while($duty_validate = $duty_validates_counter_from->fetch_assoc()){
+        if($counterName = $duty_validate['counter_id']){
+            $invalid = true;
+            $counterNameErr = "Assign conflit";
+        }
+    }
+
+    while($duty_validate = $duty_validates_counter_to->fetch_assoc()){
+        if($counterName = $duty_validate['counter_id']){
+            $invalid = true;
+            $userNameErr = "Assign conflit";
+        }
+    }
 
     if (!$invalid) {
         if (isset($_GET['id'])) {
@@ -112,6 +139,7 @@ if (isset($_POST['submit'])) {
                                     <option value="<?= $counter['id'] ?>"><?= $counter['counter_name'] ?></option>
                                 <?php } ?>
                             </select>
+                            <small class="text-danger"><?= $counterNameErr ?></small>
                         </div>
 
                         <div class="form-group mb-4">
@@ -123,6 +151,7 @@ if (isset($_POST['submit'])) {
                                     <option value="<?= $staff['id'] ?>"><?= $staff['name'] ?></option>
                                 <?php } ?>
                             </select>
+                            <small class="text-danger"><?= $userNameErr ?></small>
                         </div>
 
                         <div class="form-group mb-4">

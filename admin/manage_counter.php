@@ -48,7 +48,6 @@
         $invalid = true;
      };
     
-     
     if(!$invalid){
         if (isset($_GET['id'])) {
             edit_currency_counter($mysqli, $id, $counterName, $sellName);
@@ -83,7 +82,7 @@
                         <div class="input mx-auto">
                             <div class="form-group mb-4"> 
                                  <label for="exampleDataList" class="form-label">Choose Counter</label>
-                                <select id="datalistOptions" class="form-control" name="counterName" value="<?php echo $counterName ?>">
+                                <select id="datalistOptions" class="form-control" name="counterName" value="<?= $counterName ?>">
                                 <?php
                                     if($_GET['id']){ ?>
 

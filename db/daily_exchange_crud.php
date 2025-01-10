@@ -27,13 +27,13 @@
    }
 
    function select_only_sell_code($mysqli){
-    $sql = "SELECT DISTINCT `sell_currency_code` FROM `currency`";
+    $sql = "SELECT DISTINCT `sell_currency_code` FROM `currency` WHERE `soft_delete` = 0";
     return $mysqli->query($sql);
     //return $result->fetch_assoc();
    }
 
    function select_only_buy_code($mysqli){
-    $sql = "SELECT DISTINCT `buy_currency_code` FROM `currency`";
+    $sql = "SELECT DISTINCT `buy_currency_code` FROM `currency` WHERE `soft_delete` = 0";
     return $mysqli->query($sql);
    }
 
