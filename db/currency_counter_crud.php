@@ -31,13 +31,13 @@ function delete_currency_counter($mysqli, $id){
 }
 
 function get_currency_id_with_counter_id($mysqli,$id){
-    $sql = "SELECT `currency_id` from `currency_counter` WHERE `counter_id`='$id'";
+    $sql = "SELECT `currency_id` from `currency_counter` WHERE  `soft_delete` = 0   AND `counter_id`='$id'";
     $result =  $mysqli->query($sql);
     return $result->fetch_assoc();
 }
 
 function get_counter_name_and_id($mysqli, $counter_id, $buy_currency_code, $sell_currency_code){
-    $sql = "SELECT `counter`.`counter_name`, `currency_counter`.`id` FROM `currency_counter` INNER JOIN `currency` ON `currency`.`id` = `currency_counter`.`currency_id` INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` WHERE `currency`.`buy_currency_code` ='$buy_currency_code'  AND `currency`.`sell_currency_code`= '$sell_currency_code' AND `counter`.`id`='$counter_id'";
+    $sql = "SELECT `counter`.`counter_name`, `currency_counter`.`id` FROM `currency_counter` INNER JOIN `currency` ON `currency`.`id` = `currency_counter`.`currency_id` INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id`    AND `currency`.`buy_currency_code` ='$buy_currency_code'  AND `currency`.`sell_currency_code`= '$sell_currency_code' AND `counter`.`id`='$counter_id'";
     $result =  $mysqli->query($sql);
     return $result->fetch_assoc();  
 }

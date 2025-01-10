@@ -1,6 +1,6 @@
 <?php
 
-try {
+// try {
     $mysqli = new mysqli("localhost", "root", "");
     $sql = "CREATE DATABASE IF NOT EXISTS `money_exchange`";
     if ($mysqli->query($sql)) {
@@ -8,10 +8,10 @@ try {
             create_table($mysqli);
         }
     }
-} catch (\Throwable $th) {
-    echo "Can not connect to Database!";
-    die();
-}
+// } catch (\Throwable $th) {
+//     echo "Can not connect to Database!";
+//     die();
+// }
 
 function create_table($mysqli)
 {

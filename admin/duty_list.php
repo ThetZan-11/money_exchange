@@ -35,9 +35,16 @@
   </thead>
   <tbody>
     <?php
-    $i = 1;
+
+if(isset($_POST['key']) && $_POST['key'] != ''){
+    $key = $_POST['key'];
+    $duties =  search_duty($mysqli, $key);
+  } else {
     $duties = select_duty($mysqli);
-     while ($duty = $duties->fetch_assoc()) { ?>
+}
+    $i = 1;
+     while ($duty = $duties->fetch_assoc()) { 
+          ?>
      <tr>
         <td><?= $i ?></td>
         <td><?= $duty['name'] ?></td>

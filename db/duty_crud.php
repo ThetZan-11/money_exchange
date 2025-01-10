@@ -63,4 +63,12 @@
         return $mysqli->query($sql);
     }
 
+    function search_duty ($mysqli, $search){
+        $sql = "SELECT `duty`.`id`,`user`.`name`,`counter`.`counter_name`,
+        `counter`.`location`,`du ty`.`from_date`,`duty`.`to_date` FROM `duty` 
+        INNER JOIN `user` on `user`.`id` = `duty`.`user_id` 
+        INNER JOIN `counter` ON `counter`.`id` = `duty`.`counter_id` WHERE `duty`.`soft_delete`=0 AND `user`.`name` LIKE '%$search%' OR `counter`.`counter_name` LIKE '%$search%' OR `counter`.`location` LIKE '%$search%' OR `duty`.`from_date` LIKE '%$search%' OR `duty`.`to_date` LIKE '%$search%'";
+        return $mysqli->query($sql);
+    }
+
    

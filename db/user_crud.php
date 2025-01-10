@@ -70,7 +70,7 @@ function delete_user($mysqli , $id)
 
 function user_search ($mysqli , $key) 
 {
-$sql = "SELECT * FROM `user` WHERE `name` LIKE '%$key%' OR `email` LIKE '%$key%' OR `address` LIKE '%$key%' OR  `ph_no` LIKE '%$key%'";
+$sql = "SELECT * FROM `user` WHERE `soft_delete` = 0 AND `name` LIKE '%$key%' OR `email` LIKE '%$key%' OR `address` LIKE '%$key%' OR  `ph_no` LIKE '%$key%'";
 return $mysqli->query($sql);
 }
 
