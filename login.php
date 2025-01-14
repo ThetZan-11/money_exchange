@@ -30,6 +30,10 @@ if (isset($_POST['email'])) {
         $passwordErr   = "Can't be blank.";
         $invalid       = true;
     }
+    if(!preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',$email)){
+        $emailErr   = "Format Wrong";
+        $invalid    = true;
+    }
 
     if (!$invalid) {
         $users_with_email = get_user_with_email($mysqli, $email);

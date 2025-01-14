@@ -22,17 +22,16 @@ function save_user($mysqli, $name, $email, $password, $address, $ph_no, $role, $
             return "Internal server error!";
         }
     }
-
 }
 
 function get_user_with_email($mysqli,$email){
-    $sql = "SELECT * FROM `user` WHERE `email`='$email'";
+    $sql = "SELECT * FROM `user` WHERE `email`='$email' AND `soft_delete` = 0";
     $result = $mysqli->query($sql);
     return $result->fetch_assoc();
 }
 
 function get_all_user($mysqli){
-    $sql = "SELECT * FROM `user`";
+    $sql = "SELECT * FROM `user` WHERE `soft_delete` = 0";
     return $mysqli->query($sql);
 }
 
@@ -52,25 +51,19 @@ function get_user_with_id($mysqli, $id){
 }
 
 function get_email_of_user($mysqli){
-    $sql = "SELECT `email` FROM `user`";
+    $sql = "SELECT `email` FROM `user` WHERE `soft_delete` = 0";
     $result = $mysqli->query($sql);
     return $result->fetch_assoc();
 }
 
 function get_staff($mysqli){
-    $sql = "SELECT * FROM `user` WHERE `role`=2";
-    return $mysqli->query($sql);
-}
-
-function delete_user($mysqli , $id)
-{
-    $sql = "DELETE FROM `user` WHERE `id`=$id";
+    $sql = "SELECT * FROM `user` WHERE `role`=2 AND `soft_delete` = 0";
     return $mysqli->query($sql);
 }
 
 function user_search ($mysqli , $key) 
 {
-$sql = "SELECT * FROM `user` WHERE `soft_delete` = 0 AND `name` LIKE '%$key%' OR `email` LIKE '%$key%' OR `address` LIKE '%$key%' OR  `ph_no` LIKE '%$key%'";
+$sql = "SELECT * FROM `user` WHERE `name` LIKE '%$key%' AND `soft_delete` = 0 OR `email` LIKE '%$key%' AND `soft_delete` = 0 OR `address` LIKE '%$key%' AND `soft_delete` = 0 OR  `ph_no` LIKE '%$key%'";
 return $mysqli->query($sql);
 }
 

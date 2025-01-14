@@ -142,5 +142,5 @@
 
 <!-- ======= Footer ======= -->
 <?php require_once '../layout/footer.php' ?>
-<?php //get_exchange_rate($mysqli); ?>
+<?php get_exchange_rate($mysqli); ?>
 <!-- End footer-->

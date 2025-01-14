@@ -37,7 +37,6 @@
 <!-- Template Main JS File -->
 <script src="../assets/js/main.js"></script>
 
-
 <script>
   let counterSelect =document.getElementById("counter_select");
   let form = document.getElementById("filter_counter_form");

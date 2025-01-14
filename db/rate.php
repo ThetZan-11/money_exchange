@@ -7,7 +7,7 @@ function get_exchange_rate($mysqli){
     $sell_currency_arr = [];
     $date_validate  = select_date($mysqli);
     while ($buy_currencies = $buy_currencies_from_db->fetch_assoc()) {
-       array_push($buy_currency_arr, $buy_currencies['buy_currency_code']);
+        array_push($buy_currency_arr, $buy_currencies['buy_currency_code']);
     }
     while ($sell_currencies = $sell_currencies_from_db->fetch_assoc()) {
         array_push($sell_currency_arr, $sell_currencies['sell_currency_code']);

@@ -1,16 +1,17 @@
 <?php require_once('../layout/header.php') ?>
-<?php require_once('../layout/nav.php') ?>
-<?php require_once('../layout/sidebar.php') ?>
+<?php //require_once('../layout/nav.php') ?>
+<?php //require_once('../layout/sidebar.php') ?>
 <?php require_once('../db/daily_exchange_crud.php') ?>
 <?php require_once('../db/rate.php') ?>
 <?php  
 
-   
     if(isset($_SESSION['order_detail'])){
         $trades = $_SESSION['order_detail'];
     } else {
         echo "<script>location.replace('./calculate_exchange.php')</script>";
     }
+
+    var_dump($trades);
 
     $exchange_amount = $exchange_amountErr = "";
     $converted_amount = $converted_amountErr = "";
@@ -28,6 +29,7 @@
         $date_now           = date('Y-m-d'); 
         $customer_email     = $_POST['customer'];
         $counter_name       = $_POST['counter_name'];
+        $customer_id = get_customer_with_email($mysqli, $customer_email);
 
         if($exchange_amount == ""){
             $exchange_amountErr = "can't be blank!";
@@ -45,9 +47,12 @@
             $toErr = "can't be blank!";
             $invalid = true;           
         }  
+        if($counter_name == ""){
+            $counter_nameErr = "can't be blank";
+            $invalid = true;
+        }
 
         if(!$invalid){
-            $customer_id = get_customer_with_email($mysqli, $customer_email);
             add_trade($mysqli, $trades[0]['amount'], $trades[0]['result'], $date_now, $counter_name,$customer_id['id']);
             echo "<script>location.replace('./saleRecord_list.php')</script>";
             unset($_SESSION['order_detail']);
@@ -69,6 +74,7 @@
                         <option value="<?= $customer['email'] ?>"><?= $customer['name'] ?></option>    
                     <?php } ?>
                 </datalist>
+                <small class="text-danger"><?= $customer_emailErr ?></small>
             </div>
             
             <div class="form-group mb-3">

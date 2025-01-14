@@ -13,10 +13,9 @@
         <button class="btn btn-success my-3 mx-3" onclick="printReceipt()"> 
             Print
         </button>
-        <a href="saleRecord_list.php" class ="btn btn-primary">Back</a>
     </div>
 
-    
+
 
         <div class="card mx-auto" style="width:500px; background-color:#ccd5ae;" id="receipt">
             <div class="card-body mx-auto" style="width:450px">

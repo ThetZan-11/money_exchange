@@ -1,31 +1,29 @@
 <?php require_once '../layout/header.php' ?>
-<?php require_once '../layout/nav.php' ?>
-<?php require_once '../layout/sidebar.php' ?>
+<?php //require_once '../layout/nav.php' ?>
+<?php //require_once '../layout/sidebar.php' ?>
 
 <?php
-    $currencyName       = $currencyNameErr = "";
-    $sellCurrencyName   = $sellCurrencyNameErr ="";
-    $sellCurrencyCode   = $sellCurrencyCodeErr ="";
-    $buyCurrencyName    = $buyCurrencyNameErr ="";
-    $buyCurrencyCode    = $buyCurrencyCodeErr ="";
+    $currencyName = $currencyNameErr = "";
+    $currencyCode = $currencyCodeErr = "";
+    $total = $totalErr = "";
+    $flag = $flagErr = "" ; 
     $invalid = false;
 
     if(isset($_GET['id'])){
         $currency           = get_currency_with_id($mysqli,$_GET['id']);
         $id                 = $_GET['id'];
         $currencyName       = $currency['currency_name'];
-        $sellCurrencyName   = $currency['sell_currency_name'];
-        $sellCurrencyCode   = $currency['sell_currency_code'];
-        $buyCurrencyName    = $currency['buy_currency_name'];
-        $buyCurrencyCode    = $currency['buy_currency_code'];
+        $currencyCode   = $currency['currency_code'];
+        $total   = $currency['total'];
+        $olfImage    = $currency['flag'];
     }
 
     if(isset($_POST['submit'])){
-        $currencyName     = $mysqli->real_escape_string(trim($_POST['currencyName']));
-        $sellCurrencyName = $mysqli->real_escape_string(trim($_POST['sellCurrencyName']));
-        $sellCurrencyCode = $mysqli->real_escape_string(trim(strtoupper($_POST['sellCurrencyCode'])));
-        $buyCurrencyName  = $mysqli->real_escape_string(trim($_POST['buyCurrencyName']));
-        $buyCurrencyCode  = $mysqli->real_escape_string(trim(strtoupper($_POST['buyCurrencyCode'])));
+        $currencyName = $mysqli->real_escape_string(trim($_POST['currencyName']));
+        $currencyCode = $mysqli->real_escape_string(trim(strtoupper($_POST['currencyCode'])));
+        $total = $mysqli->real_escape_string(trim($_POST['total']));
+        $flag = $_FILES['flag_img'];
+        
 
         if($currencyName == ""){
             $currencyNameErr = "Can't be blank";
@@ -35,48 +33,45 @@
             $currencyNameErr = "Can't be number";
             $invalid = true;
         }
-        if($sellCurrencyName == ""){
-            $sellCurrencyNameErr = "Can't be blank";
+        if($currencyCode == ""){
+            $currencyCodeErr = "Can't be blank";
             $invalid = true;
         }
-        if (is_numeric($sellCurrencyName)) {
-            $sellCurrencyNameErr = "Can't be number";
+        if (is_numeric($currencyCode)) {
+            $currencyCodeErr = "Can't be number";
             $invalid = true;
         }
-        if($sellCurrencyCode == ""){
-            $sellCurrencyCodeErr = "Can't be blank";
+        if($total == ""){
+            $totalErr = "Can't be blank";
             $invalid = true;
         }
-        if (is_numeric($sellCurrencyCode)) {
-            $sellCurrencyCodeErr = "Can't be number";
-            $invalid = true;
-        }
-        if($buyCurrencyName == ""){
-            $buyCurrencyNameErr = "Can't be blank";
-            $invalid = true;
-        }
-        if (is_numeric($buyCurrencyName)) {
-            $buyCurrencyNameErr = "Can't be number";
-            $invalid = true;
-        }
-        if($buyCurrencyCode == ""){
-            $buyCurrencyCodeErr = "Can't be blank";
-            $invalid = true;
-        }
-        if (is_numeric($buyCurrencyCode)) {
-            $buyCurrencyCodeErr = "Can't be number";
+        if (!is_numeric($total)) {
+            $totalErr = "Can't be number";
             $invalid = true;
         }
 
+
         if(!$invalid){
-            if(isset($_GET['id'])){
-                update_currency($mysqli, $id ,$currencyName,$sellCurrencyName,$sellCurrencyCode,$buyCurrencyName,$buyCurrencyCode);
-                echo "<script>location.replace('../admin/currency_list.php?edit_success=Edited Successfully')</script>";
-            } else {
-                add_currency($mysqli,$currencyName,$sellCurrencyName,$sellCurrencyCode,$buyCurrencyName,$buyCurrencyCode);
-                echo "<script>location.replace('../admin/currency_list.php?add_success=Added Successfully')</script>";
+          if(isset($_GET['id'])){
+            if($flag['name']==""){
+                update_currency($mysqli, $id, $currencyName, $currencyCode, $total, $oldImage);
+                echo "<script>location.replace('./currency_list.php?add_success=Edit Successfully')</script>";
+              } else {
+                $filePath = "../assets/img/".$oldImage;
+                unlink($filePath);
+                $tmp = $user_img['tmp_name'];
+                $user_profile_name = date("YMDHS") . $user_img['name'];
+                update_user_profile($mysqli, $id, $name, $email, $address, $phone, $user_profile_name);
+                move_uploaded_file($tmp, '../assets/img/' . $user_profile_name);
+                echo "<script>location.replace('./user_profile.php?id=$id')</script>";
             }
-            
+          } else {
+                $flag_profile = date('DMYHS').$flag['name'];
+                $flag_tmp = $flag['tmp_name'];
+                add_currency($mysqli, $currencyName, $currencyCode, $total, $flag_profile);
+                move_uploaded_file($flag_tmp, '../assets/flag/'.$flag_profile);
+                echo "<script>location.replace('./currency_list.php')</script>";
+          }
         }
     }
 ?>
@@ -94,32 +89,28 @@
                 <?php } ?>
             </div>
             <div class="card-body mx-auto">
-                 <form method="post">
+                 <form method="post" enctype="multipart/form-data">
                     <div class="input mx-auto">
-                        <div class="forname mb-4">
+                        <div class="form-group mb-3">
                             <label for="name">Currency Name</label>
                             <input type="text" class="form-control" name="currencyName" placeholder="Enter Currency Name" style="width: 300px;; height:50px;" value="<?= $currencyName ?>">
                             <div class="invalid"><?= $currencyNameErr ?></div>
                         </div>
-                        <div class="foremail mb-4">
-                            <label for="name">Sell Currency Name</label>
-                            <input type="text" class="form-control" name="sellCurrencyName" placeholder="Enter Location" style="width:300px;height:50px;" value="<?= $sellCurrencyName ?>">
-                            <div class="invalid"><?= $sellCurrencyNameErr ?></div>
+
+                        <div class="form-group mb-3">
+                            <label for="name">Currency Code</label>
+                            <input type="text" class="form-control" name="currencyCode" placeholder="Enter Currency Name" style="width: 300px;; height:50px;" value="<?= $currencyCode ?>">
+                            <div class="invalid"><?= $currencyCodeErr ?></div>
                         </div>
-                        <div class="foremail mb-4">
-                            <label for="name">Sell Currency Code</label>
-                            <input type="text" class="form-control" name="sellCurrencyCode" placeholder="Enter Location" style="width:300px;height:50px;" value="<?= $sellCurrencyCode ?>">
-                            <div class="invalid"><?= $sellCurrencyCodeErr ?></div>
+                       
+                        <div class="form-group mb-3">
+                            <label for="name">Total</label>
+                            <input type="text" class="form-control" name="total" placeholder="Enter Total" style="width:300px;height:50px;" value="<?= $total ?>">
+                            <div class="invalid"><?= $totalErr ?></div>
                         </div>
-                        <div class="foremail mb-4">
-                            <label for="name">Buy Currency Name</label>
-                            <input type="text" class="form-control" name="buyCurrencyName" placeholder="Enter Buy Currency Name" style="width:300px;height:50px;" value="<?= $buyCurrencyName ?>">
-                            <div class="invalid"><?= $buyCurrencyNameErr ?></div>
-                        </div>
-                        <div class="foremail mb-4">
-                            <label for="name">Buy Currency Code</label>
-                            <input type="text" class="form-control" name="buyCurrencyCode" placeholder="Enter Buy Currency Code" style="width:300px;height:50px;" value="<?= $buyCurrencyCode ?>">
-                            <div class="invalid"><?= $buyCurrencyCodeErr ?></div>
+                        <div class="form-group mb-3">
+                            <label for="name">Flag</label>
+                            <input type="file" name="flag_img" class="form-control">
                         </div>
                         <button type="submit" name="submit" class="btn btn-primary">Submit</button>
                     </div>

@@ -17,7 +17,7 @@ $user = $users->fetch_assoc();
 
 
 if ($_GET['id'] == '') {
-  echo "<script>location.replace('./index.php'x`)</script>";
+  echo "<script>location.replace('./index.php')</script>";
 } else {
   if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -226,16 +226,14 @@ if (isset($_POST['name'])) {
   let uploadContainer = document.getElementById("uploadContainer");
   let changePassword = document.getElementById("changePassword");
 
-
   input.addEventListener("change", () => {
     if (input.files && input.files['0']) {
       var reader = new FileReader();
       reader.addEventListener("load", (e) => {
         img.setAttribute('src', e.target.result);
       })
-      reader.readAsDataURL(input.files[0]);
+      reader.readAsDataURL(input.files[0]); 
     }
   })
 </script>
-
-<?php require_once '../layout/footer.php'  ?>
+<?php require_once '../layout/footer.php' ?>

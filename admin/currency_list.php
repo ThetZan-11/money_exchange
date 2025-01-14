@@ -9,14 +9,7 @@
     }
  }
 ?>
-<style>
-    table th{
-        font-size: 15px;
-    }
-table{
-        font-size: 14px;
-    }
-</style>
+
   <main id="main" class="main">
     <div class="container">
       <h3>Currency List</h3>
@@ -31,15 +24,12 @@ table{
      </div>
     <table class="table table-bordered  datatable">
   <thead>
-    <tr>
         <th>No</th>
         <th>Currency Name</th>
-        <th>Sell Currency Name</th>
-        <th>Sell Currency Code</th>
-        <th>Buy Currency Name</th>
-        <th>Buy Currency Code</th>
+        <th>Currency Code</th>
+        <th>Total</th>
+        <th>Flag</th>
         <th>Action </th>
-    </tr>
   </thead>
   <tbody>
     <?php
@@ -49,16 +39,14 @@ table{
     }else {
       $currencies  =  currency_sd($mysqli);
     }
-  
-    //die(var_dump($currencies));
+
      while ($currency = $currencies->fetch_assoc()) { ?>
      <tr>
         <td><?= $i ?></td>
         <td><?= $currency['currency_name'] ?></td>
-        <td><?= $currency['sell_currency_name'] ?></td>
-        <td><?= $currency['sell_currency_code'] ?></td>
-        <td><?= $currency['buy_currency_name'] ?></td>
-        <td><?= $currency['buy_currency_code'] ?></td>
+        <td><?= $currency['currency_code'] ?></td>
+        <td class="text-end"><?= number_format($currency['total']) ?></td>
+        <td><img src="../assets/flag/<?= $currency['flag']?>" width="50px" height="50px"></td>
         <td>
         <a class="btn btn-primary btn-sm" href="./add_currency.php?id=<?= $currency['id'] ?> "><i class="fa-solid fa-pen"></i></a>
         <button class="btn btn-sm btn-danger counterDelete" data-value="<?= $currency['id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></button>
