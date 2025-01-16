@@ -88,6 +88,13 @@ if (isset($_POST['submit'])) {
         $invalid = true;
     }
 
+    $staff_count = staff_count_validate ($mysqli, $from_date, $to_date, $counterName);
+  
+    if($staff_count['staff_count']>='2'){
+        $counterNameErr = "This count have enough staff";
+        $invalid = true;
+    }
+
 $duty_validates_counter_from = duty_validate_counter_id($mysqli, $from_date, $userName, $counterName);
 $duty_validates_counter_to = duty_validate_counter_id($mysqli, $to_date, $userName, $counterName);
     while($duty_validate = $duty_validates_counter_from->fetch_assoc()){

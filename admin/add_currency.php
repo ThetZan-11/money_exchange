@@ -1,6 +1,6 @@
 <?php require_once '../layout/header.php' ?>
-<?php //require_once '../layout/nav.php' ?>
-<?php //require_once '../layout/sidebar.php' ?>
+<?php require_once '../layout/nav.php' ?>
+<?php require_once '../layout/sidebar.php' ?>
 
 <?php
     $currencyName = $currencyNameErr = "";
@@ -15,7 +15,7 @@
         $currencyName       = $currency['currency_name'];
         $currencyCode   = $currency['currency_code'];
         $total   = $currency['total'];
-        $olfImage    = $currency['flag'];
+        $oldImage    = $currency['flag'];
     }
 
     if(isset($_POST['submit'])){
@@ -24,7 +24,6 @@
         $total = $mysqli->real_escape_string(trim($_POST['total']));
         $flag = $_FILES['flag_img'];
         
-
         if($currencyName == ""){
             $currencyNameErr = "Can't be blank";
             $invalid = true;
@@ -59,11 +58,11 @@
               } else {
                 $filePath = "../assets/img/".$oldImage;
                 unlink($filePath);
-                $tmp = $user_img['tmp_name'];
-                $user_profile_name = date("YMDHS") . $user_img['name'];
-                update_user_profile($mysqli, $id, $name, $email, $address, $phone, $user_profile_name);
-                move_uploaded_file($tmp, '../assets/img/' . $user_profile_name);
-                echo "<script>location.replace('./user_profile.php?id=$id')</script>";
+                $tmp = $flag['tmp_name'];
+                $flag_profile = date("YMDHS") . $flag['name'];
+                update_currency($mysqli, $id, $currencyName, $currencyCode, $total, $flag_profile);
+                move_uploaded_file($tmp, '../assets/flag/' . $flag_profile);
+                echo "<script>location.replace('./currency_list.php?id=$id')</script>";
             }
           } else {
                 $flag_profile = date('DMYHS').$flag['name'];

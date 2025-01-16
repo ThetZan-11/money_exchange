@@ -76,6 +76,16 @@
                 <i class="bi bi-circle"></i><span>Currency List</span>
               </a>
             </li>
+            <li>
+              <a href="./currency_pair.php">
+                <i class="bi bi-circle"></i><span>Add Currency Pair</span>
+              </a>
+            </li>
+            <li>
+              <a href="./currencypair_list.php">
+                <i class="bi bi-circle"></i><span>Currency Pair List</span>
+              </a>
+            </li>
           </ul>
         </li>
   
@@ -108,8 +118,18 @@
               </a>
             </li>
             <li>
-              <a href="./counter_detail_list.php">
+              <a href="./counterDetail_list.php">
                 <i class="bi bi-circle"></i><span>Counter Detail List</span>
+              </a>
+            </li>
+            <li>
+              <a href="./cash_flow.php">
+                <i class="bi bi-circle"></i><span>Add Cash Flow</span>
+              </a>
+            </li>
+            <li>
+              <a href="./cashflow_list.php">
+                <i class="bi bi-circle"></i><span>Cash Flow List</span>
               </a>
             </li>
           </ul>

@@ -7,7 +7,7 @@ function add_counter($mysqli , $counter_name , $location)  {
 }
 
 function get_counter ($mysqli){
-    $sql = "SELECT * FROM `counter`";
+    $sql = "SELECT * FROM `counter` WHERE `soft_delete` = 0";
     return  $mysqli->query($sql);
   
 }
@@ -49,5 +49,13 @@ function counter_search ($mysqli , $key)
 {
     $sql = "SELECT * FROM `counter` WHERE `soft_delete` = 0 AND  `counter_name` LIKE '%$key%' OR `location` LIKE '%$key%'";
     return $mysqli->query($sql); 
+}
+
+function count_currencypair_with_counter($mysqli, $counter_id, $currencypair_id){
+    $sql = "SELECT COUNT(*) AS `count` FROM `currency_pair_counter` 
+    WHERE `currency_pair_counter`.`counter_id` = '$counter_id' 
+    AND `currency_pair_counter`.`currency_pair_id` = '$currencypair_id'";
+    $result = $mysqli->query($sql);
+    return $result->fetch_assoc();
 }
 

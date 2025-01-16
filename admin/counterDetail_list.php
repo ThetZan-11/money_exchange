@@ -6,10 +6,25 @@
 <?php
 if (isset($_GET['deleteId'])) {
   if (delete_currency_counter($mysqli, $_GET['deleteId'])) {
-    echo "<script>location.replace('./counter_detail_list.php')</script>";
+    echo "<script>location.replace('./counterDetail_list.php')</script>";
   }
 }
+
+if (isset($_POST['status_on'])) {
+  $currencyPairCounter_id = $_POST['status_on'];
+  status_on($mysqli, $currencyPairCounter_id);
+  echo "<script>location.replace('./counterDetail_list.php')</script>";
+} 
+
+if(isset($_POST['status_off'])){
+  $currencyPairCounter_id = $_POST['status_off'];
+  status_off($mysqli, $currencyPairCounter_id);
+  echo "<script>location.replace('./counterDetail_list.php')</script>";
+}
+
 ?>
+
+
 <main id="main" class="main">
   <div class="container-fluid">
     <h3>Counter With Currency</h3>
@@ -34,13 +49,26 @@ if (isset($_GET['deleteId'])) {
       <tbody>
         <?php
         $i = 1;
-        $currencyCounters = get_currency_counter($mysqli);
+        $currencyCounters = show_currency_pair_counter($mysqli);
         while ($currencyCounter = $currencyCounters->fetch_assoc()) { ?>
           <tr>
             <td><?= $i ?></td>
             <td><?= $currencyCounter['counter_name'] ?></td>
-            <td><?= $currencyCounter['currency_name'] ?></td>
-            <td>
+            <td><?= $currencyCounter['pair_name'] ?></td>
+            <td class="d-flex justify-content-evenly">
+              <form method="post">
+              <?php 
+                if($currencyCounter['status'] == true){ ?>
+                 <button class="btn btn-sm btn-danger" name="status_off" value="<?= $currencyCounter['id']?>">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+                  
+                <?php } else { ?>
+                  <button class="btn btn-sm btn-success" name="status_on" value="<?= $currencyCounter['id']?>">
+                  <i class="fa-solid fa-check"></i>
+                </button>
+              <?php } ?>
+              </form>
               <a class="btn btn-primary btn-sm" href="./manage_counter.php?id=<?= $currencyCounter['id'] ?> "><i class="fa-solid fa-pen"></i></a>
               <button class="btn btn-sm btn-danger counterDelete" data-value="<?= $currencyCounter['id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></button>
             </td>

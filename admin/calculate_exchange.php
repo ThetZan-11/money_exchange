@@ -6,26 +6,14 @@
 
 <?php  
  $amount = $amountErr = "";
- $from   = $fromErr   = "";
- $to     = $toErr     =  "";
  $result = "";
  $invalid = false;
 
     if(isset($_POST['submit'])){
         $amount = $_POST['amount'];
-        $from   = $_POST['from'];
-        $to     = $_POST['to'];
 
         if($amount == ""){
             $amountErr = "can't be blank!";
-            $invalid = true;           
-        }
-        if($from == ""){
-            $fromErr = "can't be blank!";
-            $invalid = true;           
-        }
-        if($to == ""){
-            $toErr = "can't be blank!";
             $invalid = true;           
         }
         if(!is_numeric($amount)){
@@ -33,10 +21,7 @@
             $invalid = true;  
         }
 
-        if(!$invalid){
-            $rate =  select_rates($mysqli, $from, $to);
-            $change =  select_rates($mysqli, $to, $from);
-        }
+      
     }
 ?>
 
@@ -51,8 +36,7 @@
                     <label for="floatingInput">Amount</label>
                     <small class="text-danger"><?= $amountErr ?></small>
                 </div>
-
-               
+ 
                 <div class="form-group col-md-4" id="form-input">
                 <label for="exampleDataList" class="form-label ">From</label>
                     <input class="form-control py-3" list="datalistOptions" name="from" id="exampleDataList" placeholder="Type to search..."> 
@@ -102,8 +86,6 @@
             </div>
         </form>
     </div>
-    
 </main>
 
 <?php require_once '../layout/footer.php';
-//get_exchange_rate($mysqli); ?>

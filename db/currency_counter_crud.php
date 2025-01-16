@@ -9,11 +9,6 @@
         return $mysqli->query($sql);
     }
 
-    function get_all_currency_counter($mysqli){
-        $sql = "SELECT * FROM `currency_counter`";
-        return $mysqli->query($sql);
-    }
-
     function get_currency_counter($mysqli){
         $sql = "SELECT `currency_counter`.`id`,`counter`.`counter_name`,`currency`.`currency_name` FROM `currency_counter`INNER JOIN `counter` ON `counter`.`id` = `currency_counter`.`counter_id` INNER JOIN `currency` ON `currency`.`id` = `currency_counter`.`currency_id`";
         return $mysqli->query($sql);
@@ -58,7 +53,7 @@ function sell_currency_code_with_counter($mysqli, $counter_id){
 
 
 function choose_counter_currency($mysqli,$counter_id , $currency_id){
-    $sql = "SELECT id FROM `currency_counter` WHERE `counter_id` =  $counter_id AND `currency_id` = $currency_id";
+    $sql = "SELECT `id` FROM `currency_counter` WHERE `counter_id` =  $counter_id AND `currency_id` = $currency_id";
     $result = $mysqli->query($sql);
     return $result->fetch_assoc();
 }

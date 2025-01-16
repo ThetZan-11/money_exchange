@@ -29,7 +29,7 @@
         $sql = "SELECT `counter`.`id` FROM `duty` 
         INNER JOIN counter ON `counter`.`id` = `duty`.`counter_id` 
         INNER JOIN `user` ON `user`.`id` = `duty`.`user_id` 
-        where `duty`.`user_id` = '$user_id'";
+        where `duty`.`user_id` = '$user_id' AND `duty`.`soft_delete` = 0";
         $result =  $mysqli->query($sql);
         return  $result->fetch_assoc();
     }
@@ -43,7 +43,7 @@
         $sql = "SELECT `id` FROM `duty` where '$date' 
         BETWEEN `duty`.`from_date` AND `duty`.`to_date` 
         AND `counter_id` = '$counter_id' 
-        AND `user_id` = '$user_id'";
+        AND `user_id` = '$user_id' AND `duty`.`soft_delete` = 0";
         $result = $mysqli->query($sql);
         return $result->fetch_assoc();
     }
@@ -51,7 +51,7 @@
     function duty_validate_date_counter($mysqli, $date, $user_id){
         $sql = "SELECT COUNT(`counter`.`id`) AS 'count' FROM `duty` 
         INNER JOIN `user` ON `user`.`id` = `duty`.`user_id` INNER JOIN counter ON `counter`.`id` = `duty`.`counter_id` 
-        WHERE '$date' BETWEEN `duty`.`from_date` AND `duty`.`to_date` AND `user`.`id` = '$user_id' ";
+        WHERE '$date' BETWEEN `duty`.`from_date` AND `duty`.`to_date` AND `user`.`id` = '$user_id' AND `duty`.`soft_delete` = 0";
         $result = $mysqli->query($sql);
         return $result->fetch_assoc();
     }
@@ -59,7 +59,8 @@
     function duty_validate_counter_id($mysqli, $date, $user_id, $counter_id){
         $sql= "SELECT `duty`.`counter_id` AS `counter_id` FROM `duty` 
         INNER JOIN `user` ON `user`.`id` = `duty`.`user_id` INNER JOIN counter ON `counter`.`id` = `duty`.`counter_id` 
-        WHERE '$date' BETWEEN `duty`.`from_date` AND `duty`.`to_date` AND `user`.`id` = '$user_id' AND `counter`.`id` != '$counter_id';";
+        WHERE '$date' BETWEEN `duty`.`from_date` AND `duty`.`to_date` 
+        AND `user`.`id` = '$user_id' AND `counter`.`id` != '$counter_id' AND `duty`.`soft_delete` = 0";
         return $mysqli->query($sql);
     }
 
@@ -73,6 +74,15 @@
         OR `duty`.`from_date` LIKE '%$search%' AND `duty`.`soft_delete`= 0 
         OR `duty`.`to_date` LIKE '%$search%' AND `duty`.`soft_delete`= 0";
         return $mysqli->query($sql);
+    }
+
+    function staff_count_validate ($mysqli, $from, $to, $counter_id){
+        $sql = "SELECT COUNT(`user`.`id`) AS `staff_count` FROM `duty` 
+        INNER JOIN `user` ON `user`.`id` = `duty`.`user_id` 
+        INNER JOIN `counter` ON `counter`.`id` = `duty`.`counter_id` 
+        WHERE '$from' AND '$to' BETWEEN `duty`.`from_date` AND `duty`.`to_date` AND `counter`.`id` = '$counter_id' AND `duty`.`soft_delete` = 0";
+        $result = $mysqli->query($sql);
+        return $result->fetch_assoc();
     }
 
    

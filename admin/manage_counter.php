@@ -4,58 +4,44 @@
 
 <?php
 
-  $sellName = $sellNameErr = "" ;
+  
   $counterName = $counterNameErr = "";
+  $currencyPair = $currencyPairErr = "" ;
   $FormErr = "";
   $invalid = false;
 
   if(isset($_GET['id'])){
-    $currency_counters = get_currency_counter_with_id($mysqli, $_GET['id']);
-    $currency_counter = $currency_counters->fetch_assoc();
-    $id = $currency_counter['id'];
-    $counterName = $currency_counter['counter_name'];
-    $sellName = $currency_counter['currency_name'];
+    $currency_pair_counter_id = select_currencypair_counter_with_id($mysqli, $_GET['id']);
+    $id = $_GET['id'];
+    $counterName = $currency_pair_counter_id['counter_name'];
+    $currencyPair = $currency_pair_counter_id['pair_name'];
   }
 
   if(isset($_POST['submit'])){
     $counterName = $_POST['counterName'];
-    $sellName = $_POST['sell_name'];
-    $counterValidates = get_counter_id($mysqli, $counterName);
-    $sellNamevalidates = get_currency_with_id($mysqli,$sellName);
+    $currencyPair = $_POST['currency_pair'];
+    $currency_pair_counter =  count_currencypair_with_counter($mysqli, $counterName, $currencyPair);
     
     if($counterName == ""){
         $counterNameErr = "Choose one";
         $invalid = true;
     }
-    if($sellName == ""){
-        $sellNameErr = "Choose one";
+    if($currencyPair == ""){
+        $currencyPairErr = "Choose one";
         $invalid = true;
     }
-   
-
-    if($counterValidates == ""){
-        $counterNameErr = "Choose available counter";
+    if($currency_pair_counter['count']>=1){
+        $counterNameErr = "These counter already have that currency";
         $invalid = true;
     }
-
-    if($sellNamevalidates == ""){
-        $sellNameErr = "Choose available currency";
-        $invalid = true;
-    }
-
-     if(choose_counter_currency($mysqli,$counterName, $sellName)){
-        $sellNameErr = "This currency is already in this counter";
-        $invalid = true;
-     };
     
     if(!$invalid){
         if (isset($_GET['id'])) {
-            edit_currency_counter($mysqli, $id, $counterName, $sellName);
-            echo "<script>location.replace('./counter_detail_list.php?edit_success=Edit Successfully')</script>";
+            update_currency_pair_counter($mysqli, $id, $currencyPair, $counterName);
+            echo "<script>location.replace('./counterDetail_list.php?edit_success=Edit Successfully')</script>";
         } else {
-            add_currency_counter($mysqli, $counterName, $sellName);
-
-            echo "<script>location.replace('./counter_detail_list.php?add_success=Add Successfully')</script>";
+            add_currency_pair_counter($mysqli, $currencyPair, $counterName);
+            echo "<script>location.replace('./counterDetail_list.php?add_success=Add Successfully')</script>";
         }
         
     }
@@ -83,10 +69,10 @@
                             <div class="form-group mb-4"> 
                                  <label for="exampleDataList" class="form-label">Choose Counter</label>
                                 <select id="datalistOptions" class="form-control" name="counterName" value="<?= $counterName ?>">
-                                <?php
-                                    if($_GET['id']){ ?>
-
-                                    <option value="<?=$currency_counter['id_for_counter']?>"><?=$currency_counter['counter_name']?></option>
+                                <?php if (isset($_GET['id'])) { ?>
+                                    <option value="<?=$currency_pair_counter_id['counter_id']?>"><?=$currency_pair_counter_id['counter_name']?></option>
+                                <?php } else{ ?>
+                                    <option value="">Select One Counter</option>
                                 <?php } ?>
                                 <?php 
                                     $counters = get_counter($mysqli);
@@ -98,22 +84,24 @@
                             </div>
 
                             <div class="form-group mb-4"> 
-                                <label for="exampleDataList" class="form-label">Sell Currency Name</label>
-                                <select id="datalistOptions" class="form-control" name="sell_name" value="<?= $sellName ?>">
-                                <?php
-                                    if($_GET['id']){ ?>
-                                    <option value="<?=$currency_counter['id_for_currency']?>"><?=$currency_counter['currency_name']?></option>
+                                <label for="exampleDataList" class="form-label">Currency Pair</label>
+                                <select id="datalistOptions" class="form-control" name="currency_pair">
+                                <?php if (isset($_GET['id'])) { ?>
+                                    <option value="<?=$currency_pair_counter_id['currency_pair_id']?>"><?=$currency_pair_counter_id['pair_name']?></option>
+                                <?php } else{ ?>
+                                    <option value="">Select One Counter</option>
                                 <?php } ?>
                                 <?php  
-                                    $currencies = get_all_currency(mysqli: $mysqli);
-                                    while ($currency = $currencies->fetch_assoc()) { ?>
-                                    <option value="<?=$currency['id']?>"><?=$currency['currency_name']?></option>
+                                    $currency_pairs = get_all_currency_pair($mysqli);
+                                    while ($currencypair = $currency_pairs->fetch_assoc()) { ?>
+                                    <option value="<?=$currencypair['pair_id']?>">
+                                        <?= $currencypair['pair_name'] ?>
+                                    </option>
                                 <?php } ?>
                                 </select> 
-                                <small class="text-danger"><?= $sellNameErr ?></small>
+                                <small class="text-danger"><?= $currencyPairErr ?></small>
                             </div>
                             
-
                             <div>
                                 <button class="btn btn-primary" name="submit">
                                     Submit

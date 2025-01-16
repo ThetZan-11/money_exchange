@@ -1,37 +1,43 @@
 <?php 
 function get_exchange_rate($mysqli){
     $key = "b12a2a800465395edab5dc62";
-    $buy_currencies_from_db = select_only_buy_code($mysqli);
-    $sell_currencies_from_db = select_only_sell_code($mysqli);
+    $buy_currencies_from_db = select_currency_code($mysqli);
+    $sell_currencies_from_db = select_currency_code($mysqli);
     $buy_currency_arr = [];
     $sell_currency_arr = [];
     $date_validate  = select_date($mysqli);
     while ($buy_currencies = $buy_currencies_from_db->fetch_assoc()) {
-        array_push($buy_currency_arr, $buy_currencies['buy_currency_code']);
+        array_push($buy_currency_arr, $buy_currencies['currency_code']);
     }
     while ($sell_currencies = $sell_currencies_from_db->fetch_assoc()) {
-        array_push($sell_currency_arr, $sell_currencies['sell_currency_code']);
+        array_push($sell_currency_arr, $sell_currencies['currency_code']);
     }
-    foreach ($buy_currency_arr as $buy_currency) {
+    foreach ($buy_currency_arr as $index => $buy_currency) {
         $req_url = "https://v6.exchangerate-api.com/v6/$key/latest/$buy_currency";
         $response_json = file_get_contents($req_url);
+        $buy_currency_id = $index+1;
         if(false !== $response_json) {
             try {
                 $response = json_decode($response_json);
                 if('success' === $response->result) {
-                    echo "<pre>";
+                    echo "<p>";
                     $date = date("Y-m-d", time());
-                    foreach ($sell_currency_arr as $sell_currency) {
+                    foreach ($sell_currency_arr as $index => $sell_currency) {
+                        $sell_currency_id = $index+1;
                         $currency_code = $response->conversion_rates->$sell_currency;
                         $buy_rate  =  $currency_code-($currency_code*0.02);
                         $sell_rate =  $currency_code+($currency_code*0.02);
-                        if($date_validate['date'] == $date){
-                            update_daily($mysqli, $sell_rate, $buy_rate, $date, $buy_currency, $sell_currency);
-                        } else {
-                            add_new_rate($mysqli, $sell_rate, $buy_rate, $date, $buy_currency, $sell_currency);
+                        if($buy_currency_id == $sell_currency_id){
+                            continue; 
                         }
-                        
+                        // var_dump($buy_currency_id.$buy_currency.$buy_rate.$sell_currency_id.$sell_currency, $buy_currency_id.$buy_currency.$sell_rate.$sell_currency_id.$sell_currency);
+                        if($date_validate['date'] == $date){
+                            update_daily($mysqli, $buy_rate, $sell_rate, $date, $buy_currency_id, $sell_currency_id);
+                        } else {
+                            add_new_rate($mysqli, $buy_rate, $sell_rate, $date, $buy_currency_id, $sell_currency_id);
+                        } 
                     }
+                    echo "</p>";
                 }
             }
             catch(Exception $e) {
@@ -40,6 +46,8 @@ function get_exchange_rate($mysqli){
         }
     }
 }
+
+
 
 
 
