@@ -6,126 +6,114 @@
 <?php require_once('../db/rate.php') ?>
 
 <?php  
+$date =  $_SESSION['date'];
  $amount = $amountErr = "";
- $from   = $fromErr   = "";
- $to     = $toErr     =  "";
+ $currency_pair_id  = $currency_pair_idErr = "";
  $result = "";
  $invalid = false;
- 
-$order_detail = [];
-$user = json_decode($_COOKIE['user'], true);
-$user_id = $user['id'];
-$counter_id = get_counter_id_with_user_id($mysqli, $user_id);
+ $order_detail = [];
+ $status = false;
 
     if(isset($_POST['submit'])){
         $amount = $_POST['amount'];
-        $from   = $_POST['from'];
-        $to     = $_POST['to'];
-
+        $currency_pair_id = $_POST['currency_pair_id'];
+        $date_for_trade = date('Y-m-d');
+        
         if($amount == ""){
             $amountErr = "can't be blank!";
             $invalid = true;           
-        }
-        if($from == ""){
-            $fromErr = "can't be blank!";
-            $invalid = true;           
-        }
-        if($to == ""){
-            $toErr = "can't be blank!";
-            $invalid = true;           
-        }
-        if(!is_numeric($amount)){
+        } else if(!is_numeric($amount)){
             $amountErr = "must be number";
             $invalid = true;  
         }
-        
+
         if(!$invalid){
-            $rate =  select_rates($mysqli, $from, $to);
-            $change =  select_rates($mysqli, $to, $from);
+            $rate = calculate_exchange_for_staff($mysqli, $currency_pair_id);
             $result = $rate['buy_rate'] * $amount;
-            $idAndCounter = get_counter_name_and_id($mysqli, $counter_id['id'], $from, $to);
-            array_push($order_detail, ['amount'=> $amount,'result'=>$result,'buy_currency_name'=> $rate['buy_currency_name'],'sell_currency_name'=> $rate['sell_currency_name'], 'currency_counter_id'=> $idAndCounter['id'], 'counter_name'=> $idAndCounter['counter_name']]);  
-            $_SESSION["order_detail"] = $order_detail;
+            $duty = $_SESSION['date'];
+            
+            $sell_amount_check = check_cashflow_from_counter($mysqli, $rate['sell_currency_id'], $duty['counter_id']);
+
+            if($amount >= $sell_amount_check['total']){
+                $status = true;
+                $invalid = true;
+                $amountErr = "Amount isn't Enough";
+            }
+            if(!$status){
+                array_push($order_detail, ['from_amount'=>$amount, 'to_amount'=>$result,
+                'buy_currency_name'=>$rate['buy_currency_name'], 'sell_currency_name'=>$rate['sell_currency_name'],
+                'currency_pair_counter_id'=>$rate['currency_pair_counter_id'], 'daily_exchange_id'=>$rate['daily_exchange_id'],
+                'date'=>$date_for_trade,'duty_id'=>$duty['duty_id'], 'staff_name'=>$duty['name'], 'counter_name'=>$duty['counter_name']]);
+                $_SESSION["order_detail"] = $order_detail;
+    
+                update_buy_currency_cash($mysqli, $rate['buy_currency_id'], $duty['counter_id'], $amount);
+                update_sell_currency_cash($mysqli, $rate['sell_currency_id'], $duty['counter_id'], $result);
+            }
+
+           
         }
-    }  
-   
+
+       
+    }   
+
+    if(isset($_POST['trade'])){
+        echo "<script>location.replace('./trade_cal.php')</script>";
+    }
 ?>
 
 <main id="main" class="main">
     <div class="card p-5 ">
         <h3>Currency Converter</h3>
-       
         <form method="post">
 
             <div class="row mt-3" >
-                <div class="form-group col-md-4" id="form-input">
-                    <input type="text" class="form-control py-3" name="amount" id="floatingInput" placeholder="Enter currency name" value="1.0">
-                    <label for="floatingInput">Amount</label>
-                    <small class="text-danger"><?= $amountErr ?></small>
+            <div class="row mt-3">
+                <div class="form-floating mb-3 col-md-5">
+                      <input type="text" class="form-control" name="amount" id="floatingInput" placeholder="Enter Amount" value="1.0">
+                      <label for="floatingInput">Amount</label>
+                      <small class="text-danger"><?= $amountErr ?></small>
                 </div>
-
-               
-                <div class="form-group col-md-4" id="form-input">
-                <label for="exampleDataList" class="form-label ">From</label>
-                    <input class="form-control py-3" list="datalistOptions" name="from" id="exampleDataList" placeholder="Type to search..."> 
-                     <datalist id="datalistOptions">
-                    <?php 
-                     $counter_filter  = buy_currency_code_with_counter($mysqli, $counter_id['id']);   
-
-                    while ($buy_name_code = $counter_filter->fetch_assoc()) { ?>
-                            <option value="<?= $buy_name_code['buy_currency_code'] ?>" >
-                            <span class="flag-icon flag-icon-us"></span>
-                             <?= $buy_name_code['buy_currency_name'] ?>
-                            </option>
+                <div class="form-floating mb-3 col-md-5">
+                      <select class="form-select" id="floatingSelect" name="currency_pair_id" aria-label="Floating label select example">
+                        <?php
+                        $currencies = select_currency_for_counter($mysqli, $date['from_date'], $date['to_date'], $user['id']);
+                            while ($currency = $currencies->fetch_assoc()) {  ?>
+                                <option value="<?= $currency['currency_pair_id'] ?>"><?= $currency['pair_name'] ?></option>
                         <?php  } ?>
-                    </datalist>
+                      </select>
+                      <label for="floatingSelect">Currency</label>
+                      <small class="text-danger"><?= $currency_pair_idErr ?></small>
                 </div>
-                <div class="form-group col-md-4" id="form-input">
-                <label for="exampleDataList" class="form-label ">To</label>
-                    <input class="form-control py-3" list="datalistOptions2" name="to" id="exampleDataList" placeholder="Type to search...">
-                    <datalist id="datalistOptions2">
-                    <?php 
-                    $counter_filter  = sell_currency_code_with_counter($mysqli, $counter_id['id']);   
-                        
-                    while ($sell_name_code = $counter_filter->fetch_assoc()) { ?>
-                          <option class="flag-icon flag-icon-us" value="<?= $sell_name_code['sell_currency_code'] ?>"><?= $sell_name_code['sell_currency_name'] ?> </option>
-                        <?php   } ?>
-                    </datalist>
-                </div>
+            </div>
             </div>
             <div class="row d-flex align-items-center ">
                 <?php if(isset($rate)) { ?>
                      <div class="para col-md-6 mt-4">
-                        <p class="para-mid"><?= number_format($amount) ?> <?= $rate['buy_currency_name'] ?> = </p>
-                        <p class="para-large"><?php echo number_format($result); ?>  <?= $rate['sell_currency_name'] ?></p>
-                        <p class="para-small">1 <?= $rate['buy_currency_code'] ?> = <?= $rate['buy_rate'] ?> <?= $rate['sell_currency_code'] ?></p>
-                        <p class="para-small">1 <?= $rate['sell_currency_code'] ?> = <?= $change['buy_rate'] ?> <?= $rate['buy_currency_code'] ?></p>
+                        <p class="para-mid"><?= number_format($amount) ?> <?= $rate['buy_currency_name'] ?> = <?php echo number_format($result); ?>  <?= $rate['sell_currency_name'] ?></p>
+                        <p class="para-small">1 <img src="../assets/flag/<?= $rate['buy_flag'] ?>" width="25px" height="25px"> = <?= $rate['buy_rate'] ?> <img src="../assets/flag/<?= $rate['sell_flag'] ?>" width="25px" height="25px"></p>
+                        <p class="para-small">1 <img src="../assets/flag/<?= $rate['sell_flag'] ?>" width="25px" height="25px"> = <?= $rate['buy_rate'] ?> <img src="../assets/flag/<?= $rate['buy_flag'] ?>" width="25px" height="25px"></p>
                     </div>
                  <?php } else { ?>
                     <div class="para col-md-6 mt-4" style="height: 165px;"></div>
                 <?php } ?>
-               
+
                 <div class="form-group mb-3 col-md-6">
                     <button type="submit" name="submit" class="btn_converter">
                         CONVERT
                     </button>
-                    <?php if(isset($rate)){ ?>
+                    <?php if(isset($rate) && $status == false){ ?>
                         <div class="mt-3">
                         <button name="trade" class="btn_converter">
                         Trade
                     </button>
                     </div>
-                    <?php }
-                        if(isset($_POST['trade'])){
-                            echo "<script>location.replace('./trade_cal.php')</script>";
-                        }
-                    ?>
+                    <?php }   ?>
+                        
+                   
                 </div>
             </div>
         </form>
     </div>
-    
 </main>
 
 <?php require_once '../layout/footer.php';
-//get_exchange_rate($mysqli); ?>

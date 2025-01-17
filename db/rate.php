@@ -30,12 +30,13 @@ function get_exchange_rate($mysqli){
                         if($buy_currency_id == $sell_currency_id){
                             continue; 
                         }
-                        // var_dump($buy_currency_id.$buy_currency.$buy_rate.$sell_currency_id.$sell_currency, $buy_currency_id.$buy_currency.$sell_rate.$sell_currency_id.$sell_currency);
                         if($date_validate['date'] == $date){
                             update_daily($mysqli, $buy_rate, $sell_rate, $date, $buy_currency_id, $sell_currency_id);
+                        } else if(!select_lastdate_record($mysqli)) {
+                            add_new_rate($mysqli, $buy_rate, $sell_rate, $date, $buy_currency_id, $sell_currency_id);
                         } else {
                             add_new_rate($mysqli, $buy_rate, $sell_rate, $date, $buy_currency_id, $sell_currency_id);
-                        } 
+                        }
                     }
                     echo "</p>";
                 }

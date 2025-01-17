@@ -35,41 +35,21 @@
     if(isset($_POST['key'])){
       $currencies = currency_search ($mysqli , $_POST['key']);
     }else {
-      $currencypairs  =  currency_pair_id($mysqli);
+      $currencypairs  =  get_all_currency_pair_separate($mysqli);
     }
     while ($currencypair = $currencypairs->fetch_assoc()) { ?>   
      <tr>
         <td><?= $i ?></td>
         <td><?php 
-            if($currencypair['buy_currency_id'] == 1){
-                echo "US Dollar";
-            } else if($currencypair['buy_currency_id'] == 2){
-                echo "Japan Yen";
-            } else if($currencypair['buy_currency_id'] == 3){
-                echo "Euro";
-            } else if($currencypair['buy_currency_id'] == 4){
-                echo "Myanmar Kyat";
-            } else if($currencypair['buy_currency_id'] == 5){
-                echo "Thai Baht";
-            } 
+            echo $currencypair['buy_currency_name'];
             ?>
         </td>
         <td><?php 
-            if ($currencypair['sell_currency_id'] == 1){
-                echo "US Dollar";
-            } else if($currencypair['sell_currency_id'] == 2){
-                echo "Japan Yen";
-            } else if($currencypair['sell_currency_id'] == 3){
-                echo "Euro";
-            } else if($currencypair['sell_currency_id'] == 4){
-                echo "Myanmar Kyat";
-            } else if($currencypair['sell_currency_id'] == 5){
-                echo "Thai Baht";
-            } 
+            echo $currencypair['sell_currency_name'];
             ?></td>
         <td>
-        <a class="btn btn-primary btn-sm" href="./currency_pair.php?id=<?= $currencypair['id'] ?> "><i class="fa-solid fa-pen"></i></a>
-        <button class="btn btn-sm btn-danger counterDelete" data-value="<?= $currencypair['id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></button>
+        <a class="btn btn-primary btn-sm" href="./currency_pair.php?id=<?= $currencypair['pair_id'] ?> "><i class="fa-solid fa-pen"></i></a>
+        <button class="btn btn-sm btn-danger counterDelete" data-value="<?= $currencypair['pair_id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></button>
         </td>
     </tr>
     <?php $i++;} ?>

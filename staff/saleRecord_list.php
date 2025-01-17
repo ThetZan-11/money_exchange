@@ -8,10 +8,6 @@ if(isset($_GET['deleteId'])){
     delete_customer($mysqli,($_GET['deleteId']));
     echo "<script>location.replace('./customer_list.php')</script>";
 }
-
-$user = json_decode($_COOKIE['user'], true);
-$user_id = $user['id'];
-$counter_id = get_counter_id_with_user_id($mysqli, $user_id);
 ?>
 <main id="main" class="main">
     <div class="container">
@@ -30,11 +26,12 @@ $counter_id = get_counter_id_with_user_id($mysqli, $user_id);
                 <tr>
                     <th>No</th>
                     <th>Customers</th>
-                    <th>Email</th>
-                    <th>Exchange Amount</th>
-                    <th>Convert Amount</th>
                     <th>Buy Currency</th>
                     <th>Sell Currency</th>
+                    <th>From Amount</th>
+                    <th>Counter Name</th>
+                    <th>Staff Name</th>
+                    <th>Rate</th>
                     <th>Date</th>
                     <th>Action</th>
                 </tr>
@@ -46,21 +43,23 @@ $counter_id = get_counter_id_with_user_id($mysqli, $user_id);
                     $key = $_POST['key'];
                     $customer =  search_query_for_customer($mysqli, $key);
                 } else {
-                    $trades= show_trades_with_counter($mysqli, $counter_id['id']);
+                    $trades= show_trades($mysqli);
                 }
 
                 while($trade = $trades->fetch_assoc()) { ?>
                     <tr>
                         <td><?= $i ?></td>
-                        <td><?= $trade['name'] ?></td>
-                        <td><?= $trade['email'] ?></td>
-                        <td><?= number_format($trade['exchange_amount'] )?> </td>
-                        <td><?= number_format($trade['converted_amount'] )?> </td>
-                        <td><?= $trade['buy_currency_name'] ?></td>
-                        <td><?= $trade['sell_currency_name'] ?></td>
+                        <td><?= $trade['customer_name'] ?></td>
+                        <td><?= $trade['buy_currency'] ?></td>
+                        <td><?= $trade['sell_currency'] ?></td>
+                        <td><?= number_format($trade['from_amount'] )?> </td>
+                        <td><?= number_format($trade['to_amount'] )?> </td>
+                        <td><?= $trade['counter_name'] ?></td>
+                        <td><?= $trade['staff_name'] ?></td>
+                        <td><?= $trade['rate'] ?></td>
                         <td><?= $trade['date'] ?></td>
                         <td>
-                            <a class="btn btn-primary btn-sm" href="./receipt.php?id=<?= $trade['id'] ?>"><i class="fa-solid fa-circle-info"></i></a>
+                            <a class="btn btn-primary btn-sm" href="./receipt.php?id=<?= $trade['trade_id'] ?>"><i class="fa-solid fa-circle-info"></i></a>
                         </td>
                     </tr>
                     <?php $i++;} ?>

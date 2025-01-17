@@ -136,13 +136,13 @@ function create_table($mysqli)
     `daily_exchange_id` INT NOT NULL,
     `customer_id` INT NOT NULL,
     `duty_id` INT NOT NULL,
-    `currency_pair_id` INT NOT NULL,
+    `currency_pair_counter_id` INT NOT NULL,
     `soft_delete` boolean DEFAULT 0, 
     PRIMARY KEY(`id`), 
     FOREIGN KEY (`daily_exchange_id`) REFERENCES `daily_exchange`(`id`), 
     FOREIGN KEY (`customer_id`) REFERENCES `customer`(`id`),
     FOREIGN KEY (`duty_id`) REFERENCES `duty`(`id`),
-    FOREIGN KEY (`currency_pair_id`) REFERENCES `currency_pair`(`id`))";    
+    FOREIGN KEY (`currency_pair_counter_id`) REFERENCES `currency_pair_counter`(`id`))";    
     if(!$mysqli->query($sql)){
         return false;
     }

@@ -31,12 +31,12 @@
                         <div class="mt-3">7. Date</div>
                     </div>
                     <div>
-                        <div class="mt-3"><?= $receipt['name'] ?></div>
-                        <div class="mt-3"><?= $receipt['email'] ?></div>
-                        <div class="mt-3"><?= $receipt['buy_currency_name'] ?></div>
-                        <div class="mt-3"><?= $receipt['sell_currency_name'] ?></div>
-                        <div class="mt-3"><?= number_format($receipt['exchange_amount'])." ".$receipt['buy_currency_code'] ?></div>
-                        <div class="mt-3"><?= number_format($receipt['converted_amount'])." ".$receipt['sell_currency_code']  ?></div>
+                        <div class="mt-3"><?= $receipt['customer_name'] ?></div>
+                        <div class="mt-3"><?= $receipt['customer_email'] ?></div>
+                        <div class="mt-3"><?= $receipt['buy_currency'] ?></div>
+                        <div class="mt-3"><?= $receipt['sell_currency'] ?></div>
+                        <div class="mt-3"><?= number_format($receipt['from_amount']) ?></div>
+                        <div class="mt-3"><?= number_format($receipt['to_amount'])  ?></div>
                         <div class="mt-3"><?= $receipt['date'] ?></div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                         <div class="mt-3">Total amount</div>
                     </div>
                     <div>
-                        <div class="mt-3"><?= number_format($receipt['converted_amount'])." ".$receipt['sell_currency_code'] ?></div>
+                        <div class="mt-3"><?= number_format($receipt['to_amount']) ?></div>
                     </div>
                 </div>
                 <hr>

@@ -63,11 +63,7 @@ function add_currency_pair($mysqli, $buy_currency_id, $sell_currency_id){
     return $mysqli->query($sql);
 }
 
-function currency_pair_id($mysqli){
-    $sql = "SELECT `currency_pair`.`id`,`currency_pair`.`buy_currency_id`, `currency_pair`.`sell_currency_id` FROM `currency_pair` 
-    INNER JOIN `currency` ON `currency`.`id` = `currency_pair`.`buy_currency_id` WHERE `currency_pair`.`soft_delete` = 0";
-    return $mysqli->query($sql);
-}
+
 
 function get_currencypair_id($mysqli, $buy_currency_id, $sell_currency_id){
     $sql = "SELECT `currency_pair`.`id` FROM `currency_pair` 
@@ -79,6 +75,16 @@ function get_currencypair_id($mysqli, $buy_currency_id, $sell_currency_id){
 function get_all_currency_pair($mysqli){
     $sql = "SELECT `currency_pair`.`id` AS `pair_id`,
     CONCAT(`buy_currency`.`currency_name`, ' to ', `sell_currency`.`currency_name`) AS `pair_name`
+    FROM `currency_pair`
+    INNER JOIN `currency` AS `sell_currency` ON `currency_pair`.`sell_currency_id` = `sell_currency`.`id`
+    INNER JOIN `currency` AS `buy_currency` ON `currency_pair`.`buy_currency_id` = `buy_currency`.`id` 
+    WHERE `currency_pair`.`soft_delete` = 0";
+    return $mysqli->query($sql);
+}
+
+function get_all_currency_pair_separate($mysqli){
+    $sql = "SELECT `currency_pair`.`id` AS `pair_id`,
+    `buy_currency`.`currency_name` AS `buy_currency_name`, `sell_currency`.`currency_name` AS `sell_currency_name`
     FROM `currency_pair`
     INNER JOIN `currency` AS `sell_currency` ON `currency_pair`.`sell_currency_id` = `sell_currency`.`id`
     INNER JOIN `currency` AS `buy_currency` ON `currency_pair`.`buy_currency_id` = `buy_currency`.`id` 
@@ -131,9 +137,10 @@ function status_off($mysqli, $id){
     return $mysqli->query($sql);
 }
 
-function currency_with_counter($mysqli, $counter_id){
-    $sql = "SELECT `cash_flow`.`currency_id` FROM `cash_flow` WHERE `cash_flow`.`counter_id` = '$counter_id'";
-    return $mysqli->query($sql);
+function currency_with_counter($mysqli, $currency_id, $counter_id){
+    $sql = "SELECT `id` FROM `cash_flow` WHERE `counter_id` = '$counter_id' AND `currency_id` = '$currency_id'";
+    $result =  $mysqli->query($sql);
+    return $result->fetch_assoc();
 }
 
 

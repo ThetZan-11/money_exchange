@@ -42,7 +42,7 @@
             $invalid = true;
         }
 
-        if(currency_with_counter($mysqli, $counterName)){
+        if(currency_with_counter($mysqli, $currencyName, $counterName)){
             $currencyNameErr = "Can't add same currency for same counter";
             $invalid = true;
         }

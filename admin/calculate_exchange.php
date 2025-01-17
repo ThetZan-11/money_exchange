@@ -6,73 +6,79 @@
 
 <?php  
  $amount = $amountErr = "";
+ $from  = $fromErr = "";
+ $to  = $toErr = "";
  $result = "";
  $invalid = false;
 
     if(isset($_POST['submit'])){
         $amount = $_POST['amount'];
+        $from = $_POST['from'];
+        $to = $_POST['to'];
 
         if($amount == ""){
             $amountErr = "can't be blank!";
             $invalid = true;           
-        }
-        if(!is_numeric($amount)){
+        } else if(!is_numeric($amount)){
             $amountErr = "must be number";
             $invalid = true;  
         }
+        if($from == $to){
+            $fromErr = "can't be same";
+            $toErr = "can't be same";
+            $invalid = true;
+        }
 
-      
+        if(!$invalid){
+            $rate = calculate_exchange($mysqli, $from, $to);
+        }
     }
 ?>
 
 <main id="main" class="main">
-    <div class="card p-5 ">
+    <div class="card p-5">
         <h3>Currency Converter</h3>
         <form method="post">
 
-            <div class="row mt-3" >
-                <div class="form-group col-md-4" id="form-input">
-                    <input type="text" class="form-control py-3" name="amount" id="floatingInput" placeholder="Enter currency name" value="1.0">
-                    <label for="floatingInput">Amount</label>
-                    <small class="text-danger"><?= $amountErr ?></small>
+            <div class="row mt-3">
+                <div class="form-floating mb-3 col-md-4">
+                      <input type="text" class="form-control" name="amount" id="floatingInput" placeholder="Enter Amount" value="1.0">
+                      <label for="floatingInput">Amount</label>
+                      <small class="text-danger"><?= $amountErr ?></small>
                 </div>
- 
-                <div class="form-group col-md-4" id="form-input">
-                <label for="exampleDataList" class="form-label ">From</label>
-                    <input class="form-control py-3" list="datalistOptions" name="from" id="exampleDataList" placeholder="Type to search..."> 
-                     <datalist id="datalistOptions">
-                    <?php 
-                    $get_all_currency = get_buy_name_code($mysqli);
-
-                    while ($buy_name_code = $get_all_currency->fetch_assoc()) { ?>
-                            <option value="<?= $buy_name_code['buy_currency_code'] ?>" >
-                            <!-- <img src="../assets/img/USD.png" alt="Hello">  -->
-                            <span class="flag-icon flag-icon-us"></span>
-                             <?= $buy_name_code['buy_currency_name'] ?>
+                <div class="form-floating mb-3 col-md-4">
+                      <select class="form-select" id="floatingSelect" name="from" aria-label="Floating label select example">
+                        <?php
+                        $currencies = get_all_currency($mysqli);
+                            while ($currency = $currencies->fetch_assoc()) {  ?>
+                                <option value="<?= $currency['currency_code'] ?>"><?= $currency['currency_name'] ?></option>
+                        <?php  } ?>
+                      </select>
+                      <label for="floatingSelect">From</label>
+                      <small class="text-danger"><?= $fromErr ?></small>
+                </div>
+                <div class="form-floating mb-3 col-md-4">
+                      <select class="form-select" id="floatingSelect" name="to" aria-label="Floating label select example">
+                      <?php
+                      $currencies = get_all_currency($mysqli);
+                            while ($currency = $currencies->fetch_assoc()) {  ?>
+                            <option value="<?= $currency['currency_code'] ?>">
+                                <?= $currency['currency_name'] ?>
                             </option>
                         <?php  } ?>
-                    </datalist>
-                </div>
-                <div class="form-group col-md-4" id="form-input">
-                <label for="exampleDataList" class="form-label ">To</label>
-                    <input class="form-control py-3" list="datalistOptions2" name="to" id="exampleDataList" placeholder="Type to search...">
-                    <datalist id="datalistOptions2">
-                    <?php 
-                    $get_all_currency = get_sell_name_code($mysqli);
-                        
-                    while ($sell_name_code = $get_all_currency->fetch_assoc()) { ?>
-                          <option class="flag-icon flag-icon-us" value="<?= $sell_name_code['sell_currency_code'] ?>"><?= $sell_name_code['sell_currency_name'] ?> </option>
-                        <?php   } ?>
-                    </datalist>
+                       
+                      </select>
+                      <label for="floatingSelect">To</label>
+                      <small class="text-danger"><?= $toErr ?></small>
                 </div>
             </div>
-            <div class="row d-flex align-items-center ">
+            <div class="row d-flex align-items-center">
                 <?php if(isset($rate)) { ?>
                      <div class="para col-md-6 mt-4">
-                        <p class="para-mid"><?= number_format($amount) ?> <?= $rate['buy_currency_name'] ?> = </p>
-                        <p class="para-large"><?php $result = $rate['buy_rate'] * $amount; echo number_format($result); ?>  <?= $rate['sell_currency_name'] ?></p>
-                        <p class="para-small">1 <?= $rate['buy_currency_code'] ?> = <?= $rate['buy_rate'] ?> <?= $rate['sell_currency_code'] ?></p>
-                        <p class="para-small">1 <?= $rate['sell_currency_code'] ?> = <?= $change['buy_rate'] ?> <?= $rate['buy_currency_code'] ?></p>
+                        <!-- <p class="para-mid"></p> -->
+                        <p class="para-mid"><?= number_format($amount) ?> <?= $rate['buy_currency_name'] ?> = <?php $result = $rate['buy_rate'] * $amount; echo number_format($result); ?>  <?= $rate['sell_currency_name'] ?></p>
+                        <p class="para-small">1 <img src="../assets/flag/<?= $rate['buy_flag'] ?>" width="25px" height="25px"> = <?= $rate['buy_rate'] ?> <img src="../assets/flag/<?= $rate['sell_flag'] ?>" width="25px" height="25px"></p>
+                        <p class="para-small">1 <img src="../assets/flag/<?= $rate['sell_flag'] ?>" width="25px" height="25px"> = <?= $rate['buy_rate'] ?> <img src="../assets/flag/<?= $rate['buy_flag'] ?>" width="25px" height="25px"></p>
                     </div>
                  <?php } else { ?>
                     <div class="para col-md-6 mt-4" style="height: 165px;"></div>

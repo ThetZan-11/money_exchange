@@ -48,14 +48,16 @@ if(isset($_POST['filter'])){
     </div>
         <table class="table table-bordered datatable">
             <thead>
-                <tr>
+            <tr>
                     <th>No</th>
                     <th>Customers</th>
-                    <th>Email</th>
-                    <th>Exchange Amount</th>
-                    <th>Convert Amount</th>
                     <th>Buy Currency</th>
                     <th>Sell Currency</th>
+                    <th>From Amount</th>
+                    <th>To Amount</th>
+                    <th>Counter Name</th>
+                    <th>Staff Name</th>
+                    <th>Rate</th>
                     <th>Date</th>
                     <th>Action</th>
                 </tr>
@@ -63,22 +65,20 @@ if(isset($_POST['filter'])){
             <tbody>
                 <?php
                 $i = 1;
-               
-                
-                
-        
                 while($trade = $trades->fetch_assoc()) { ?>
                     <tr>
                         <td><?= $i ?></td>
-                        <td><?= $trade['name'] ?></td>
-                        <td><?= $trade['email'] ?></td>
-                        <td><?= number_format($trade['exchange_amount'] )?> </td>
-                        <td><?= number_format($trade['converted_amount'] )?> </td>
-                        <td><?= $trade['buy_currency_name'] ?></td>
-                        <td><?= $trade['sell_currency_name'] ?></td>
+                        <td><?= $trade['customer_name'] ?></td>
+                        <td><?= $trade['buy_currency'] ?></td>
+                        <td><?= $trade['sell_currency'] ?></td>
+                        <td><?= number_format($trade['from_amount'] )?> </td>
+                        <td><?= number_format($trade['to_amount'] )?> </td>
+                        <td><?= $trade['counter_name'] ?></td>
+                        <td><?= $trade['staff_name'] ?></td>
+                        <td><?= $trade['rate'] ?></td>
                         <td><?= $trade['date'] ?></td>
                         <td>
-                            <a class="btn btn-primary btn-sm" href="./receipt.php?id=<?= $trade['id'] ?>"><i class="fa-solid fa-circle-info"></i></a>
+                            <a class="btn btn-primary btn-sm" href="./receipt.php?id=<?= $trade['trade_id'] ?>"><i class="fa-solid fa-circle-info"></i></a>
                         </td>
                     </tr>
                     <?php $i++;} ?>

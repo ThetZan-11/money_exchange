@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
             echo "Hello";
         } else {
             add_currency_pair($mysqli, $buy_currency, $sell_currency);
-            //echo "<script>location.replace('../admin/currencyPair_list.php?add_success=Added Successfully')</script>";
+            echo "<script>location.replace('../admin/currencyPair_list.php?add_success=Added Successfully')</script>";
         }
     }
 }
