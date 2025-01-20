@@ -3,34 +3,40 @@
 <?php require_once '../layout/sidebar.php' ?>
 
 <?php
-$name = $nameErr = "";
+$name = $nameErr = $nameWarn  = "";
 $location = $locationErr = "";
+
 $invalid = true;
 
 if (isset($_GET['id'])) {
     $counters = get_counter_id($mysqli, $_GET['id']);
     $name = $counters['counter_name'];
     $location = $counters['location'];
+
+    if($name != $_POST['name']){
+        $nameWarn = "You can't change the counter";
+        $invalid = false;
+    }
 }
 
 if (isset($_POST['name'])) {
     $name = trim($_POST['name']);
     $location = trim($_POST['location']);
      
-    $allcounters = get_counter($mysqli);
-    
-     while($counterNmae = $allcounters ->fetch_assoc()){
-    var_dump($counterNmae['counter_name']);
-      if($counterNmae['counter_name'] == $name){
-            $nameErr = "This counter is already exists!";
-           $invalid = false;
-      }
+    if(!isset($_GET['id'])){
+        $allcounters = get_counter($mysqli);
+        while($counterNmae = $allcounters ->fetch_assoc()){
+         if($counterNmae['counter_name'] == $name){
+               $nameErr = "This counter is already exists!";
+              $invalid = false;
+         }
+       }
     }
 
     if ($name == "") {  
         $nameErr = "Please enter counter";
         $invalid = false;
-    } elseif (!preg_match('/^Counter-\d{2}$/', $name)) {
+    } else if (!preg_match('/^Counter-\d{2}$/', $name)) {
         $nameErr = "Valid format eg - Counter-01";
         $invalid = false;
     }
@@ -75,6 +81,7 @@ if (isset($_POST['name'])) {
                             <label for="name">Counter Name</label>
                             <input type="text" class="form-control" name="name" placeholder="Enter counter name" style="width: 300px;; height:50px;" value="<?= $name ?>">
                             <div class="invalid"><?= $nameErr ?></div>
+                            <div class="text-warning"><?= $nameWarn ?></div>
                         </div>
                         <div class="foremail mb-4">
                             <label for="name">Location</label>

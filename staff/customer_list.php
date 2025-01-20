@@ -30,7 +30,7 @@ if(isset($_GET['deleteId'])){
                     <th>Email</th>
                     <th>Address</th>
                     <th>Phone </th>
-                    <th>Action</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -51,10 +51,7 @@ if(isset($_GET['deleteId'])){
                         <td><?= $customers['address'] ?></td>
                         <td><?= $customers['ph_no'] ?></td>
 
-                        <td>
-                            <a class="btn btn-primary btn-sm" href="./add_customer.php?id=<?= $customers['id'] ?>"><i class="fa-solid fa-pen"></i></a>
-                            <button class="btn btn-sm btn-danger counterDelete" data-value="<?= $customers['id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></button>
-                        </td>
+                      
                     </tr>
                     <?php $i++;} ?>
 

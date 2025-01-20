@@ -45,7 +45,7 @@
             $invalid = true;
         }
         if (!is_numeric($total)) {
-            $totalErr = "Can't be number";
+            $totalErr = "must be number";
             $invalid = true;
         }
 

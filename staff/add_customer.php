@@ -8,6 +8,12 @@ require_once '../layout/nav.php'
 require_once '../layout/sidebar.php'
 ?>
 <?php 
+
+if(isset($_SESSION['order_detail'])){
+    $trades = $_SESSION['order_detail'];
+} else {
+    echo "<script>location.replace('./calculate_exchange.php')</script>";
+}
  
 $name = $email = $address = $phone = "";
 $name_err = $email_err = $adderss_err = $phone_err ="";
@@ -20,8 +26,7 @@ if (isset($_GET['id'])) {
     $name = $customer['name'];
     $email = $customer['email'];
     $address = $customer['address'];
-    $phone = $customer['ph_no'];
-    
+    $phone = $customer['ph_no']; 
 }
 if(isset($_POST['name'])){
     $name       = $_POST['name'];
@@ -33,17 +38,14 @@ if(isset($_POST['name'])){
         $name_err = "Name cann't be blank";
         $invalid = true;
     }
-
     if($email == ""){
         $email_err = "Email cann't be blank";
         $invalid = true;
     }
-
     if($address == ""){
         $adderss_err = "Address can't be blank";
         $invalid = true;
     }
-
     if($phone == ""){
         $phone_err = "Phone number can't be blank";
         $invalid = true;
@@ -57,11 +59,16 @@ if(isset($_POST['name'])){
             $invalid = true;
         }else {   
             if(isset($_GET['id'])){
-                update_customer($mysqli , $id , $name ,  $email , $address , $phone);
+                //update_customer($mysqli , $id , $name, $address , $phone);
                 echo "<script>location.replace('./customer_list.php?edit_success=Edit Successfully')</script>";
             } else {
                 add_customer($mysqli , $name , $email , $address , $phone);
-                echo "<script>location.replace('./customer_list.php?edit_success=Edit Successfully')</script>";
+                $get_customer_id = get_customer_with_email($mysqli, $email);
+                add_trade($mysqli, $trades[0]['from_amount'], $trades[0]['to_amount'],
+            $trades[0]['date'], $trades['0']['daily_exchange_id'],
+            $get_customer_id['id'], $trades['0']['duty_id'], $trades['0']['currency_pair_counter_id']);
+                echo "<script>location.replace('./saleRecord_list.php')</script>";
+                unset($_SESSION['order_detail']);
             }
         }
     }
@@ -92,12 +99,15 @@ if(isset($_POST['name'])){
                             <div class="invalid"><?= $name_err ?></div>
                         </div>
 
-                        <div class="foremail mb-4">
+                        <?php 
+                        if(!isset($_GET['id'])){ ?>
+                            <div class="foremail mb-4">
                             <label for="name">Email</label>
                             <input type="text" class="form-control" name="email" placeholder="email" style="height:50px;" value="<?= $email ?>">
                             <div class="invalid"><?= $email_err ?></div>
-                        </div>
-
+                            </div>
+                        <?php  } ?>
+                        
                         <div class="foraddress mb-4">
                             <label for="name">Address</label>
                             <input type="text" class="form-control" name="address" placeholder="Address" style="height:50px;" value="<?= $address ?>">

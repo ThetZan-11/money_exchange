@@ -35,7 +35,7 @@
     <?php
     $i = 1;
     if(isset($_POST['key'])){
-      $currencies = currency_search ($mysqli , $_POST['key']);
+      $currencies = currency_search($mysqli , $_POST['key']);
     }else {
       $currencies  =  currency_sd($mysqli);
     }

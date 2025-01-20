@@ -5,9 +5,8 @@
         return $mysqli->query($sql);
     }
 
-    function update_cash_flow($mysqli, $id, $counter_id, $currency_id, $total){
-        $sql = "UPDATE `cash_flow` SET `counter_id`='$counter_id', `currency_id`='$currency_id', `total`='$total'
-        WHERE `id`='$id'";
+    function update_cash_flow($mysqli, $id, $total){
+        $sql = "UPDATE `cash_flow` SET `total`='$total' WHERE `id`='$id'";
         return $mysqli->query($sql);
     }
 
@@ -16,6 +15,15 @@
         INNER JOIN `currency` ON `currency`.`id` = `cash_flow`.`currency_id` 
         INNER JOIN `counter` ON `counter`.`id` = `cash_flow`.`counter_id` WHERE `cash_flow`.`soft_delete` = 0";
         return $mysqli->query($sql);
+    }
+
+    function search_cash_flow($mysqli, $key){
+        $sql = "SELECT * FROM `cash_flow` 
+        INNER JOIN `currency` ON `currency`.`id` = `cash_flow`.`currency_id` 
+        INNER JOIN `counter` ON `counter`.`id` = `cash_flow`.`counter_id` 
+        WHERE `currency`.`currency_name` LIKE '%$key%' AND `cash_flow`.`soft_delete` = 0 
+        OR `counter`.`counter_name` LIKE '%$key%' AND `cash_flow`.`soft_delete` = 0";
+         return $mysqli->query($sql);
     }
 
     function cash_flow_with_id($mysqli, $id){
@@ -33,5 +41,10 @@
 
     function update_currency_total_for_update($mysqli, $total,$old_amount, $new_amount, $currency_id){
         $sql = "UPDATE `currency` SET `total` = '$total' + '$old_amount' - '$new_amount' WHERE `id` = '$currency_id'";
+        return $mysqli->query($sql);
+    }
+
+    function soft_delete_cash_flow($mysqli, $id){
+        $sql = "UPDATE `cash_flow` SET `soft_delete` = 1 WHERE `id`='$id'";
         return $mysqli->query($sql);
     }

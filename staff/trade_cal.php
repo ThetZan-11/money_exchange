@@ -20,13 +20,24 @@
         $counter_name       = $_POST['counter_name'];
         $customer_id = get_customer_with_email($mysqli, $customer_email);
 
+        if($customer_email == ""){
+            $customer_emailErr = "can't be blank";
+            $invalid = true;
+        }
+        if(!isset($customer_id['id'])){
+            $invalid = true;
+            echo "<script>location.replace('./add_customer.php')</script>";
+        }
+        
+
         if(!$invalid){
             add_trade($mysqli, $trades[0]['from_amount'], $trades[0]['to_amount'],
-             $trades[0]['date'], $trades['0']['daily_exchange_id'],
-             $customer_id['id'], $trades['0']['duty_id'], $trades['0']['currency_pair_counter_id']);
+            $trades[0]['date'], $trades['0']['daily_exchange_id'],
+            $customer_id['id'], $trades['0']['duty_id'], $trades['0']['currency_pair_counter_id']);
             echo "<script>location.replace('./saleRecord_list.php')</script>";
             unset($_SESSION['order_detail']);
-        }
+        } 
+        
     }
 ?>
 

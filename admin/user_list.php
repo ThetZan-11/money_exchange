@@ -42,7 +42,7 @@ if(isset($_GET['deleteId'])){
     <?php
     $i = 1;
 
-    if(isset($_POST['key'])){
+    if(isset($_POST['key']) && $_POST['key'] != ''){
         $key = $_POST['key'];
         $users = user_search ($mysqli , $_POST['key']);
     }else{

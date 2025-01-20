@@ -49,7 +49,13 @@ if(isset($_POST['status_off'])){
       <tbody>
         <?php
         $i = 1;
-        $currencyCounters = show_currency_pair_counter($mysqli);
+
+        if(isset($_POST['key']) && $_POST['key'] != ''){
+          $currencyCounters = search_currency_pair_counter($mysqli , $_POST['key']);
+         }else {
+          $currencyCounters = show_currency_pair_counter($mysqli);
+         }
+       
         while ($currencyCounter = $currencyCounters->fetch_assoc()) { ?>
           <tr>
             <td><?= $i ?></td>
@@ -69,8 +75,6 @@ if(isset($_POST['status_off'])){
                 </button>
               <?php } ?>
               </form>
-              <a class="btn btn-primary btn-sm" href="./manage_counter.php?id=<?= $currencyCounter['id'] ?> "><i class="fa-solid fa-pen"></i></a>
-              <button class="btn btn-sm btn-danger counterDelete" data-value="<?= $currencyCounter['id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></button>
             </td>
           </tr>
         <?php $i++;

@@ -22,6 +22,7 @@ if (isset($_GET['id'])) {
   $address = $user['address'];
   $phone = $user['ph_no'];
   $select = $user['role'];
+  $oldImage = $user['user_img'];
 }
 
 if (isset($_POST['name'])) {
@@ -31,8 +32,6 @@ if (isset($_POST['name'])) {
   $phone = trim($_POST['phone']);
   $select = $_POST['select'];
   $profile = $_FILES['profile'];
-  $profileName = date('DMYHS') . $profile['name'];
-  $tmp = $profile['tmp_name'];
 
   $allEmails = get_email_of_user($mysqli);
 
@@ -72,11 +71,6 @@ if (isset($_POST['name'])) {
     $phoneErr = "Enter only number";
   }
 
-  if ($profile == "") {
-    $profileErr = "Please choose profile!";
-    $invalid    = true;
-  }
-
   if ($select == "") {
     $selectErr = 'Please select one.';
     $invalid   = true;
@@ -84,24 +78,38 @@ if (isset($_POST['name'])) {
     $selectErr = "Please select available role";
     $invalid = true;
   }
-
-  if ($profile['name'] == "") {
-    $profileErr = "Please insert images";
-    $invalid = true;
+  
+  if(!isset($_GET['id'])){
+    if ($profile['name'] == "") {
+      $profileErr = "Please insert images";
+      $invalid = true;
+    }
   }
-
+  
   if (!$invalid) {
     if (isset($_GET['id'])) {
-      $profile = $_FILES['profile'];
-      $profileName = $profile['name'];
-      update_user($mysqli, $id, $name, $email, $address, $phone, $select, $profileName);
-      move_uploaded_file($profile['tmp_name'], '../assets/img/' . $profileName);
+
+      if($profile['name'] == ""){
+      update_user($mysqli, $id, $name, $email, $address, $phone, $select, $oldImage);
       echo "<script>location.replace('./user_list.php?edit_success=Edit Successfully')</script>";
+      } else {
+        $filePath = "../assets/img/".$oldImage;
+        unlink($filePath);
+        $tmp = $profile['tmp_name'];
+        $profileName = date("YMDHS") . $flag['name'];
+      update_user($mysqli, $id, $name, $email, $address, $phone, $select, $profileName);
+      move_uploaded_file($tmp, '../assets/img/' . $profileName);
+      echo "<script>location.replace('./user_list.php?edit_success=Edit Successfully')</script>";
+      }
+      
+      
     } else {
+      $tmp = $profile['tmp_name'];
+        $profileName = date("YMDHS") . $flag['name'];
       $hash_password = password_hash($pwd, PASSWORD_BCRYPT);
       save_user($mysqli, $name, $email, $hash_password, $address, $phone, $select, $profileName);
       move_uploaded_file($tmp, '../assets/img/' . $profileName);
-      echo "<script>location.replace('./user_list.php?add_success=Edit Successfully')</script>";
+      echo "<script>location.replace('./user_list.php?add_success=Add Successfully')</script>";
     }
   }
 }

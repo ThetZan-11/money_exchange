@@ -11,8 +11,8 @@
     if (isset($_GET['id'])) {
         $cash_flow_with_id = cash_flow_with_id($mysqli, $_GET['id']);
         $id = $_GET['id'];
-        $counterName = $cash_flow_with_id['counter_name'];
-        $currencyName = $cash_flow_with_id['currency_name'];
+        $counterName = $cash_flow_with_id['counter_id'];
+        $currencyName = $cash_flow_with_id['currency_id'];
         $total  = $cash_flow_with_id['total'];
     }
 
@@ -20,7 +20,7 @@
         $counterName    = $_POST['counter_name'];
         $currencyName   = $_POST['currency_name'];
         $total          = trim($_POST['total']);
-        $total_from_currency = get_currency_with_id($mysqli, $currencyName);    
+        $total_from_currency = get_currency_with_id($mysqli, $currencyName); 
 
         if($counterName == ""){
             $counterNameErr = "Can't be blank";
@@ -42,15 +42,18 @@
             $invalid = true;
         }
 
-        if(currency_with_counter($mysqli, $currencyName, $counterName)){
-            $currencyNameErr = "Can't add same currency for same counter";
-            $invalid = true;
+        if(!isset($_GET['id'])){
+            if(currency_with_counter($mysqli, $currencyName, $counterName)){
+                $currencyNameErr = "Can't add same currency for same counter";
+                $invalid = true;
+            }
         }
+        
 
         if(!$invalid){
             if(isset($_GET['id'])){
                 update_currency_total_for_update($mysqli, $total_from_currency['total'], $cash_flow_with_id['total'], $total, $currencyName);
-                update_cash_flow($mysqli, $id, $counterName, $currencyName, $total);
+                update_cash_flow($mysqli, $id, $total);
                 echo "<script>location.replace('./cashflow_list.php?edit_success=Edit Successfully')</script>";
             } else {
                 update_currency_total_for_insert($mysqli, $total,$currencyName);
@@ -80,32 +83,36 @@
                     <div class="input mx-auto">
                         <div class="form-group mb-4"> 
                             <label for="exampleDataList" class="form-label">Choose Counter</label>
-                            <select id="datalistOptions" class="form-control" name="counter_name">
-                                <?php if (isset($_GET['id'])) { ?>
-                                    <option value="<?=$cash_flow_with_id['counter_id']?>"><?=$cash_flow_with_id['counter_name']?></option>
-                                <?php } else{ ?>
-                                    <option value="">Select One Counter</option>
-                                <?php } ?>
+                            <select id="datalistOptions" class="form-control" name="counter_name" <?=$readonly?> >
+                            <option value="">Select one counter</option>
                                 <?php 
                                     $counters = get_counter($mysqli);
-                                    while ($counter = $counters->fetch_assoc()) { ?>
-                                    <option value="<?=$counter['id']?>"><?=$counter['counter_name']?></option>
+                                    while ($counter = $counters->fetch_assoc()) { 
+                                        if(isset($counterName) && $counterName == $counter['id']){
+                                            $select = "selected";
+                                        } else {
+                                            $select = "";
+                                        }
+                                        ?>
+                                    <option value="<?=$counter['id']?>" <?= $select ?> ><?=$counter['counter_name']?></option>
                                 <?php } ?>
                             </select> 
                             <small class="text-danger"><?= $counterNameErr ?></small>
                         </div>
                         <div class="form-group mb-4"> 
                             <label for="exampleDataList" class="form-label">Choose Currency</label>
-                            <select id="datalistOptions" class="form-control" name="currency_name">
-                                <?php if (isset($_GET['id'])) { ?>
-                                    <option value="<?=$cash_flow_with_id['currency_id']?>"><?=$cash_flow_with_id['currency_name']?></option>
-                                <?php } else{ ?>
-                                    <option value="">Select One Currency</option>
-                                <?php } ?>
+                            <select id="datalistOptions" class="form-control" name="currency_name" <?=$readonly?> >
+                               <option value="">Select one currency</option>
                                 <?php 
                                     $currencies = currency_sd($mysqli);
-                                    while ($currency = $currencies->fetch_assoc()) { ?>
-                                    <option value="<?=$currency['id']?>"><?=$currency['currency_name']?></option>
+                                    while ($currency = $currencies->fetch_assoc()) { 
+                                        if(isset($currencyName) && $currencyName == $currency['id']){
+                                            $select = "selected";
+                                        } else {
+                                            $select = "";
+                                        }
+                                        ?>
+                                    <option value="<?=$currency['id']?>" <?= $select ?> ><?=$currency['currency_name']?></option>
                                 <?php } ?>
                             </select> 
                             <small class="text-danger"><?= $currencyNameErr ?></small>

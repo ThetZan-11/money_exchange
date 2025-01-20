@@ -81,7 +81,7 @@
     return $result->fetch_assoc();
    }
 
-   function calculate_exchange_for_staff($mysqli, $currency_pair_id){
+   function calculate_exchange_for_staff($mysqli, $currency_pair_id , $date){
     $sql = "SELECT `daily_exchange`.`id` AS `daily_exchange_id`,`sell_currency`.`flag` AS `sell_flag`,`buy_currency`.`flag` AS `buy_flag`,
     `buy_currency`.`currency_name` AS `buy_currency_name`,`sell_currency`.`currency_name` AS `sell_currency_name`,
     `buy_currency`.`id` AS `buy_currency_id`,`sell_currency`.`id` AS `sell_currency_id`,
@@ -90,7 +90,7 @@
     INNER JOIN `currency_pair_counter` ON `currency_pair_counter`.`currency_pair_id` = `currency_pair`.`id` 
     INNER JOIN `currency` AS `sell_currency` ON `currency_pair`.`sell_currency_id` = `sell_currency`.`id` 
     INNER JOIN `currency` AS `buy_currency` ON `currency_pair`.`buy_currency_id` = `buy_currency`.`id` 
-    WHERE `daily_exchange`.`date` = CURRENT_DATE AND `currency_pair`.`id` = '$currency_pair_id'";
+    WHERE `daily_exchange`.`date` = '$date' AND `currency_pair`.`id` = '$currency_pair_id'";
     $result =  $mysqli->query($sql);
     return $result->fetch_assoc();
    }

@@ -6,12 +6,7 @@
 $buy_currency      = $buy_currencyErr = "";
 $sell_currency     = $sell_currencyErr = "";
 $invalid = false;
-
-// if (isset($_GET['id'])) {
-//     $duties         = get_duites_with_id($mysqli, $_GET['id']);
-//     $duty           = $duties->fetch_assoc();
-//     $counterName    = $duty['counter_id'];
-// }
+$status = false;
 
 if (isset($_POST['submit'])) {
     $buy_currency      = $mysqli->real_escape_string($_POST['buy_currency']);
@@ -31,14 +26,17 @@ if (isset($_POST['submit'])) {
         $sell_currencyErr = "can't be same";
         $invalid = true;
     }
-
+    if(currencypair_validate($mysqli, $buy_currency, $sell_currency)){
+            $buy_currencyErr = "already pair";
+            $sell_currencyErr = "already pair";
+            $invalid = true;
+            $status = true;
+    }
+    
+    
     if(!$invalid){
-        if(isset($_GET['id'])){
-            echo "Hello";
-        } else {
             add_currency_pair($mysqli, $buy_currency, $sell_currency);
             echo "<script>location.replace('../admin/currencyPair_list.php?add_success=Added Successfully')</script>";
-        }
     }
 }
 ?>
@@ -60,8 +58,13 @@ if (isset($_POST['submit'])) {
                             <label for="exampleDataList" class="form-label">Choose Buy Currency</label>
                                 <select name="buy_currency" class="form-control">
                                      <?php $currencies = get_all_currency($mysqli);
-                                     while ($currency = $currencies->fetch_assoc()) { ?> 
-                                        <option value="<?= $currency['id'] ?>"><?= $currency['currency_code'] ?></option> 
+                                     while ($currency = $currencies->fetch_assoc()) {
+                                      if(isset($buy_currency) && $buy_currency==$currency['id']){
+                                            $selected = "selected";
+                                        } else {
+                                            $selected = "";
+                                        } ?>
+                                        <option value="<?= $currency['id'] ?>"  <?= $selected ?>><?= $currency['currency_code'] ?></option> 
                                     <?php }  ?>
                                      
                                 </select>
@@ -71,9 +74,16 @@ if (isset($_POST['submit'])) {
                         <div class="form-group mb-4">
                             <label for="exampleDataList" class="form-label">Choose Sell Currency</label>
                                 <select name="sell_currency" class="form-control">
-                                     <?php $currencies = get_all_currency($mysqli);
-                                     while ($currency = $currencies->fetch_assoc()) { ?> 
-                                        <option value="<?= $currency['id'] ?>"><?= $currency['currency_code'] ?></option> 
+                                <?php $currencies = get_all_currency($mysqli);
+                                     while ($currency = $currencies->fetch_assoc()) {
+                                      if(isset($sell_currency) && $sell_currency==$currency['id']){
+                                            $selected = "selected";
+                                        } else {
+                                            $selected = "";
+                                        } ?>
+                                        <option value="<?= $currency['id'] ?>"  <?= $selected ?> > 
+                                            <?= $currency['currency_code'] ?>
+                                    </option> 
                                     <?php }  ?>
                                      
                                 </select>

@@ -175,6 +175,11 @@
               </a>
             </li>
             <li>
+              <a href="./cashflow_list.php">
+                <i class="bi bi-circle"></i><span>Cash Flow List</span>
+              </a>
+            </li>
+            <li>
               <a href="./saleRecord_list.php">
                 <i class="bi bi-circle"></i><span>Sale Record</span>
               </a>
@@ -188,11 +193,6 @@
              <i class="bi bi-currency-exchange"></i><span>Customer</span><i class="bi bi-chevron-down ms-auto"></i>
              </a>
              <ul id="components-customer" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-               <li>
-                 <a href="./add_customer.php">
-                   <i class="bi bi-circle"></i><span>Add Customer</span>
-                 </a>
-               </li>
                <li>
                  <a href="./customer_list.php">
                    <i class="bi bi-circle"></i><span>Customer List</span>

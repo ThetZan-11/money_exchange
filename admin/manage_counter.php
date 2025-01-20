@@ -69,15 +69,17 @@
                             <div class="form-group mb-4"> 
                                  <label for="exampleDataList" class="form-label">Choose Counter</label>
                                 <select id="datalistOptions" class="form-control" name="counterName" value="<?= $counterName ?>">
-                                <?php if (isset($_GET['id'])) { ?>
-                                    <option value="<?=$currency_pair_counter_id['counter_id']?>"><?=$currency_pair_counter_id['counter_name']?></option>
-                                <?php } else{ ?>
-                                    <option value="">Select One Counter</option>
-                                <?php } ?>
+                                <option value="">Select one counter</option>
                                 <?php 
                                     $counters = get_counter($mysqli);
-                                    while ($counter = $counters->fetch_assoc()) { ?>
-                                    <option value="<?=$counter['id']?>"><?=$counter['counter_name']?></option>
+                                    while ($counter = $counters->fetch_assoc()) {
+                                        if(isset($counterName) && $counterName == $counter['id']){
+                                            $select = "selected";
+                                        } else {
+                                            $select = "";
+                                        }
+                                        ?>
+                                    <option value="<?=$counter['id']?>" <?=$select?> ><?=$counter['counter_name']?></option>
                                 <?php } ?>
                                 </select> 
                                 <small class="text-danger"><?= $counterNameErr ?></small>
@@ -86,15 +88,17 @@
                             <div class="form-group mb-4"> 
                                 <label for="exampleDataList" class="form-label">Currency Pair</label>
                                 <select id="datalistOptions" class="form-control" name="currency_pair">
-                                <?php if (isset($_GET['id'])) { ?>
-                                    <option value="<?=$currency_pair_counter_id['currency_pair_id']?>"><?=$currency_pair_counter_id['pair_name']?></option>
-                                <?php } else{ ?>
-                                    <option value="">Select One Counter</option>
-                                <?php } ?>
+                                <option value="">Select one currency pair</option>
                                 <?php  
                                     $currency_pairs = get_all_currency_pair($mysqli);
-                                    while ($currencypair = $currency_pairs->fetch_assoc()) { ?>
-                                    <option value="<?=$currencypair['pair_id']?>">
+                                    while ($currencypair = $currency_pairs->fetch_assoc()) {
+                                        if(isset($currencyPair) && $currencyPair == $currencypair['pair_id']){
+                                            $select = "selected";
+                                        } else {
+                                            $select = "";
+                                        }
+                                         ?>
+                                    <option value="<?=$currencypair['pair_id']?>" <?=$select?>>
                                         <?= $currencypair['pair_name'] ?>
                                     </option>
                                 <?php } ?>

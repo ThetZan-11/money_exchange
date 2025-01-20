@@ -11,11 +11,14 @@ if(isset($_GET['deleteId'])){
 
 if(isset($_POST['filter'])){
     $counter_id = $_POST['filter'];
-    $trades = sale_record_filter_counter($mysqli, $counter_id);
+    $trades = show_trades_with_counter($mysqli, $counter_id);
+    if($counter_id == ""){
+        $trades= show_trades($mysqli);
+    }
 } else {
     if(isset($_POST['key']) && $_POST['key'] != ''){
         $key = $_POST['key'];
-        $trades =  search_query_for_sale_record($mysqli, $key);
+        $trades =  search_show_trade($mysqli, $key);
     } else {
         $trades= show_trades($mysqli);
     }
@@ -37,11 +40,17 @@ if(isset($_POST['filter'])){
      <div>
         <form method="post" id="filter_counter_form">
             <select name="filter" class="form-control" id="counter_select" value="<?= $counter_id ?>">
-                <option value="">Select Counter</option>
+                <option value="">All Counter</option>
+
                 <?php  
                 $counters = get_counter($mysqli); 
-                while($counter = $counters->fetch_assoc()){ ?>
-                    <option value="<?= $counter['id'] ?>"><?= $counter['counter_name'] ?></option>
+                while($counter = $counters->fetch_assoc()){ 
+                if(isset($counter_id) && $counter_id==$counter['id']){
+                    $selected = "selected";
+                } else {
+                    $selected = "";
+                } ?>
+                    <option value="<?= $counter['id'] ?>" <?= $selected ?> ><?= $counter['counter_name'] ?></option>
                 <?php } ?>
             </select>
         </form>

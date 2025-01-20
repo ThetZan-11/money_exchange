@@ -6,12 +6,12 @@ function get_customer ($mysqli){
 }
 
 function get_customer_with_id($mysqli , $id){
-    $sql = "SELECT * FROM `customer` WHERE `soft_delete` = 0   AND `id`= $id";
+    $sql = "SELECT * FROM `customer` WHERE `id`= '$id' AND `soft_delete` = 0 ";
     return $mysqli->query($sql); 
 }
 
 function get_customer_with_email($mysqli , $email){
-    $sql = "SELECT * FROM `customer` WHERE  `soft_delete` = 0   AND `email`= '$email'";
+    $sql = "SELECT * FROM `customer` WHERE  `soft_delete` = 0 AND `email`= '$email'";
     $result = $mysqli->query($sql); 
     return $result->fetch_assoc();
 }
@@ -21,8 +21,8 @@ function delete_customer($mysqli , $id){
     return $mysqli->query($sql); 
 }
 
-function update_customer($mysqli , $id , $name , $email , $address , $ph_no ){
-    $sql = "UPDATE  `customer` SET `name` = '$name' , `email` ='$email' , `address` ='$address' , `ph_no` = '$ph_no'
+function update_customer($mysqli , $id , $name, $email,$address , $ph_no ){
+    $sql = "UPDATE `customer` SET `name` = '$name', `email` = '$email',`address` ='$address' , `ph_no` = '$ph_no'
     WHERE `id` = $id";
     return $mysqli->query($sql);
 }

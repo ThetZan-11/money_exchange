@@ -8,6 +8,10 @@ if(isset($_GET['deleteId'])){
     delete_customer($mysqli,($_GET['deleteId']));
     echo "<script>location.replace('./customer_list.php')</script>";
 }
+if(isset($_SESSION['date'])){
+$duty = $_SESSION['date'];
+}
+
 ?>
 <main id="main" class="main">
     <div class="container">
@@ -29,6 +33,7 @@ if(isset($_GET['deleteId'])){
                     <th>Buy Currency</th>
                     <th>Sell Currency</th>
                     <th>From Amount</th>
+                    <th>To Amount</th>
                     <th>Counter Name</th>
                     <th>Staff Name</th>
                     <th>Rate</th>
@@ -43,7 +48,7 @@ if(isset($_GET['deleteId'])){
                     $key = $_POST['key'];
                     $customer =  search_query_for_customer($mysqli, $key);
                 } else {
-                    $trades= show_trades($mysqli);
+                    $trades= show_trades_with_counter($mysqli, $duty['counter_id']);
                 }
 
                 while($trade = $trades->fetch_assoc()) { ?>

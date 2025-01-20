@@ -4,8 +4,8 @@
 
 <?php   
  if(isset($_GET['deleteId'])){
-    if(soft_delete_currency ($mysqli , $_GET['deleteId'])){
-      echo "<script>location.replace('./currency_list.php')</script>";
+    if(soft_delete_currency_pair ($mysqli , $_GET['deleteId'])){
+      echo "<script>location.replace('./currencypair_list.php')</script>";
     }
  }
 ?>
@@ -32,8 +32,8 @@
   <tbody>
     <?php
     $i = 1;
-    if(isset($_POST['key'])){
-      $currencies = currency_search ($mysqli , $_POST['key']);
+    if(isset($_POST['key']) && $_POST['key'] != ''){
+      $currencypairs = currency_pair_search ($mysqli , $_POST['key']);
     }else {
       $currencypairs  =  get_all_currency_pair_separate($mysqli);
     }
@@ -48,7 +48,6 @@
             echo $currencypair['sell_currency_name'];
             ?></td>
         <td>
-        <a class="btn btn-primary btn-sm" href="./currency_pair.php?id=<?= $currencypair['pair_id'] ?> "><i class="fa-solid fa-pen"></i></a>
         <button class="btn btn-sm btn-danger counterDelete" data-value="<?= $currencypair['pair_id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></button>
         </td>
     </tr>

@@ -25,6 +25,43 @@
         return $mysqli->query($sql);
     }
 
+    function search_show_trade($mysqli, $key){
+        $sql = "SELECT `trade`.`id` AS `trade_id`,`customer`.`name` AS `customer_name`,`customer`.`email` AS `customer_email`,`buy_currency`.`currency_name` AS `buy_currency`,
+        `sell_currency`.`currency_name` AS `sell_currency`, `trade`.`from_amount` AS `from_amount`, `trade`.`to_amount` AS `to_amount`,
+        `trade`.`date` AS `date`, `counter`.`counter_name` AS `counter_name`,`user`.`name` AS `staff_name`, `daily_exchange`.`buy_rate` AS `rate`
+        FROM `trade` 
+        INNER JOIN `customer` ON `customer`.`id` = `trade`.`customer_id` 
+        INNER JOIN `duty` ON `duty`.`id` = `trade`.`duty_id` 
+        INNER JOIN `daily_exchange` ON `daily_exchange`.`id` = `trade`.`daily_exchange_id` 
+        INNER JOIN `currency_pair_counter` ON `currency_pair_counter`.`id` = `trade`.`currency_pair_counter_id` 
+        INNER JOIN `currency_pair` ON `currency_pair`.`id` = `currency_pair_counter`.`currency_pair_id`  
+        INNER JOIN `currency` AS `sell_currency` ON `currency_pair`.`sell_currency_id` = `sell_currency`.`id` 
+        INNER JOIN `currency` AS `buy_currency` ON `currency_pair`.`buy_currency_id` = `buy_currency`.`id`
+        INNER JOIN `counter` ON `counter`.`id` = `duty`.`counter_id`
+        INNER JOIN `user` ON `user`.`id` = `duty`.`user_id` WHERE 
+        `counter`.`counter_name` LIKE '%$key%' AND `trade`.`soft_delete` = 0 
+        OR `user`.`name` LIKE '%$key%' AND `trade`.`soft_delete` = 0 OR  `customer`.`email` LIKE '%$key%' AND `trade`.`soft_delete` = 0 
+        OR `customer`.`name` LIKE '%$key%' AND `trade`.`soft_delete` = 0 OR  `sell_currency`.`currency_name` LIKE '%$key%' AND `trade`.`soft_delete` = 0 
+        OR  `trade`.`date` LIKE '%$key%' AND `trade`.`soft_delete` = 0 OR  `buy_currency`.`currency_name` LIKE '%$key%' AND `trade`.`soft_delete` = 0 ";
+        return $mysqli->query($sql);
+    }
+    function show_trades_with_counter($mysqli, $counter_id){
+        $sql = "SELECT `trade`.`id` AS `trade_id`,`customer`.`name` AS `customer_name`,`customer`.`email` AS `customer_email`,`buy_currency`.`currency_name` AS `buy_currency`,
+        `sell_currency`.`currency_name` AS `sell_currency`, `trade`.`from_amount` AS `from_amount`, `trade`.`to_amount` AS `to_amount`,
+        `trade`.`date` AS `date`, `counter`.`counter_name` AS `counter_name`,`user`.`name` AS `staff_name`, `daily_exchange`.`buy_rate` AS `rate`
+        FROM `trade` 
+        INNER JOIN `customer` ON `customer`.`id` = `trade`.`customer_id` 
+        INNER JOIN `duty` ON `duty`.`id` = `trade`.`duty_id` 
+        INNER JOIN `daily_exchange` ON `daily_exchange`.`id` = `trade`.`daily_exchange_id` 
+        INNER JOIN `currency_pair_counter` ON `currency_pair_counter`.`id` = `trade`.`currency_pair_counter_id` 
+        INNER JOIN `currency_pair` ON `currency_pair`.`id` = `currency_pair_counter`.`currency_pair_id`  
+        INNER JOIN `currency` AS `sell_currency` ON `currency_pair`.`sell_currency_id` = `sell_currency`.`id` 
+        INNER JOIN `currency` AS `buy_currency` ON `currency_pair`.`buy_currency_id` = `buy_currency`.`id`
+        INNER JOIN `counter` ON `counter`.`id` = `duty`.`counter_id`
+        INNER JOIN `user` ON `user`.`id` = `duty`.`user_id` WHERE `counter`.`id` = '$counter_id'";
+        return $mysqli->query($sql);
+    }
+
     function show_trades_with_id($mysqli, $trade_id){
         $sql = "SELECT `trade`.`id` AS `trade_id`,`customer`.`name` AS `customer_name`,`customer`.`email` AS `customer_email`,`buy_currency`.`currency_name` AS `buy_currency`,
         `sell_currency`.`currency_name` AS `sell_currency`, `trade`.`from_amount` AS `from_amount`, `trade`.`to_amount` AS `to_amount`,
@@ -63,15 +100,6 @@
         return $result->fetch_assoc();
     }
 
-    function show_trades_with_counter($mysqli, $counter_id){
-        $sql = "SELECT `trade`.`id`,`customer`.`name`, `customer`.`email`,
-        `trade`.`exchange_amount`, `trade`.`converted_amount`, `currency`.`buy_currency_name`, `currency`.`sell_currency_name`,`currency`.`buy_currency_code`, `currency`.`sell_currency_code`, `trade`.`date` 
-        FROM `trade` INNER JOIN `customer` ON `customer`.`id` = `trade`.`customer_id` 
-        INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id` 
-        INNER JOIN `currency` ON `currency_counter`.`currency_id` = `currency`.`id` 
-        WHERE `currency_counter`.`counter_id` = '$counter_id' AND `trade`.`soft_delete` = 0 ORDER BY `trade`.`id` DESC";
-        return $mysqli->query($sql);
-    }
     function total_sale_counter_today_filter($mysqli ,$email, $from_date, $to_date){
         $sql = "SELECT COUNT(*) AS `sale_count` FROM `trade` 
         INNER JOIN `currency_counter` ON `currency_counter`.`id` = `trade`.`currency_counter_id` 

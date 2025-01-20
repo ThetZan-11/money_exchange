@@ -25,6 +25,7 @@ if (isset($_GET['id'])) {
   
 
 if(isset($_POST['name'])){
+
     $name = $_POST['name'];
     $email = $_POST['email'];
     $address = $_POST['address'];
@@ -48,6 +49,11 @@ if(isset($_POST['name'])){
 
     if($phone == ""){
         $phone_err = "Phone number can't be blank";
+        $invalid = true;
+    }
+
+    if(!is_numeric($phone)){
+        $phone_err = "must be number";
         $invalid = true;
     }
 

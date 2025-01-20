@@ -42,7 +42,7 @@
 
             <div class="row mt-3">
                 <div class="form-floating mb-3 col-md-4">
-                      <input type="text" class="form-control" name="amount" id="floatingInput" placeholder="Enter Amount" value="1.0">
+                      <input type="text" class="form-control" name="amount" id="floatingInput" placeholder="Enter Amount" value="<?= $amount ?>">
                       <label for="floatingInput">Amount</label>
                       <small class="text-danger"><?= $amountErr ?></small>
                 </div>
@@ -50,8 +50,15 @@
                       <select class="form-select" id="floatingSelect" name="from" aria-label="Floating label select example">
                         <?php
                         $currencies = get_all_currency($mysqli);
-                            while ($currency = $currencies->fetch_assoc()) {  ?>
-                                <option value="<?= $currency['currency_code'] ?>"><?= $currency['currency_name'] ?></option>
+                            while ($currency = $currencies->fetch_assoc()) { 
+                                if(isset($from) && $from==$currency['currency_code']){
+                                    $selected = "selected";
+                                } else {
+                                    $selected = "";
+                                } ?>
+                                <option value="<?= $currency['currency_code'] ?>"  <?= $selected ?>>
+                                    <?= $currency['currency_name'] ?>
+                                </option>
                         <?php  } ?>
                       </select>
                       <label for="floatingSelect">From</label>
@@ -61,8 +68,13 @@
                       <select class="form-select" id="floatingSelect" name="to" aria-label="Floating label select example">
                       <?php
                       $currencies = get_all_currency($mysqli);
-                            while ($currency = $currencies->fetch_assoc()) {  ?>
-                            <option value="<?= $currency['currency_code'] ?>">
+                            while ($currency = $currencies->fetch_assoc()) { 
+                                if(isset($to) && $to==$currency['currency_code']){
+                                    $selected = "selected";
+                                } else {
+                                    $selected = "";
+                                }  ?>
+                            <option value="<?= $currency['currency_code'] ?>"  <?= $selected ?>>
                                 <?= $currency['currency_name'] ?>
                             </option>
                         <?php  } ?>
@@ -75,7 +87,6 @@
             <div class="row d-flex align-items-center">
                 <?php if(isset($rate)) { ?>
                      <div class="para col-md-6 mt-4">
-                        <!-- <p class="para-mid"></p> -->
                         <p class="para-mid"><?= number_format($amount) ?> <?= $rate['buy_currency_name'] ?> = <?php $result = $rate['buy_rate'] * $amount; echo number_format($result); ?>  <?= $rate['sell_currency_name'] ?></p>
                         <p class="para-small">1 <img src="../assets/flag/<?= $rate['buy_flag'] ?>" width="25px" height="25px"> = <?= $rate['buy_rate'] ?> <img src="../assets/flag/<?= $rate['sell_flag'] ?>" width="25px" height="25px"></p>
                         <p class="para-small">1 <img src="../assets/flag/<?= $rate['sell_flag'] ?>" width="25px" height="25px"> = <?= $rate['buy_rate'] ?> <img src="../assets/flag/<?= $rate['buy_flag'] ?>" width="25px" height="25px"></p>

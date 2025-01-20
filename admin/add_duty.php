@@ -142,8 +142,14 @@ $duty_validates_counter_to = duty_validate_counter_id($mysqli, $to_date, $userNa
                             <select id="datalistOptions" class="form-control" name="counterName" value="<?= $counterName ?>">
                                 <?php
                                 $counters = get_counter($mysqli);
-                                while ($counter = $counters->fetch_assoc()) { ?>
-                                    <option value="<?= $counter['id'] ?>"><?= $counter['counter_name'] ?></option>
+                                while ($counter = $counters->fetch_assoc()) {
+                                    if(isset($counterName) &&  $counterName == $counter['id']){
+                                        $select = "selected";
+                                    } else {
+                                        $select = "";
+                                    }
+                                    ?>
+                                    <option value="<?= $counter['id'] ?>" <?= $select ?> ><?= $counter['counter_name'] ?></option>
                                 <?php } ?>
                             </select>
                             <small class="text-danger"><?= $counterNameErr ?></small>
@@ -154,8 +160,15 @@ $duty_validates_counter_to = duty_validate_counter_id($mysqli, $to_date, $userNa
                             <select name="userName" class="form-control" value="<?= $userName ?>">
                                 <?php
                                 $staffs = get_staff($mysqli);
-                                while ($staff = $staffs->fetch_assoc()) { ?>
-                                    <option value="<?= $staff['id'] ?>"><?= $staff['name'] ?></option>
+                                while ($staff = $staffs->fetch_assoc()) {
+                                    if(isset($userName) &&  $userName == $staff['id']){
+                                        $select = "selected";
+                                    } else {
+                                        $select = "";
+                                    }
+                                    ?>
+                                    ?>
+                                    <option value="<?= $staff['id'] ?>" <?=$select?> ><?= $staff['name'] ?></option>
                                 <?php } ?>
                             </select>
                             <small class="text-danger"><?= $userNameErr ?></small>
@@ -163,13 +176,13 @@ $duty_validates_counter_to = duty_validate_counter_id($mysqli, $to_date, $userNa
 
                         <div class="form-group mb-4">
                             <label for="" class="form-label">From Date</label>
-                            <input type="date" class="form-control" name="from_date">
+                            <input type="date" class="form-control" name="from_date" value="<?=$from_date?>">
                             <small class="text-danger"><?= $from_dateErr ?></small>
                         </div>
 
                         <div class="form-group mb-4">
                             <label for="" class="form-label">To Date</label>
-                            <input type="date" class="form-control" name="to_date">
+                            <input type="date" class="form-control" name="to_date" value="<?=$to_date?>">
                             <small class="text-danger"><?= $to_dateErr ?></small>
                         </div>
 
