@@ -42,11 +42,11 @@ if(isset($_SESSION['date'])){
         <?php
         $i = 1;
 
-        if(isset($_POST['key'])){
-         $counters = counter_search ($mysqli , $_POST['key']);
-        }else {
+        // if(isset($_POST['key'])){
+        //  $counters = counter_search ($mysqli , $_POST['key']);
+        // }else {
           $cash_flows = cash_flow_with_counter_id($mysqli, $duty['counter_id']);
-        }
+        // }
        
         while ($cash_flow = $cash_flows->fetch_assoc()) { ?>
           <tr>

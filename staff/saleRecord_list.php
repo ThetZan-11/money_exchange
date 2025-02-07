@@ -46,7 +46,7 @@ $duty = $_SESSION['date'];
                 $i = 1;
                 if(isset($_POST['key']) && $_POST['key'] != ''){
                     $key = $_POST['key'];
-                    $customer =  search_query_for_customer($mysqli, $key);
+                    $trades =  search_trade_with_counter($mysqli, $key, $duty['counter_id']);
                 } else {
                     $trades= show_trades_with_counter($mysqli, $duty['counter_id']);
                 }
